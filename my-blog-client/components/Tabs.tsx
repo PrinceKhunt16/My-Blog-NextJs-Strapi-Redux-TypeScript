@@ -20,16 +20,16 @@ export default function Tabs({ categories }: IPropTypes) {
     const searchItemsArray = ['nodejs', 'python', 'javascript', 'php', 'java'];
 
     useEffect(() => {
-        const timer = setTimeout(() => setCount(count + 1), 1000)
+        const timer = setTimeout(() => setCount(count + 1), 800)
         
         if(num == searchLetters.length){
             num = 0
             item += 1
-            
+
             if(item == searchItemsArray.length){
                 item = 0
             }
-
+            
             searchLetters = searchItemsArray[item]
         } else {
             num += 1

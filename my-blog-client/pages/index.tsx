@@ -1,17 +1,22 @@
 import { AxiosResponse } from 'axios'
-import { GetServerSidePropsContext, NextPage } from 'next'
+import { GetServerSidePropsContext } from 'next'
 import Head from 'next/head'
+import ArticleList from '../components/ArticleList'
 import Tabs from '../components/Tabs'
-import { fetchCategories } from '../http'
-import { ICategory, ICollectionResponse } from '../types'
+import { fetchArticles, fetchCategories } from '../http'
+import { IArticle, ICategory, ICollectionResponse } from '../types'
+import qs from 'qs'
 
 interface IPropTypes {
   categories: {
     items: ICategory[]
+  },
+  articles: {
+    items: IArticle[]
   }
 }
 
-export default function Home({ categories }: IPropTypes) {
+export default function Home({ categories, articles }: IPropTypes) {
   return (
     <div>
       <Head>
@@ -20,17 +25,31 @@ export default function Home({ categories }: IPropTypes) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Tabs categories={categories.items} />
+      <ArticleList articles={articles.items} />
     </div>
   )
 }
 
 export async function getServerSideProps (context: GetServerSidePropsContext) {
+  const options = {
+    populate: ['author.avatar'],
+    sort: ['id:desc']
+  }
+
+  const queryString = qs.stringify(options)
+  
+  const { data: articles }: AxiosResponse<ICollectionResponse<IArticle[]>> = await fetchArticles(queryString)
+
   const { data: categories }: AxiosResponse<ICollectionResponse<ICategory[]>> = await fetchCategories()
   
   return {
     props: {
       categories: {
         items: categories.data
+      },
+      articles: {
+        items: articles.data,
+        pagination: articles.meta.pagination
       }
     }
   }
