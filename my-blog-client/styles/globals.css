@@ -9,3 +9,7 @@
     box-shadow: 0 0 0 100vmax #53bd9515; 
     clip-path: inset(0 -100vmax);
 }
+
+.borderbottom {
+    border-bottom: 1px solid #4b556317;
+}
