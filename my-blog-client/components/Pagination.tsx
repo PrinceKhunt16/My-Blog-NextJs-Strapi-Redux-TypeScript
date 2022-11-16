@@ -33,6 +33,7 @@ export default function Pagination({ page, pageCount, redirectUrl = '/' }: IProp
         }
            
         const queryString = qs.stringify({
+            ...router.query,
             page: page + direction
         })
 

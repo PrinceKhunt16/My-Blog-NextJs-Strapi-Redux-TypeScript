@@ -36,7 +36,7 @@ export default function BlogCard({ article }: IPropType) {
             </div>
             <div className="text-gray-500">
                 {article.attributes.shortDescription.slice(0, 250)}{' '}
-                {article.attributes.shortDescription.length > 250 ? <span className="text-gray-500 font-medium">read more</span> : ''}
+                {article.attributes.shortDescription.length > 250 ? <span className="text-gray-500 text-sm">read more</span> : ''}
             </div>
         </div>
     )

@@ -16,3 +16,17 @@ export const makeCategory = (slug: string): string => {
 
     return ''
 }
+
+export const debounce = (fn: (query: string) => void, timeout = 1000) => {
+    let timer: NodeJS.Timeout
+
+    const debounced = (...args: any) => {
+        clearTimeout(timer)
+        
+        timer = setTimeout(() => {
+            fn.apply(this, args)
+        }, timeout)
+    }
+
+    return debounced
+}

@@ -6,46 +6,43 @@ import Search from "../images/search.png"
 import { useEffect, useState } from "react"
 
 interface IPropTypes {
-    categories: ICategory[]
+    categories: ICategory[],
+    handleSearch: (query: string) => void
 }
 
 let num = 0
 let item = 0
 let searchLetters = ''
 
-export default function Tabs({ categories }: IPropTypes) {
+export default function Tabs({ categories, handleSearch }: IPropTypes) {
     const [placeholder, setPlaceholder] = useState('');
     const [count, setCount] = useState(0)
     const router = useRouter()
     const searchItemsArray = ['nodejs', 'python', 'javascript', 'php', 'java', 'digital marketing'];
 
     useEffect(() => {
-        const timer = setTimeout(() => setCount(count + 1), 500)
-        
-        if(num == searchLetters.length){
+        const timer = setTimeout(() => setCount(count + 1), 5000)
+
+        if (num == searchLetters.length) {
             num = 0
             item += 1
 
-            if(item == searchItemsArray.length){
+            if (item == searchItemsArray.length) {
                 item = 0
             }
-            
+
             searchLetters = searchItemsArray[item]
         } else {
             num += 1
         }
 
-        setPlaceholder(searchLetters.substring(0, num))        
+        setPlaceholder(searchLetters.substring(0, num))
         return () => clearTimeout(timer)
-    }, [])
     // }, [count])
+    }, [])
 
     const isActiveLink = (category: ICategory) => {
         return category.attributes.Slug === router.query.category
-    }
-
-    const handleOnSearch = (query: string) => {
-
     }
 
     return (
@@ -83,10 +80,10 @@ export default function Tabs({ categories }: IPropTypes) {
                     height="16"
                 />
                 <input
-                    onChange={(e) => handleOnSearch(e.target.value)}
+                    onChange={(e) => handleSearch(e.target.value)}
                     type="text"
-                    placeholder={placeholder}
-                    className="outline-none ml-3 pt-0.5 text-gray-600 placeholder:text-gray-600"
+                    placeholder={`blogs on ${placeholder}`}
+                    className="outline-none w-48 ml-3 pt-0.5 text-gray-600 placeholder:text-gray-600"
                 />
             </div>
         </div>
