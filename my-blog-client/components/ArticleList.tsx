@@ -9,7 +9,7 @@ interface IPropTypes {
 export default function ArticleList({ articles }: IPropTypes) {
     return (
 
-        <div className="grid lg:grid-cols-2 grid-gap gap-10 mt-8">
+        <div className="grid lg:grid-cols-2 grid-gap gap-6 mt-8">
             {articles.map((article) => {
                 return (
                     <div key={article.id}>

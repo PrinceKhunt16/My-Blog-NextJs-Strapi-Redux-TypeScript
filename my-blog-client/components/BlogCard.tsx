@@ -11,7 +11,7 @@ export default function BlogCard({ article }: IPropType) {
     return (
         <div>
             <Link href={`/article/${article.attributes.Slug}`}>
-                <h1 className="text-lg text-gray-600 hover:decoration-1 hover:underline hover:cursor-pointer hover:decoration-gray-500">
+                <h1 className="text-lg font-medium text-gray-600 hover:decoration-1 hover:underline hover:cursor-pointer hover:decoration-gray-500">
                     {article.attributes.Title}
                 </h1>
             </Link>
@@ -36,7 +36,7 @@ export default function BlogCard({ article }: IPropType) {
             </div>
             <div className="text-gray-500">
                 {article.attributes.shortDescription.slice(0, 250)}{' '}
-                {article.attributes.shortDescription.length > 250 ? '...' : ''}
+                {article.attributes.shortDescription.length > 250 ? <span className="text-gray-500 font-medium">read more</span> : ''}
             </div>
         </div>
     )

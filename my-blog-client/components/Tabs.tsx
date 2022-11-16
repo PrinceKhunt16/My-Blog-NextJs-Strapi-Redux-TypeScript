@@ -17,7 +17,7 @@ export default function Tabs({ categories }: IPropTypes) {
     const [placeholder, setPlaceholder] = useState('');
     const [count, setCount] = useState(0)
     const router = useRouter()
-    const searchItemsArray = ['nodejs', 'python', 'javascript', 'php', 'java'];
+    const searchItemsArray = ['nodejs', 'python', 'javascript', 'php', 'java', 'digital marketing'];
 
     useEffect(() => {
         const timer = setTimeout(() => setCount(count + 1), 500)
@@ -57,7 +57,7 @@ export default function Tabs({ categories }: IPropTypes) {
                         : 'text-gray-600'
                     }`
                 }>
-                    <Link href='#'>Recent</Link>
+                    <Link href='/'>Recent</Link>
                 </li>
                 {
                     categories.map((category) => {

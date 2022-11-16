@@ -4,6 +4,11 @@
 @tailwind components;
 @tailwind utilities;
 
+.disabled {
+    opacity: 50%;
+    cursor: none;
+}
+
 .boxshedow-fullwidth {
     background-color: #53bd9515;
     box-shadow: 0 0 0 100vmax #53bd9515; 

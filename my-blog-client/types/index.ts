@@ -71,3 +71,5 @@ export interface ICollectionResponse<T> {
     data: T,
     meta: IResourceMeta
 }
+
+export type TDirection = 1 | -1

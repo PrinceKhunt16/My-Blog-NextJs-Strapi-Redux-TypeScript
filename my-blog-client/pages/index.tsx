@@ -6,6 +6,7 @@ import Tabs from '../components/Tabs'
 import { fetchArticles, fetchCategories } from '../http'
 import { IArticle, ICategory, ICollectionResponse } from '../types'
 import qs from 'qs'
+import Pagination from '../components/Pagination'
 
 interface IPropTypes {
   categories: {
@@ -26,6 +27,7 @@ export default function Home({ categories, articles }: IPropTypes) {
       </Head>
       <Tabs categories={categories.items} />
       <ArticleList articles={articles.items} />
+      <Pagination />
     </div>
   )
 }

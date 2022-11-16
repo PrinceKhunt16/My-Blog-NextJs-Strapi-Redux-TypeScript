@@ -8,3 +8,11 @@ export const formatDate = (dateString: string) => {
 
     return date
 }
+
+export const makeCategory = (slug: string): string => {
+    if(typeof slug === 'string'){
+        return slug.split('-').map(str => str.charAt(0).toUpperCase() + str.slice(1)).join(' ')
+    }
+
+    return ''
+}
