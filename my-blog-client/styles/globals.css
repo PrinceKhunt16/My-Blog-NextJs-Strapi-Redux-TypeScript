@@ -6,10 +6,10 @@
 
 .disabled {
     opacity: 50%;
-    cursor: none;
+    cursor: not-allowed;
 }
 
-.boxshedow-fullwidth {
+.boxshadow-fullwidth {
     background-color: #53bd9515;
     box-shadow: 0 0 0 100vmax #53bd9515; 
     clip-path: inset(0 -100vmax);

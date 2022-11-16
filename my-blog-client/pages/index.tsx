@@ -4,7 +4,7 @@ import Head from 'next/head'
 import ArticleList from '../components/ArticleList'
 import Tabs from '../components/Tabs'
 import { fetchArticles, fetchCategories } from '../http'
-import { IArticle, ICategory, ICollectionResponse } from '../types'
+import { IArticle, ICategory, ICollectionResponse, IPagination } from '../types'
 import qs from 'qs'
 import Pagination from '../components/Pagination'
 
@@ -14,10 +14,13 @@ interface IPropTypes {
   },
   articles: {
     items: IArticle[]
-  }
+    pagination: IPagination
+  },
 }
 
 export default function Home({ categories, articles }: IPropTypes) {
+  const { page, pageCount } = articles.pagination
+
   return (
     <div>
       <Head>
@@ -27,7 +30,7 @@ export default function Home({ categories, articles }: IPropTypes) {
       </Head>
       <Tabs categories={categories.items} />
       <ArticleList articles={articles.items} />
-      <Pagination />
+      <Pagination page={page} pageCount={pageCount} />
     </div>
   )
 }
@@ -35,7 +38,11 @@ export default function Home({ categories, articles }: IPropTypes) {
 export async function getServerSideProps (context: GetServerSidePropsContext) {
   const options = {
     populate: ['author.avatar'],
-    sort: ['id:desc']
+    sort: ['id:desc'],
+    pagination: {
+      page: context.query.page ? context.query.page : 1,
+      pageSize: 1
+    }
   }
 
   const queryString = qs.stringify(options)
