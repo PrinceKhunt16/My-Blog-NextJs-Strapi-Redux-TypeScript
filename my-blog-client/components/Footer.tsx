@@ -1,7 +1,7 @@
 export default function Footer() {
     return (
-        <footer className="text-gray-600 mt-8 fixed bottom-0 left-0 bg-white w-full boxshedow-fullwidth">
-            <div className="container mx-auto flex items-center flex-col sm:flex-row py-4">
+        <footer className="text-gray-600 mt-auto bg-white w-full">
+            <div className="container mx-auto flex items-center flex-col sm:flex-row py-4 mt-8  boxshedow-fullwidth">
                 <div className="flex items-center cursor-pointer">
                     <span className="text-3xl text-primary font-caveatbrush pb-0.5">
                         My Blog

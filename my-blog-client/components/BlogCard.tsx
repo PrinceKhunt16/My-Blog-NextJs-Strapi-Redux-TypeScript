@@ -11,19 +11,21 @@ export default function BlogCard({ article }: IPropType) {
     return (
         <div>
             <Link href={`/article/${article.attributes.Slug}`}>
-                <h1 className="text-xl text-gray-600 font-bold hover:decoration-2 hover:underline hover:cursor-pointer hover:decoration-primary">
+                <h1 className="text-lg text-gray-600 hover:decoration-1 hover:underline hover:cursor-pointer hover:decoration-gray-500">
                     {article.attributes.Title}
                 </h1>
             </Link>
-            <div className="flex items-center my-4">
-                <div className="rounded-lg overflow-hidden flex items-center justify-center mr-2">
+            <div className="flex items-center my-3">
+                <div className="flex items-center justify-center mr-2">
                     <Image
                         src={`http://localhost:1337${article.attributes.author.data.attributes.avatar.data.attributes.formats.thumbnail.url}`}
+                        alt={article.attributes.Title}
                         height={40}
                         width={40}
+                        className="h-10 w-10 object-cover rounded-full"
                     />
                 </div>
-                <span className="text-sm font-bold text-gray-600">
+                <span className="text-sm text-gray-600">
                     {article.attributes.author.data.attributes.firstname}{' '}
                     {article.attributes.author.data.attributes.lastname} on
                     &nbsp;

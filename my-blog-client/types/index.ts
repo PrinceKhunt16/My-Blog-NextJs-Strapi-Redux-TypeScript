@@ -48,7 +48,7 @@ export interface IArticleAttribute {
     Image: IImageData,
     createdAt: string,
     author: IAuthor,
-    sortDescription: string
+    shortDescription: string
 }
 
 export interface IArticle {
