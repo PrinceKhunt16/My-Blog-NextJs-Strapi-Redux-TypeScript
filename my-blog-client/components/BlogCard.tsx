@@ -11,7 +11,7 @@ export default function BlogCard({ article }: IPropType) {
     return (
         <div>
             <Link href={`/article/${article.attributes.Slug}`}>
-                <h1 className="text-lg font-medium text-gray-600 hover:decoration-1 hover:underline hover:cursor-pointer hover:decoration-gray-500">
+                <h1 className="text-[28px] font-normal font-caveatbrush text-gray-600 hover:text-primary transition-transform hover:cursor-pointer hover:decoration-gray-500">
                     {article.attributes.Title}
                 </h1>
             </Link>

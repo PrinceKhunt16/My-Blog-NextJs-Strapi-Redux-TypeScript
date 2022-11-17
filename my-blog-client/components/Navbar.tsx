@@ -15,7 +15,7 @@ export default function Navbar() {
                     <a href="#">Products</a>
                 </li>
                 <li className="text-gray-600">
-                    <a href="#">pricing</a>
+                    <a href="#">Pricing</a>
                 </li>
                 <li className="text-gray-600">
                     <a href="#">Docs</a>

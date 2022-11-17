@@ -7,7 +7,7 @@ export default function Footer() {
                         My Blog
                     </span>
                 </div>
-                <p className="text-sm text-gray-700 sm:ml-4 sm:pl-4 sm:mt-0 mt-2 pt-1">
+                <p className="text-xs font-bold text-gray-700 sm:ml-4 sm:pl-4 sm:mt-0 mt-2 pt-1">
                     © 2022 My Blog —
                     <a
                         href="https://twitter.com/codersgyan"

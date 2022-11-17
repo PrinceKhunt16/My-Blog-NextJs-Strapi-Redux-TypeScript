@@ -11,10 +11,52 @@
 
 .boxshadow-fullwidth {
     background-color: #53bd9515;
-    box-shadow: 0 0 0 100vmax #53bd9515; 
+    box-shadow: 0 0 0 100vmax #53bd9515;
     clip-path: inset(0 -100vmax);
 }
 
 .borderbottom {
     border-bottom: 1px solid #4b556317;
+}
+
+.single-article h1 {
+    font-size: 40px;
+    padding: 10px 0px 10px 0px;
+    margin: 0px;
+}
+
+.single-article h2 {
+    font-size: 34px;
+    padding: 10px 0px 10px 0px;
+    margin: 0px;
+}
+
+.single-article h3 {
+    font-size: 28px;
+    padding: 10px 0px 10px 0px;
+    margin: 0px;
+}
+
+.single-article h4 {
+    font-size: 24px;
+    padding: 10px 0px 10px 0px;
+    margin: 0px;
+}
+
+.single-article h5 {
+    font-size: 18px;
+    padding: 10px 0px 10px 0px;
+    margin: 0px;
+}
+
+.single-article h6 {
+    font-size: 16px;
+    padding: 10px 0px 10px 0px;
+    margin: 0px;
+}
+
+.single-article p {
+    font-size: 18px;
+    padding: 10px 0px 10px 0px;
+    margin: 0px;
 }
