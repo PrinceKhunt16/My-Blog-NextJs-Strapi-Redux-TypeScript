@@ -11,6 +11,9 @@ export default function App({ Component, pageProps }: AppProps) {
         <NextNProgress 
           color='#53bd95'
           height={1}
+          options={{
+            showSpinner: false
+          }}
         />
         <Navbar />
         <main>

@@ -26,13 +26,13 @@ export default function Navbar() {
             </ul>
             <ul className="flex items-center gap-7">
                 <li className="text-primary">
-                    <a href="#" className="hover:text-gray-400">
+                    <a href="/login">
                         Log in
                     </a>
                 </li>
                 <li className="text-gray-600">
                     <a
-                        href="#"
+                        href="/signup"
                         className="rounded-sm text-primary transition-all">
                         Sign up
                     </a>

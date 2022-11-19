@@ -24,36 +24,37 @@ export default function Article({ article, notFound = false }: IPropTypes) {
                 />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <div className="mb-7 mt-4 grid lg:grid-cols-3 gap-12 single-article">
-                <div className="col-span-2">
+            <div className="mb-7 mt-4 grid lg:grid-cols-3 md:grid-cols-2 lg:gap-12 md:gap-0 single-article">
+                <div className="lg:col-span-2 md:col-span-2">
                     <h1 className="text-[40px] font-caveatbrush text-gray-600">
                         {article.attributes.Title}
                     </h1>
-                    <div>
+                    {/* <div className="pt-1">
                         <span className="text-base text-gray-600">
                             {article.attributes.author.data.attributes.firstname}{' '}
-                            {article.attributes.author.data.attributes.lastname} on
+                            {article.attributes.author.data.attributes.lastname} On
                             &nbsp;
                             <span className="text-gray-500">
                                 {formatDate(article.attributes.createdAt)}
                             </span>
                         </span>
-                    </div>
-                    <div className="text-lg text-gray-600 leading-8">
+                    </div> */}
+                    <div className="text-lg text-gray-600 leading-7">
                         <img
-                            className="w-full pt-6"
+                            className="w-full pt-5"
                             src={`http://localhost:1337${article.attributes.Image.data.attributes.url}`}
                             alt={article.attributes.Title}
                         />
-                        <div className="pt-5">
+                        <div className="pt-5 mdxremote">
                             <MDXRemote {...(article.attributes.Body) as MDXRemoteSerializeResult} />
                         </div>
                     </div>
                 </div>
-                <div className="col-span-1 pt-7">
+                <div className="lg:col-span-1 md:col-span-2 pt-7">
                     <div className="p-5 w-full flex items-center justify-center border border-primary bg-[#53bd9515]">
+                    {/* .data.attributes.formats.thumbnail.url */}
                         <Image
-                            src={`http://localhost:1337${article.attributes.author.data.attributes.avatar.data.attributes.formats.thumbnail.url}`}
+                            src={`http://localhost:1337${article.attributes.author.data.attributes.avatarurl}`}
                             alt={article.attributes.Title}
                             height={40}
                             width={40}

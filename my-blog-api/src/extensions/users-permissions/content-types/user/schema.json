@@ -84,6 +84,9 @@
     "lastname": {
       "type": "string",
       "required": true
+    },
+    "avatarurl": {
+      "type": "string"
     }
   }
 }

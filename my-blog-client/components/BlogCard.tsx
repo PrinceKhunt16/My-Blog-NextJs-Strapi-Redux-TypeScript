@@ -17,8 +17,9 @@ export default function BlogCard({ article }: IPropType) {
             </Link>
             <div className="flex items-center my-3">
                 <div className="flex items-center justify-center mr-2">
+                {/* .data.attributes.formats.thumbnail.url */}
                     <Image
-                        src={`http://localhost:1337${article.attributes.author.data.attributes.avatar.data.attributes.formats.thumbnail.url}`}
+                        src={`http://localhost:1337${article.attributes.author.data.attributes.avatarurl}`}
                         alt={article.attributes.Title}
                         height={40}
                         width={40}

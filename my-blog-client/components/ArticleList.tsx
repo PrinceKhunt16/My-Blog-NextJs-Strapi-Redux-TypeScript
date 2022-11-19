@@ -1,6 +1,5 @@
 import { IArticle } from "../types";
 import BlogCard from "./BlogCard";
-import BlogCardWithImage from "./BlogCardWithImage";
 
 interface IPropTypes {
     articles: IArticle[]
@@ -8,7 +7,6 @@ interface IPropTypes {
 
 export default function ArticleList({ articles }: IPropTypes) {
     return (
-
         <div className="grid lg:grid-cols-2 grid-gap gap-6 mt-8">
             {articles.map((article) => {
                 return (

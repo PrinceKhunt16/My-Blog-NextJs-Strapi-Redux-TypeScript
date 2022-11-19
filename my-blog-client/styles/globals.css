@@ -19,44 +19,29 @@
     border-bottom: 1px solid #4b556317;
 }
 
-.single-article h1 {
+.mdxremote {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    color: #4b5563;
+}
+
+.mdxremote h1 {
     font-size: 40px;
-    padding: 10px 0px 10px 0px;
     margin: 0px;
 }
 
-.single-article h2 {
+.mdxremote h2 {
     font-size: 34px;
-    padding: 10px 0px 10px 0px;
     margin: 0px;
 }
 
-.single-article h3 {
+.mdxremote h3 {
     font-size: 28px;
-    padding: 10px 0px 10px 0px;
     margin: 0px;
 }
 
-.single-article h4 {
-    font-size: 24px;
-    padding: 10px 0px 10px 0px;
-    margin: 0px;
-}
-
-.single-article h5 {
+.mdxremote p {
     font-size: 18px;
-    padding: 10px 0px 10px 0px;
-    margin: 0px;
-}
-
-.single-article h6 {
-    font-size: 16px;
-    padding: 10px 0px 10px 0px;
-    margin: 0px;
-}
-
-.single-article p {
-    font-size: 18px;
-    padding: 10px 0px 10px 0px;
     margin: 0px;
 }
