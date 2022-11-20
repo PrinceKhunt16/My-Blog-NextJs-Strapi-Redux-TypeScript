@@ -12,6 +12,8 @@ interface IPropTypes {
 
 let num = 0
 let item = 0
+let hold = 10
+let time = 300
 let searchLetters = ''
 
 export default function Tabs({ categories, handleSearch }: IPropTypes) {
@@ -21,11 +23,18 @@ export default function Tabs({ categories, handleSearch }: IPropTypes) {
     const searchItemsArray = ['nodejs', 'python', 'javascript', 'php', 'java', 'digital marketing'];
 
     useEffect(() => {
-        const timer = setTimeout(() => setCount(count + 1), 5000)
+        const timer = setTimeout(() => setCount(count + 1), time)
 
         if (num == searchLetters.length) {
-            num = 0
-            item += 1
+            if(num == searchLetters.length && hold > 0 && hold <= 10){
+               hold -= 1
+            }
+
+            if(num == searchLetters.length && hold == 0){
+                num = 0
+                hold = 10
+                item += 1
+            }
 
             if (item == searchItemsArray.length) {
                 item = 0
@@ -34,6 +43,14 @@ export default function Tabs({ categories, handleSearch }: IPropTypes) {
             searchLetters = searchItemsArray[item]
         } else {
             num += 1
+        }
+
+        if(num < searchLetters.length / 3){
+            time = 300
+        } else if (num < searchLetters.length / 2){
+            time = 230
+        } else {
+            time = 130
         }
 
         setPlaceholder(searchLetters.substring(0, num))

@@ -2,7 +2,6 @@ import Image from "next/image"
 import Previos from "../images/previous.png"
 import Next from "../images/next.png"
 import { TDirection } from "../types"
-import { useRef } from "react"
 import qs from "qs"
 import { useRouter } from "next/router"
 

@@ -45,3 +45,7 @@
     font-size: 18px;
     margin: 0px;
 }
+
+.account {
+    height: calc(100vh - 72px);
+}

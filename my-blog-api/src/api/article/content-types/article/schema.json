@@ -18,7 +18,7 @@
     "Image": {
       "type": "media",
       "multiple": false,
-      "required": true,
+      "required": false,
       "allowedTypes": [
         "files",
         "videos",
@@ -50,6 +50,9 @@
     "shortDescription": {
       "type": "text",
       "required": true
+    },
+    "imageurl": {
+      "type": "string"
     }
   }
 }
