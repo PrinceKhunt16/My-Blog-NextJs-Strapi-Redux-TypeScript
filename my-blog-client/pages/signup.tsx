@@ -31,8 +31,6 @@ export default function Login() {
         
         const { avatarurl, email, username, id } = response.data.user
         const me = { avatarurl, email, username, id }
-        
-        console.log(response.data.jwt)
 
         localStorage.setItem('me', JSON.stringify(me))
         

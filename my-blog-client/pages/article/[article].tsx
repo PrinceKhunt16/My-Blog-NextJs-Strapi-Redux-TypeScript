@@ -7,6 +7,7 @@ import Head from "next/head"
 import { formatDate, serializeMarkdown } from "../../utils"
 import Image from "next/image"
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
+import DisplayMoreArticle from "../../components/DisplayMoreArticle"
 
 interface IPropTypes {
     article: IArticle,
@@ -14,7 +15,6 @@ interface IPropTypes {
 }
 
 export default function Article({ article, notFound = false }: IPropTypes) {
-    console.log(article)
     return (
         <>
             <Head>
@@ -52,7 +52,7 @@ export default function Article({ article, notFound = false }: IPropTypes) {
                     </div>
                 </div>
                 <div className="lg:col-span-1 md:col-span-2 pt-7">
-                    <div className="p-5 w-full flex flex-col items-center justify-center border border-primary bg-[#53bd9515]">
+                    <div className="p-5 w-full flex flex-col items-center border border-primary bg-[#53bd9515]">
                         {/* .data.attributes.formats.thumbnail.url */}
                         <div>
                             <Image
@@ -60,12 +60,17 @@ export default function Article({ article, notFound = false }: IPropTypes) {
                                 alt={article.attributes.Title}
                                 height={40}
                                 width={40}
-                                className="h-40 w-40 border border-primary object-cover rounded-full"
+                                className="h-36 w-36 border border-primary object-cover rounded-full"
                             />
                         </div>
                         <div>
                             <h1 className="pt-4 font-caveatbrush text-2xl text-center text-gray-600">{article.attributes.author.data.attributes.username}</h1>
-                            <h2 className="pt-1 font-caveatbrush text-2xl text-center text-gray-600">{article.attributes.author.data.attributes.email}</h2>
+                        </div>
+                        <div className="mt-5 w-full">
+                            <DisplayMoreArticle
+                                username={article.attributes.author.data.attributes.username}
+                                slug={article.attributes.Slug}
+                            />
                         </div>
                     </div>
                 </div>

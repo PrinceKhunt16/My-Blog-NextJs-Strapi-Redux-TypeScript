@@ -70,7 +70,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
         },
         pagination: {
             page: context.query.page ? +context.query.page : 1,
-            pageSize: 1
+            pageSize: 8
         }
     }
 
