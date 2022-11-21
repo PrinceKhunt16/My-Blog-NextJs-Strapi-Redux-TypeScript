@@ -69,14 +69,6 @@
       "target": "api::article.article",
       "mappedBy": "author"
     },
-    "avatar": {
-      "type": "media",
-      "multiple": false,
-      "required": false,
-      "allowedTypes": [
-        "images"
-      ]
-    },
     "firstname": {
       "type": "string",
       "required": true

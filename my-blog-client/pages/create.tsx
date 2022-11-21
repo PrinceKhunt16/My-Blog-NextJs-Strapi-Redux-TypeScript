@@ -106,7 +106,7 @@ export default function Create({ categories }: IPropTypes) {
             <form className="flex flex-col gap-3 w-60" onSubmit={(e) => handleSubmit(e)} >
                 <input type="text" name="Title" placeholder="Title" onChange={(e) => handleChange(e)} />
                 <input type="file" name="Image" onChange={(e) => handleChange(e)} />
-                <input type="text" name="Body" placeholder="Body" onChange={(e) => handleChange(e)} />
+                <textarea name="Body" placeholder="Body" onChange={(e) => handleChange(e)} />
                 <input type="text" name="shortDescription" placeholder="Short Discription" onChange={(e) => handleChange(e)} />
                 <select onChange={(e) => setCategory(+e.target.value)}>
                     <option value="">Category</option>

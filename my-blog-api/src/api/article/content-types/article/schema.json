@@ -15,17 +15,6 @@
     "Title": {
       "type": "string"
     },
-    "Image": {
-      "type": "media",
-      "multiple": false,
-      "required": false,
-      "allowedTypes": [
-        "files",
-        "videos",
-        "audios",
-        "images"
-      ]
-    },
     "Body": {
       "type": "richtext",
       "required": true
