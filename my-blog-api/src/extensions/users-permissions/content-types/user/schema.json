@@ -79,6 +79,9 @@
     },
     "avatarurl": {
       "type": "string"
+    },
+    "about": {
+      "type": "string"
     }
   }
 }

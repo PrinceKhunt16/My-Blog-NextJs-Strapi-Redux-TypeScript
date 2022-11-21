@@ -11,7 +11,8 @@ export default function Signup() {
         lastname: '',
         email: '',
         password: '',
-        username: ''
+        username: '',
+        about: ''
     })
     const router = useRouter()
     const { setUserData, setIsUser } = useContext(UserContext)
@@ -24,6 +25,7 @@ export default function Signup() {
         data.set("lastname", user.lastname)
         data.set("email", user.email)
         data.set("password", user.password)
+        data.set("about", user.about)
 
         const config = { headers: { "Content-Type": "application/json" } }
         const response = await axios.post(`http://localhost:1337/api/auth/local/register`, data, config)
@@ -97,6 +99,7 @@ export default function Signup() {
                     <input type="text" name="username" placeholder="username" onChange={(e) => handleChange(e)} />
                     <input type="text" name="firstname" placeholder="firstname" onChange={(e) => handleChange(e)} />
                     <input type="text" name="lastname" placeholder="lastname" onChange={(e) => handleChange(e)} />
+                    <input type="text" name="about" placeholder="about" onChange={(e) => handleChange(e)} />
                     <input type="text" name="email" placeholder="email" onChange={(e) => handleChange(e)} />
                     <input type="text" name="password" placeholder="password" onChange={(e) => handleChange(e)} />
                     <input type="file" name="avatar" onChange={(e) => handleChange(e)} />

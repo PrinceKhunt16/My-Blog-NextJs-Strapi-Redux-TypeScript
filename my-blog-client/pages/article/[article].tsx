@@ -30,16 +30,6 @@ export default function Article({ article, notFound = false }: IPropTypes) {
                     <h1 className="text-[40px] font-caveatbrush text-gray-600">
                         {article.attributes.Title}
                     </h1>
-                    {/* <div className="pt-1">
-                        <span className="text-base text-gray-600">
-                            {article.attributes.author.data.attributes.firstname}{' '}
-                            {article.attributes.author.data.attributes.lastname} On
-                            &nbsp;
-                            <span className="text-gray-500">
-                                {formatDate(article.attributes.createdAt)}
-                            </span>
-                        </span>
-                    </div> */}
                     <div className="text-lg text-gray-600 leading-7">
                         <img
                             className="w-full pt-5"
@@ -53,7 +43,6 @@ export default function Article({ article, notFound = false }: IPropTypes) {
                 </div>
                 <div className="lg:col-span-1 md:col-span-2 pt-7">
                     <div className="p-5 w-full flex flex-col items-center border border-primary bg-[#53bd9515]">
-                        {/* .data.attributes.formats.thumbnail.url */}
                         <div>
                             <Image
                                 src={`http://localhost:1337${article.attributes.author.data.attributes.avatarurl}`}
@@ -64,9 +53,15 @@ export default function Article({ article, notFound = false }: IPropTypes) {
                             />
                         </div>
                         <div>
-                            <h1 className="pt-4 font-caveatbrush text-2xl text-center text-gray-600">{article.attributes.author.data.attributes.username}</h1>
+                            <h1 className="pt-3 font-caveatbrush text-2xl text-center text-gray-600">{article.attributes.author.data.attributes.username}</h1>
                         </div>
-                        <div className="mt-5 w-full">
+                        <div className="mt-4 w-full">
+                            <div className="pb-2">
+                                <p className="text-gray-600">{article.attributes.author.data.attributes.about}</p>
+                                <p className="text-gray-600">This blog written by {article.attributes.author.data.attributes.username} on {formatDate(article.attributes.createdAt)} and below his more blogs.</p>
+                            </div>
+                            <div>
+                            </div>
                             <DisplayMoreArticle
                                 username={article.attributes.author.data.attributes.username}
                                 slug={article.attributes.Slug}
