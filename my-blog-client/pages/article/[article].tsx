@@ -44,11 +44,9 @@ export default function Article({ article, notFound = false }: IPropTypes) {
                 <div className="lg:col-span-1 md:col-span-2 pt-7">
                     <div className="p-5 w-full flex flex-col items-center border border-primary bg-[#53bd9515]">
                         <div>
-                            <Image
+                            <img
                                 src={`http://localhost:1337${article.attributes.author.data.attributes.avatarurl}`}
                                 alt={article.attributes.Title}
-                                height={40}
-                                width={40}
                                 className="h-36 w-36 border border-primary object-cover rounded-full"
                             />
                         </div>
@@ -56,7 +54,7 @@ export default function Article({ article, notFound = false }: IPropTypes) {
                             <h1 className="pt-3 font-caveatbrush text-2xl text-center text-gray-600">{article.attributes.author.data.attributes.username}</h1>
                         </div>
                         <div className="mt-4 w-full">
-                            <div className="pb-2">
+                            <div className="pb-2 text-sm font-medium">
                                 <p className="text-gray-600">{article.attributes.author.data.attributes.about}</p>
                                 <p className="text-gray-600">This blog written by {article.attributes.author.data.attributes.username} on {formatDate(article.attributes.createdAt)} and below his more blogs.</p>
                             </div>

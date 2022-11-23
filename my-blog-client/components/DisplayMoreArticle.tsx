@@ -44,13 +44,13 @@ export default function DisplayMoreArticle({ username, slug }: IPropTypes) {
                     return (
                         <>
                             { blog.attributes.Slug !== slug &&
-                                <div key={blog.attributes.id} className="flex gap-2 bg-[#53bd9530] p-2">
-                                    <img className="object-cover h-28 w-36" src={`http://localhost:1337${blog.attributes.imageurl}`} alt="" />
+                                <div key={blog.attributes.id} className="flex gap-2 bg-[#53bd9530] p-2 2xl:flex-row lg:flex-col md:flex-row">
+                                    <img className="object-cover 2xl:h-[124px] lg:h-32 md:h-20 2xl:w-36 lg:w-full md:w-28" src={`http://localhost:1337${blog.attributes.imageurl}`} alt="" />
                                     <div>
                                         <Link href={`/article/${blog.attributes.Slug}`}>
                                             <h1 className="text-[24px] leading-[26px] font-normal font-caveatbrush text-gray-600 hover:text-primary transition-transform hover:cursor-pointer hover:decoration-gray-500">{blog.attributes.Title}</h1>
                                         </Link>
-                                        <div className="text-gray-600 leading-[23px] pt-1">
+                                        <div className="text-gray-600 text-sm font-medium leading-[23px] pt-1">
                                             {blog.attributes.shortDescription.slice(0, 90)}{' '}
                                             {blog.attributes.shortDescription.length > 90 ? <span className="text-gray-600 text-sm">read more</span> : ''}
                                         </div>

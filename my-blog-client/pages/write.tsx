@@ -1,10 +1,10 @@
 import axios, { AxiosResponse } from "axios"
 import { GetServerSidePropsContext } from "next"
 import { useRouter } from "next/router"
-import { useContext, useEffect, useState } from "react"
+import { useContext, useState } from "react"
 import { ICategory, ICollectionResponse } from "../types"
 import { fetchCategories } from '../http'
-import { UserContext } from "./_app"
+import { AppContext } from "./_app"
 
 interface IPropTypes {
     categories: {
@@ -12,8 +12,9 @@ interface IPropTypes {
     }
 }
 
-export default function Create({ categories }: IPropTypes) {
-    const { userData } = useContext(UserContext)
+export default function Write({ categories }: IPropTypes) {
+    const router = useRouter()
+    const { isLoggedIn } = useContext(AppContext)
     const [category, setCategory] = useState(null)
     const [image, setImage] = useState('')
     const [imagePreview, setImagePrivew] = useState('')
@@ -23,7 +24,6 @@ export default function Create({ categories }: IPropTypes) {
         shortDescription: '',
         Slug: ''
     })
-    const router = useRouter()
 
     const makeSlug = (title: string) => {
         return title.split(' ').map(str => str.toLowerCase()).join('-')
@@ -102,27 +102,36 @@ export default function Create({ categories }: IPropTypes) {
     }
 
     return (
-        <div>
-            <form className="flex flex-col gap-3 w-60" onSubmit={(e) => handleSubmit(e)} >
-                <input type="text" name="Title" placeholder="Title" onChange={(e) => handleChange(e)} />
-                <input type="file" name="Image" onChange={(e) => handleChange(e)} />
-                <textarea name="Body" placeholder="Body" onChange={(e) => handleChange(e)} />
-                <input type="text" name="shortDescription" placeholder="Short Discription" onChange={(e) => handleChange(e)} />
-                <select onChange={(e) => setCategory(+e.target.value)}>
-                    <option value="">Category</option>
-                    {categories.items.map((category) => (
-                        <option key={category.id} value={category.id}>
-                            {category.attributes.Title}
-                        </option>
-                    ))}
-                </select>
-                <button type="submit">Create</button>
-            </form>
-            <div>
-                {imagePreview &&
-                    <img src={imagePreview} alt="" />
-                }
-            </div>
+        <div className="screen-height flex items-center justify-center">
+            {isLoggedIn &&
+                <div className="w-[400px] my-20 rounded-lg bg-[#53bd9530]">
+                    <form className="flex flex-col p-8" onSubmit={(e) => handleSubmit(e)} >
+                        <h1 className="font-caveatbrush text-2xl text-center text-gray-600 mb-6">Write Blog</h1>
+                        <input className="bg-transparent mb-5 px-2 h-10 focus:outline-none text-gray-600 border border-[#53bd95]" type="text" name="Title" placeholder="Title" onChange={(e) => handleChange(e)} />
+                        <div className="signin flex gap-2">
+                            {imagePreview &&
+                                <img className="h-10 w-20 object-cover border border-[#53bd95]" src={imagePreview} alt="" />
+                            }
+                            <input className="mb-5 h-10 focus:outline-none text-gray-600 border border-[#53bd95]" type="file" name="Image" onChange={(e) => handleChange(e)} />
+                        </div>
+                        <input className="bg-transparent mb-5 px-2 h-10 focus:outline-none text-gray-600 border border-[#53bd95]" type="text" name="shortDescription" placeholder="Short Discription" onChange={(e) => handleChange(e)} />
+                        <textarea className="bg-transparent mb-5 px-2 h-28 focus:outline-none text-gray-600 border border-[#53bd95] resize-none" name="Body" placeholder="Body" onChange={(e) => handleChange(e)} />
+                        <select className="bg-transparent mb-5 px-2 h-10 focus:outline-none text-gray-600 border border-[#53bd95]" onChange={(e) => setCategory(+e.target.value)}>
+                            <option className="bg-[#53bd9530]" value="">Category</option>
+                            {categories.items.map((category) => {
+                                return (
+                                    <option className="bg-[#53bd9530]" key={category.id} value={category.id}>
+                                        {category.attributes.Title}
+                                    </option>
+                                )
+                            })}
+                        </select>
+                        <div className="mt-5 flex items-center justify-center bottom-0 left-0 w-full p-2">
+                            <button className="text-gray-700 pt-[2px] h-[42px] w-24 text-sm font-medium rounded-full bg-[#53bd9560]" type="submit">POST</button>
+                        </div>
+                    </form>
+                </div>
+            }
         </div>
     )
 }

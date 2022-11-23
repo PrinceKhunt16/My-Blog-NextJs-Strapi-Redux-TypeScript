@@ -1,9 +1,9 @@
-import Link from "next/link";
-import { useContext, useState } from "react";
-import { UserContext } from "../pages/_app";
+import Link from "next/link"
+import { useContext } from "react"
+import { AppContext } from "../pages/_app"
 
 export default function Navbar() {
-    const { isUser, userData } = useContext(UserContext)
+    const { isLoggedIn, user } = useContext(AppContext)
 
     return (
         <nav className="flex item-center justify-between py-3 boxshadow-fullwidth">
@@ -14,33 +14,33 @@ export default function Navbar() {
                     </span>
                 </div>
             </Link>
-            <ul className="flex items-center gap-7">
+            <ul className="flex items-center gap-5">
                 <li className="text-gray-600">
-                    <a href="#">Products</a>
+                    <a href="/">Blogs</a>
                 </li>
                 <li className="text-gray-600">
-                    <a href="#">Pricing</a>
+                    <a href="#">Community</a>
                 </li>
                 <li className="text-gray-600">
-                    <a href="#">Docs</a>
+                    <a href="#">About</a>
                 </li>
                 <li className="text-gray-600">
-                    <a href="#">Company</a>
+                    <a href="#">Learn</a>
                 </li>
                 <li className="text-gray-600">
-                    <a href="/create">Create</a>
+                    <a href="/write">Write</a>
                 </li>
             </ul>
-            <ul className="flex items-center gap-7">
+            <ul className="flex items-center">
                 {
-                    isUser ?
+                    isLoggedIn ?
                         (
                             <>
                                 <li>
                                     <a href="/account">
                                         <div>
                                             <img
-                                                src={`http://localhost:1337${userData.avatarurl}`} alt=""
+                                                src={`http://localhost:1337${user.avatarurl}`} alt=""
                                                 className="w-10 h-10 cursor-pointer rounded-full"
                                             />
                                         </div>
@@ -49,7 +49,7 @@ export default function Navbar() {
                             </>
                         ) : (
                             <>
-                                <ul className="flex items-center gap-7">
+                                <ul className="flex items-center gap-5">
                                     <li className="text-gray-600">
                                         <a href="/signin">
                                             Sign in

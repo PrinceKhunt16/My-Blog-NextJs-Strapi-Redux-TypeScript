@@ -1,9 +1,12 @@
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useContext, useState } from "react"
-import { UserContext } from "./_app";
+import { fetchUserFromId } from "../utils";
+import { AppContext } from "./_app";
 
 export default function Signup() {
+    const { setUser:setUserContext, setIsLoggedIn } = useContext(AppContext)
+    const router = useRouter()
     const [avatar, setAvatar] = useState('')
     const [avatarPreview, setAvatarPreview] = useState('')
     const [user, setUser] = useState({
@@ -14,8 +17,6 @@ export default function Signup() {
         username: '',
         about: ''
     })
-    const router = useRouter()
-    const { setUserData, setIsUser } = useContext(UserContext)
 
     const handleTextData = async () => {
         const data = new FormData()
@@ -54,17 +55,7 @@ export default function Signup() {
             const fileResponse = await handleImageData()
             const response = await handleImageAfterText(textResponse.data.user.id, fileResponse.data[0].url)
 
-            const { avatarurl, email, username, id } = response.data
-            const me = { avatarurl, email, username, id}
-            
-            localStorage.setItem('me', JSON.stringify(me))
-            
-            const localStorageData = localStorage.getItem('me')
-            const parsedData = JSON.parse(localStorageData)
-            
-            setUserData(parsedData)
-            setIsUser(true)   
-            router.push('/')  
+            router.push('/signup')
         } catch (e) {
             console.log(e)
         }
@@ -81,11 +72,10 @@ export default function Signup() {
             reader.readAsDataURL(e.target.files[0])
 
             setAvatar(e.target.files[0])
-
             const file = e.target.files[0]
             const blob = file.slice(0, file.size, 'image/png')
             const nameChnagedFile = new File([blob], `${Date.now()}`, { type: 'image/png' })
-            
+
             setAvatar(nameChnagedFile)
         } else {
             setUser({ ...user, [e.target.name]: e.target.value })
@@ -93,23 +83,26 @@ export default function Signup() {
     }
 
     return (
-        <div>
-            <div>
-                <form onSubmit={(e) => handleSubmit(e)} className="flex gap-4 flex-col w-64">
-                    <input type="text" name="username" placeholder="username" onChange={(e) => handleChange(e)} />
-                    <input type="text" name="firstname" placeholder="firstname" onChange={(e) => handleChange(e)} />
-                    <input type="text" name="lastname" placeholder="lastname" onChange={(e) => handleChange(e)} />
-                    <input type="text" name="about" placeholder="about" onChange={(e) => handleChange(e)} />
-                    <input type="text" name="email" placeholder="email" onChange={(e) => handleChange(e)} />
-                    <input type="text" name="password" placeholder="password" onChange={(e) => handleChange(e)} />
-                    <input type="file" name="avatar" onChange={(e) => handleChange(e)} />
-                    <button type="submit">Submit</button>
+        <div className="screen-height h-full flex items-center justify-center">
+            <div className="w-[400px] my-20 rounded-lg bg-[#53bd9530]">
+                <form onSubmit={(e) => handleSubmit(e)} className="flex flex-col p-8">
+                    <h1 className="font-caveatbrush text-2xl text-center text-gray-600 mb-6">Sign in</h1>
+                    <input className="bg-transparent mb-5 px-2 h-10 focus:outline-none text-gray-600 border border-[#53bd95]" type="text" name="username" placeholder="Username" onChange={(e) => handleChange(e)} />
+                    <input className="bg-transparent mb-5 px-2 h-10 focus:outline-none text-gray-600 border border-[#53bd95]" type="text" name="firstname" placeholder="Firstname" onChange={(e) => handleChange(e)} />
+                    <input className="bg-transparent mb-5 px-2 h-10 focus:outline-none text-gray-600 border border-[#53bd95]" type="text" name="lastname" placeholder="Lastname" onChange={(e) => handleChange(e)} />
+                    <div className="signin flex gap-2">
+                        {avatarPreview &&
+                            <img className="h-10 w-10 rounded-full object-cover border border-[#53bd95]" src={avatarPreview} alt="" />
+                        }
+                        <input className="mb-5 h-10 focus:outline-none text-gray-600 border border-[#53bd95]" type="file" name="avatar" onChange={(e) => handleChange(e)} />
+                    </div>
+                    <input className="bg-transparent mb-5 px-2 h-10 focus:outline-none text-gray-600 border border-[#53bd95]" type="text" name="email" placeholder="Email" onChange={(e) => handleChange(e)} />
+                    <input className="bg-transparent mb-5 px-2 h-10 focus:outline-none text-gray-600 border border-[#53bd95]" type="password" name="password" placeholder="Password" onChange={(e) => handleChange(e)} />
+                    <textarea className="bg-transparent mb-5 px-2 h-24 focus:outline-none text-gray-600 border border-[#53bd95]" type="text" name="about" placeholder="About" onChange={(e) => handleChange(e)} />
+                    <div className="mt-5 flex items-center justify-center bottom-0 left-0 w-full p-2">
+                        <button type="submit" className="text-gray-700 pt-[2px] h-[42px] w-24 text-sm font-medium rounded-full bg-[#53bd9560]">SIGN IN</button>
+                    </div>
                 </form>
-            </div>
-            <div>
-                {avatarPreview &&
-                    <img src={avatarPreview} alt="" />
-                }
             </div>
         </div>
     )

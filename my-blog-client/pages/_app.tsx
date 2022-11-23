@@ -4,25 +4,43 @@ import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import NextNProgress from "nextjs-progressbar"
 import { createContext, useEffect, useState } from 'react'
+import { fetchUserFromJWTToken } from '../utils'
 
-export const UserContext = createContext(null)
+export const AppContext = createContext(null)
 
 export default function App({ Component, pageProps }: AppProps) {
-  const [userData, setUserData] = useState({})
-  const [isUser, setIsUser] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [user, setUser] = useState({
+    avatarurl: '',
+    email: '',
+    username: '',
+    id: '',
+    about: ''
+  })
+
+  const fetchInitialUser = async () => {
+    try {
+      const jwt = localStorage.getItem('jwt')
+      if (jwt) {
+        const obj = await fetchUserFromJWTToken(jwt)
+        setUser({ ...obj })
+        setIsLoggedIn(true)
+      } else {
+        console.log('popup for login')
+      }
+    } catch (e) {
+      localStorage.removeItem('jwt')
+      console.log(e)
+    }
+  }
 
   useEffect(() => {
-    if(localStorage.getItem('me')){
-      setIsUser(true)
-      const data = localStorage.getItem('me')
-      const parsedData = JSON.parse(data)
-      setUserData(parsedData)
-    }
+    fetchInitialUser()
   }, [])
 
   return (
     <>
-      <UserContext.Provider value={{userData, isUser, setUserData, setIsUser}}>
+      <AppContext.Provider value={{ user, setUser, isLoggedIn, setIsLoggedIn }}>
         <div className='flex flex-col min-h-screen container mx-auto font-sans'>
           <NextNProgress
             color='#53bd95'
@@ -37,7 +55,7 @@ export default function App({ Component, pageProps }: AppProps) {
           </main>
           <Footer />
         </div>
-      </UserContext.Provider>
+      </AppContext.Provider>
     </>
   )
 }
