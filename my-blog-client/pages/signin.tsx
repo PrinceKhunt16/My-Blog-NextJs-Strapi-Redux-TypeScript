@@ -1,11 +1,12 @@
 import axios from "axios"
 import { useRouter } from "next/router"
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { IAppContextTypes } from "../types"
+import { checkEmail, checkText } from "../utils"
 import { AppContext } from "./_app"
 
 export default function Signup() {
-    const { } = useContext(AppContext) as IAppContextTypes
+    const { isLoggedIn } = useContext(AppContext) as IAppContextTypes
     const router = useRouter()
     const [avatar, setAvatar] = useState<string | Blob>('')
     const [avatarPreview, setAvatarPreview] = useState<string | ArrayBuffer | null>(null)
@@ -34,7 +35,7 @@ export default function Signup() {
                 Authorization: `Bearer ${process.env.NEXT_PUBLIC_BASE_API_KEY}`
             }
         }
-        
+
         const response = await axios.post(`http://localhost:1337/api/auth/local/register`, data, config)
         return response
     }
@@ -42,7 +43,7 @@ export default function Signup() {
     const handleImageData = async () => {
         const data = new FormData()
         data.append('files', avatar)
-        
+
         const config = {
             headers: {
                 Authorization: `Bearer ${process.env.NEXT_PUBLIC_BASE_API_KEY}`
@@ -68,8 +69,24 @@ export default function Signup() {
         return response
     }
 
+    const checkUserData = () => {
+        const email = checkEmail(user.email)
+        const password = checkText(user.password, 8, 20)
+        const about = checkText(user.about, 60, 150)
+        const username = checkText(user.username, 3, 30)
+        const firstname = checkText(user.firstname, 3, 15)
+        const lastname = checkText(user.lastname, 3, 15)
+        return email && password && about && avatarPreview !== null && username && firstname && lastname 
+    }
+
     const handleSubmit = async (e: any) => {
         e.preventDefault()
+
+        if (!checkUserData()) {
+            console.log('snackbar for unvalid user credentials')
+            return
+        }
+
         try {
             const textResponse = await handleTextData()
             const fileResponse = await handleImageData()
@@ -77,7 +94,7 @@ export default function Signup() {
 
             router.push('/signup')
         } catch (e) {
-            console.log(e)
+            console.log('snackbar for error')
         }
     }
 
@@ -102,28 +119,43 @@ export default function Signup() {
         }
     }
 
+    useEffect(() => {
+        const jwt = localStorage.getItem('jwt')
+        if (jwt) {
+            router.push('/')
+        }
+    }, [])
+
     return (
-        <div className="screen-height h-full flex items-center justify-center">
-            <div className="w-[400px] my-20 rounded-lg bg-[#53bd9530]">
-                <form onSubmit={(e) => handleSubmit(e)} className="flex flex-col p-8">
-                    <h1 className="font-caveatbrush text-2xl text-center text-gray-600 mb-6">Sign in</h1>
-                    <input className="bg-transparent mb-5 px-2 h-10 focus:outline-none text-gray-600 border border-[#53bd95]" type="text" name="username" placeholder="Username" onChange={(e) => handleChange(e)} />
-                    <input className="bg-transparent mb-5 px-2 h-10 focus:outline-none text-gray-600 border border-[#53bd95]" type="text" name="firstname" placeholder="Firstname" onChange={(e) => handleChange(e)} />
-                    <input className="bg-transparent mb-5 px-2 h-10 focus:outline-none text-gray-600 border border-[#53bd95]" type="text" name="lastname" placeholder="Lastname" onChange={(e) => handleChange(e)} />
-                    <div className="signin flex gap-2">
-                        {avatarPreview &&
-                            <img className="h-10 w-10 rounded-full object-cover border border-[#53bd95]" src={avatarPreview} alt="" />
-                        }
-                        <input className="mb-5 h-10 focus:outline-none text-gray-600 border border-[#53bd95]" type="file" name="avatar" onChange={(e) => handleChange(e)} />
+        <>
+            {
+                !isLoggedIn &&
+                <div className="screen-height h-full flex items-center justify-center">
+                    <div className="w-[400px] my-20 rounded-lg bg-[#53bd9530]">
+                        <form onSubmit={(e) => handleSubmit(e)} className="flex flex-col p-8">
+                            <h1 className="font-caveatbrush text-2xl text-center text-gray-600 mb-6">Sign in</h1>
+                            <input className="bg-transparent mb-5 px-2 h-10 focus:outline-none text-gray-600 border border-[#53bd95]" type="text" name="username" placeholder="Username" onChange={(e) => handleChange(e)} />
+                            <input className="bg-transparent mb-5 px-2 h-10 focus:outline-none text-gray-600 border border-[#53bd95]" type="text" name="firstname" placeholder="Firstname" onChange={(e) => handleChange(e)} />
+                            <input className="bg-transparent mb-5 px-2 h-10 focus:outline-none text-gray-600 border border-[#53bd95]" type="text" name="lastname" placeholder="Lastname" onChange={(e) => handleChange(e)} />
+                            <div className="signin flex gap-2">
+                                {avatarPreview &&
+                                    <img className="h-10 w-10 rounded-full object-cover border border-[#53bd95]" src={avatarPreview} alt="" />
+                                }
+                                <input className="mb-5 h-10 focus:outline-none text-gray-600 border border-[#53bd95]" type="file" name="avatar" onChange={(e) => handleChange(e)} />
+                            </div>
+                            <input className="bg-transparent mb-5 px-2 h-10 focus:outline-none text-gray-600 border border-[#53bd95]" type="text" name="email" placeholder="Email" onChange={(e) => handleChange(e)} />
+                            <input className="bg-transparent mb-5 px-2 h-10 focus:outline-none text-gray-600 border border-[#53bd95]" type="password" name="password" placeholder="Password" onChange={(e) => handleChange(e)} />
+                            <textarea className="bg-transparent mb-5 px-2 h-20 focus:outline-none text-gray-600 border border-[#53bd95] resize-none" name="about" placeholder="About" onChange={(e) => handleChange(e)} />
+                            <div className="text-gray-600 pb-5 font-medium text-xs">
+                                <p>All fiels are required. Username should be minimum 3 and maximum 30 characters. Firstname and Lastname should be minimum 2 and maximum 15 characters. Password should be minimum 8 and maximum 20 characters. About should be minimum 60 and maximum 150 characters. For avatar Image should be jpg file.</p>
+                            </div>
+                            <div className="mt-5 flex items-center justify-center bottom-0 left-0 w-full p-2">
+                                <button type="submit" className="text-gray-700 pt-[2px] h-[42px] w-24 text-sm font-medium rounded-full bg-[#53bd9560]">SIGN IN</button>
+                            </div>
+                        </form>
                     </div>
-                    <input className="bg-transparent mb-5 px-2 h-10 focus:outline-none text-gray-600 border border-[#53bd95]" type="text" name="email" placeholder="Email" onChange={(e) => handleChange(e)} />
-                    <input className="bg-transparent mb-5 px-2 h-10 focus:outline-none text-gray-600 border border-[#53bd95]" type="password" name="password" placeholder="Password" onChange={(e) => handleChange(e)} />
-                    <textarea className="bg-transparent mb-5 px-2 h-24 focus:outline-none text-gray-600 border border-[#53bd95]" name="about" placeholder="About" onChange={(e) => handleChange(e)} />
-                    <div className="mt-5 flex items-center justify-center bottom-0 left-0 w-full p-2">
-                        <button type="submit" className="text-gray-700 pt-[2px] h-[42px] w-24 text-sm font-medium rounded-full bg-[#53bd9560]">SIGN IN</button>
-                    </div>
-                </form>
-            </div>
-        </div>
+                </div>
+            }
+        </>
     )
 }

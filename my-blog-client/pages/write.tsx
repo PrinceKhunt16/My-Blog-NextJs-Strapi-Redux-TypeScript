@@ -1,11 +1,10 @@
 import axios, { AxiosResponse } from "axios"
-import { GetServerSidePropsContext } from "next"
 import { useRouter } from "next/router"
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { IAppContextTypes, ICategory, ICollectionResponse } from "../types"
 import { AppContext } from "./_app"
 import Loading from "../components/Loading"
-import { isJWTIsValid } from "../utils"
+import { checkText, isJWTIsValid } from "../utils"
 
 interface IPropTypes {
     categories: {
@@ -16,27 +15,26 @@ interface IPropTypes {
 export default function Write({ categories }: IPropTypes) {
     const router = useRouter()
     const { user, isLoggedIn, isLoading } = useContext(AppContext) as IAppContextTypes
-    const [category, setCategory] = useState<string | null>(null)
-    const [image, setImage] = useState<string | Blob>('')
+    const [category, setCategory] = useState<string>('0')
+    const [image, setImage] = useState<string>('')
     const [imagePreview, setImagePrivew] = useState<string | ArrayBuffer | null>(null)
     const [blog, setBlog] = useState({
         Title: '',
         Body: '',
         shortDescription: '',
+        imageurl: '',
         Slug: ''
     })
 
-    const makeSlug = (title: string) => {
-        return title.split(' ').map(str => str.toLowerCase()).join('-')
+    const checkUserData = () => {
+        const title = checkText(blog.Title, 60, 150)
+        const body = checkText(blog.Body, 300, 20000)
+        const shortDescription = checkText(blog.shortDescription, 150, 250)
+        console.log(category)
+        return title && body && shortDescription && category !== '0' && imagePreview !== null
     }
 
     const handleTextData = async () => {
-        const slug = makeSlug(blog.Title)
-
-        setBlog({
-            ...blog,
-            Slug: slug
-        })
 
         const config = {
             headers: {
@@ -94,6 +92,12 @@ export default function Write({ categories }: IPropTypes) {
 
     const handleSubmit = async (e: any) => {
         e.preventDefault()
+
+        if (!checkUserData()) {
+            console.log('snackbar for unvalid user credentials')
+            return
+        }
+
         try {
             if (isJWTIsValid()) {
                 const textResponse = await handleTextData()
@@ -104,7 +108,7 @@ export default function Write({ categories }: IPropTypes) {
                 router.push('/signup')
             }
         } catch (e) {
-            console.log(e)
+            console.log('snackbar for error')
         }
     }
 
@@ -130,22 +134,23 @@ export default function Write({ categories }: IPropTypes) {
         }
     }
 
+    useEffect(() => {
+        const dummy = blog.Title
+        const slug = dummy.split(' ').map(str => str.toLowerCase()).join('-')
+        setBlog({ ...blog, ['Slug']: slug })
+    }, [blog.Title])
+
+    useEffect(() => {
+        const jwt = localStorage.getItem('jwt')
+        if (!jwt) {
+            router.push('/')
+        }
+    }, [])
+
     return (
         <div className="screen-height flex items-center justify-center">
             {isLoading && (
                 <Loading />
-            )}
-            {!isLoggedIn && !isLoading && (
-                <div className="w-[400px] my-20 rounded-lg bg-[#53bd9530]">
-                    <div className="flex flex-col p-8">
-                        <p className="text-sm font-medium text-gray-600">
-                            You cannot write blog without signup so please go for signup and then you can write.
-                        </p>
-                        <div className="mt-5 flex items-center justify-center bottom-0 left-0 w-full p-2">
-                            <a href="/signup" className="flex items-center justify-center  text-gray-700 pt-[2px] h-[42px] w-24 text-sm font-medium rounded-full bg-[#53bd9560]">GO</a>
-                        </div>
-                    </div>
-                </div>
             )}
             {isLoggedIn && !isLoading && (
                 <div className="w-[400px] my-20 rounded-lg bg-[#53bd9530]">
@@ -161,7 +166,7 @@ export default function Write({ categories }: IPropTypes) {
                         <input className="bg-transparent mb-5 px-2 h-10 focus:outline-none text-gray-600 border border-[#53bd95]" type="text" name="shortDescription" placeholder="Short Discription" onChange={(e) => handleChange(e)} />
                         <textarea className="bg-transparent mb-5 px-2 h-28 focus:outline-none text-gray-600 border border-[#53bd95] resize-none" name="Body" placeholder="Body" onChange={(e) => handleChange(e)} />
                         <select className="bg-transparent mb-5 px-2 h-10 focus:outline-none text-gray-600 border border-[#53bd95]" onChange={(e) => setCategory(e.target.value)}>
-                            <option className="bg-[#53bd9530]" value="">Category</option>
+                            <option className="bg-[#53bd9530]" value="0">Category</option>
                             {categories.items.map((category) => {
                                 return (
                                     <option className="bg-[#53bd9530]" key={category.id} value={category.id}>
@@ -170,6 +175,9 @@ export default function Write({ categories }: IPropTypes) {
                                 )
                             })}
                         </select>
+                        <div className="text-gray-600 pb-5 font-medium text-xs">
+                            <p>All fiels are required. Title should be minimum 60 and maximum 150 characters. Body should be minimum 300 and maximum 20000 characters. Short Description should be minimum 150 and maximum 250 characters. Category should be selected. For Blog Image should be jpg file.</p>
+                        </div>
                         <div className="mt-5 flex items-center justify-center bottom-0 left-0 w-full p-2">
                             <button className="text-gray-700 pt-[2px] h-[42px] w-24 text-sm font-medium rounded-full bg-[#53bd9560]" type="submit">POST</button>
                         </div>

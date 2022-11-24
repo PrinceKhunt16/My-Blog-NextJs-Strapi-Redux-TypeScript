@@ -72,3 +72,12 @@ export const isJWTIsValid = () => {
         return false
     }
 }
+
+export const checkEmail = (email: string) => {
+    const e = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
+    return e.test(email)
+}
+
+export const checkText = (str: string, min: number, max: number) => {
+    return str.length >= min && str.length <= max
+}

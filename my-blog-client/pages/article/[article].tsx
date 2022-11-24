@@ -25,7 +25,7 @@ export default function Article({ article, notFound = false }: IPropTypes) {
             </Head>
             <div className="mb-7 mt-4 grid lg:grid-cols-3 md:grid-cols-2 lg:gap-12 md:gap-0 single-article">
                 <div className="lg:col-span-2 md:col-span-2">
-                    <h1 className="text-[40px] font-caveatbrush text-gray-600">
+                    <h1 className="text-[40px] font-caveatbrush text-gray-600 leading-[45px]">
                         {article.attributes.Title}
                     </h1>
                     <div className="text-lg text-gray-600 leading-7">
