@@ -10,6 +10,7 @@ export const AppContext = createContext(null)
 
 export default function App({ Component, pageProps }: AppProps) {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
   const [user, setUser] = useState({
     avatarurl: '',
     email: '',
@@ -24,13 +25,13 @@ export default function App({ Component, pageProps }: AppProps) {
       if (jwt) {
         const obj = await fetchUserFromJWTToken(jwt)
         setUser({ ...obj })
+        setIsLoading(false)
         setIsLoggedIn(true)
       } else {
-        console.log('popup for login')
+        setIsLoading(false)
       }
     } catch (e) {
       localStorage.removeItem('jwt')
-      console.log(e)
     }
   }
 
@@ -40,7 +41,7 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <>
-      <AppContext.Provider value={{ user, setUser, isLoggedIn, setIsLoggedIn }}>
+      <AppContext.Provider value={{ user, setUser, isLoggedIn, setIsLoggedIn, isLoading, setIsLoading }}>
         <div className='flex flex-col min-h-screen container mx-auto font-sans'>
           <NextNProgress
             color='#53bd95'

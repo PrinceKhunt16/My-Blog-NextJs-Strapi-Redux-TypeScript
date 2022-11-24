@@ -1,9 +1,10 @@
 import { useRouter } from "next/router"
 import { useContext } from "react"
+import Loading from "../components/Loading"
 import { AppContext } from "./_app"
 
 export default function Account() {
-    const { user, isLoggedIn, setIsLoggedIn } = useContext(AppContext)
+    const { user, isLoading, isLoggedIn, setIsLoggedIn } = useContext(AppContext)
     const router = useRouter()
 
     const handleLogout = () => {
@@ -14,7 +15,22 @@ export default function Account() {
 
     return (
         <div className="screen-height h-full flex items-center justify-center">
-            {isLoggedIn &&
+            {isLoading && (
+                <Loading />
+            )}
+            {!isLoggedIn && !isLoading && (
+                <div className="w-[400px] my-20 rounded-lg bg-[#53bd9530]">
+                    <div className="flex flex-col p-8">
+                        <p className="text-sm font-medium text-gray-600">
+                            You cannot show your account without signup so please go for signup and then you can show your profile.
+                        </p>
+                        <div className="mt-5 flex items-center justify-center bottom-0 left-0 w-full p-2">
+                            <a href="/signup" className="flex items-center justify-center  text-gray-700 pt-[2px] h-[42px] w-24 text-sm font-medium rounded-full bg-[#53bd9560]">GO</a>
+                        </div>
+                    </div>
+                </div>
+            )}
+            {isLoggedIn && !isLoading && (
                 <div className="w-[400px] p-8 my-20 rounded-lg bg-[#53bd9530]">
                     <div className="flex items-center justify-center">
                         <img
@@ -31,7 +47,7 @@ export default function Account() {
                         <button onClick={() => handleLogout()} className="text-gray-700 pt-[2px] h-[42px] w-24 text-sm font-medium rounded-full bg-[#53bd9560]">LOGOUT</button>
                     </div>
                 </div>
-            }
+            )}
         </div>
     )
 }

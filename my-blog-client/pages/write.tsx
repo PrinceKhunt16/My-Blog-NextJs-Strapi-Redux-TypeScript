@@ -5,6 +5,8 @@ import { useContext, useState } from "react"
 import { ICategory, ICollectionResponse } from "../types"
 import { fetchCategories } from '../http'
 import { AppContext } from "./_app"
+import Loading from "../components/Loading"
+import { isJWTIsValid } from "../utils"
 
 interface IPropTypes {
     categories: {
@@ -14,7 +16,7 @@ interface IPropTypes {
 
 export default function Write({ categories }: IPropTypes) {
     const router = useRouter()
-    const { isLoggedIn } = useContext(AppContext)
+    const { user, isLoggedIn, isLoading } = useContext(AppContext)
     const [category, setCategory] = useState(null)
     const [image, setImage] = useState('')
     const [imagePreview, setImagePrivew] = useState('')
@@ -44,7 +46,7 @@ export default function Write({ categories }: IPropTypes) {
         const response = await axios.put(`http://localhost:1337/api/articles/${postresponse.data.data.id}/?populate=categories&users`, {
             data: {
                 Category: [category],
-                author: [userData.id]
+                author: [user.id]
             },
         })
 
@@ -70,10 +72,14 @@ export default function Write({ categories }: IPropTypes) {
     const handleSubmit = async (e: any) => {
         e.preventDefault()
         try {
-            const textResponse = await handleTextData()
-            const fileResponse = await handleImageData()
-            const response = await handleImageAfterText(textResponse.data.data.id, fileResponse.data[0].url)
-            router.push('/')
+            if (isJWTIsValid()) {
+                const textResponse = await handleTextData()
+                const fileResponse = await handleImageData()
+                const response = await handleImageAfterText(textResponse.data.data.id, fileResponse.data[0].url)
+                router.push('/')
+            } else {
+                router.push('/signup')
+            }
         } catch (e) {
             console.log(e)
         }
@@ -103,7 +109,22 @@ export default function Write({ categories }: IPropTypes) {
 
     return (
         <div className="screen-height flex items-center justify-center">
-            {isLoggedIn &&
+            {isLoading && (
+                <Loading />
+            )}
+            {!isLoggedIn && !isLoading && (
+                <div className="w-[400px] my-20 rounded-lg bg-[#53bd9530]">
+                    <div className="flex flex-col p-8">
+                        <p className="text-sm font-medium text-gray-600">
+                            You cannot write blog without signup so please go for signup and then you can write.
+                        </p>
+                        <div className="mt-5 flex items-center justify-center bottom-0 left-0 w-full p-2">
+                            <a href="/signup" className="flex items-center justify-center  text-gray-700 pt-[2px] h-[42px] w-24 text-sm font-medium rounded-full bg-[#53bd9560]">GO</a>
+                        </div>
+                    </div>
+                </div>
+            )}
+            {isLoggedIn && !isLoading && (
                 <div className="w-[400px] my-20 rounded-lg bg-[#53bd9530]">
                     <form className="flex flex-col p-8" onSubmit={(e) => handleSubmit(e)} >
                         <h1 className="font-caveatbrush text-2xl text-center text-gray-600 mb-6">Write Blog</h1>
@@ -131,6 +152,7 @@ export default function Write({ categories }: IPropTypes) {
                         </div>
                     </form>
                 </div>
+            )
             }
         </div>
     )
