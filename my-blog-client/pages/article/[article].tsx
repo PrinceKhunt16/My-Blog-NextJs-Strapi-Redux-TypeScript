@@ -80,7 +80,13 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
         },
     })
 
-    const { data: articles }:AxiosResponse<ICollectionResponse<IArticle[]>> = await axios.get(`${process.env.API_BASE_URL}/api/articles?${queryString}`)
+    const config = {
+        headers: {
+            Authorization: `Bearer ${process.env.NEXT_PUBLIC_BASE_API_KEY}`
+        }
+    }
+
+    const { data: articles }: AxiosResponse<ICollectionResponse<IArticle[]>> = await axios.get(`${process.env.API_BASE_URL}/api/articles?${queryString}`, config)
 
     if (articles.data.length === 0) {
         return {

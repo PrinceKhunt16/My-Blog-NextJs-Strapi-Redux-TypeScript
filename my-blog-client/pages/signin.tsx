@@ -5,7 +5,7 @@ import { IAppContextTypes } from "../types"
 import { AppContext } from "./_app"
 
 export default function Signup() {
-    const {  } = useContext(AppContext) as IAppContextTypes
+    const { } = useContext(AppContext) as IAppContextTypes
     const router = useRouter()
     const [avatar, setAvatar] = useState<string | Blob>('')
     const [avatarPreview, setAvatarPreview] = useState<string | ArrayBuffer | null>(null)
@@ -28,7 +28,13 @@ export default function Signup() {
         data.set("password", user.password)
         data.set("about", user.about)
 
-        const config = { headers: { "Content-Type": "application/json" } }
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${process.env.NEXT_PUBLIC_BASE_API_KEY}`
+            }
+        }
+        
         const response = await axios.post(`http://localhost:1337/api/auth/local/register`, data, config)
         return response
     }
@@ -36,14 +42,28 @@ export default function Signup() {
     const handleImageData = async () => {
         const data = new FormData()
         data.append('files', avatar)
-        const response = await axios.post(`http://localhost:1337/api/upload`, data)
+        
+        const config = {
+            headers: {
+                Authorization: `Bearer ${process.env.NEXT_PUBLIC_BASE_API_KEY}`
+            }
+        }
+
+        const response = await axios.post(`http://localhost:1337/api/upload`, data, config)
         return response
     }
 
     const handleImageAfterText = async (id: number, url: string) => {
         const data = new FormData()
         data.set("avatarurl", url)
-        const config = { headers: { "Content-Type": "application/json" } }
+
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${process.env.NEXT_PUBLIC_BASE_API_KEY}`
+            }
+        }
+
         const response = await axios.put(`http://localhost:1337/api/users/${id}`, data, config)
         return response
     }

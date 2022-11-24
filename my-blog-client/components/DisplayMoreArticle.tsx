@@ -31,7 +31,14 @@ export default function DisplayMoreArticle({ username, slug }: IPropTypes) {
         }
 
         const queryString = qs.stringify(options)
-        const response = await axios.get(`http://localhost:1337/api/articles?${queryString}`)
+
+        const config = {
+            headers: {
+                Authorization: `Bearer ${process.env.NEXT_PUBLIC_BASE_API_KEY}`
+            }
+        }
+
+        const response = await axios.get(`http://localhost:1337/api/articles?${queryString}`, config)
         return response
     }
 

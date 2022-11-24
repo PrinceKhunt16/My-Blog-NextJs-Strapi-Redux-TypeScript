@@ -38,16 +38,24 @@ export default function Write({ categories }: IPropTypes) {
             Slug: slug
         })
 
-        const postresponse = await axios.post(`http://localhost:1337/api/articles`, {
-            data: blog
-        })
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${process.env.NEXT_PUBLIC_BASE_API_KEY}`
+            }
+        }
 
-        const response = await axios.put(`http://localhost:1337/api/articles/${postresponse.data.data.id}/?populate=categories&users`, {
-            data: {
-                Category: [category],
-                author: [user.id]
+        const postresponse = await axios.post(`http://localhost:1337/api/articles`, { data: blog }, config)
+
+        const response = await axios.put(`http://localhost:1337/api/articles/${postresponse.data.data.id}/?populate=categories&users`,
+            {
+                data: {
+                    Category: [category],
+                    author: [user.id]
+                }
             },
-        })
+            config
+        )
 
         return postresponse
     }
@@ -55,16 +63,32 @@ export default function Write({ categories }: IPropTypes) {
     const handleImageData = async () => {
         const data = new FormData()
         data.append('files', image)
-        const response = await axios.post(`http://localhost:1337/api/upload`, data)
+
+        const config = {
+            headers: {
+                Authorization: `Bearer ${process.env.NEXT_PUBLIC_BASE_API_KEY}`
+            }
+        }
+
+        const response = await axios.post(`http://localhost:1337/api/upload`, data, config)
         return response
     }
 
     const handleImageAfterText = async (id: number, url: string) => {
-        const response = await axios.put(`http://localhost:1337/api/articles/${id}/?populate=imageurl`, {
-            data: {
-                imageurl: url
+        const config = {
+            headers: {
+                Authorization: `Bearer ${process.env.NEXT_PUBLIC_BASE_API_KEY}`
             }
-        })
+        }
+
+        const response = await axios.put(`http://localhost:1337/api/articles/${id}/?populate=imageurl`,
+            {
+                data: {
+                    imageurl: url
+                }
+            },
+            config
+        )
         return response
     }
 

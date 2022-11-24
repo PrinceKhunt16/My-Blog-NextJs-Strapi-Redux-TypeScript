@@ -1,6 +1,5 @@
 import axios from "axios"
 import { serialize } from "next-mdx-remote/serialize"
-import { useRouter } from "next/router"
 import { IArticle } from "../types"
 
 export const formatDate = (dateString: string) => {
