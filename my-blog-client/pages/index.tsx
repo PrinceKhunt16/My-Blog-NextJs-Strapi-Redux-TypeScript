@@ -1,9 +1,8 @@
-import { AxiosResponse } from 'axios'
+import axios, { AxiosResponse } from 'axios'
 import { GetServerSidePropsContext } from 'next'
 import Head from 'next/head'
 import ArticleList from '../components/ArticleList'
 import Tabs from '../components/Tabs'
-import { fetchArticles, fetchCategories } from '../http'
 import { IArticle, ICategory, ICollectionResponse, IPagination, IQueryOptions } from '../types'
 import qs from 'qs'
 import Pagination from '../components/Pagination'
@@ -70,9 +69,9 @@ export async function getServerSideProps (context: GetServerSidePropsContext) {
 
   const queryString = qs.stringify(options)
   
-  const { data: articles }: AxiosResponse<ICollectionResponse<IArticle[]>> = await fetchArticles(queryString)
+  const { data: articles }: AxiosResponse<ICollectionResponse<IArticle[]>> = await axios.get(`${process.env.API_BASE_URL}/api/articles?${queryString}`)
 
-  const { data: categories }: AxiosResponse<ICollectionResponse<ICategory[]>> = await fetchCategories()
+  const { data: categories }: AxiosResponse<ICollectionResponse<ICategory[]>> = await axios.get(`${process.env.API_BASE_URL}/api/categories`)
   
   return {
     props: {

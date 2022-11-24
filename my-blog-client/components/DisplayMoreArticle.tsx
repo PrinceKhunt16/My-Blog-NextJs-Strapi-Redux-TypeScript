@@ -1,7 +1,6 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
 import qs from 'qs'
-import { formatDate } from "../utils"
 import Link from "next/link"
 
 interface IPropTypes {
@@ -9,8 +8,17 @@ interface IPropTypes {
     slug: string
 }
 
+interface IPropBlogTypes {
+    attributes: {
+        Slug: string,
+        imageurl: string,
+        shortDescription: string
+        Title: string
+    }
+}
+
 export default function DisplayMoreArticle({ username, slug }: IPropTypes) {
-    const [blogs, setBlogs] = useState([])
+    const [blogs, setBlogs] = useState<IPropBlogTypes[]>([])
 
     const getData = async () => {
         const options = {
@@ -23,7 +31,7 @@ export default function DisplayMoreArticle({ username, slug }: IPropTypes) {
         }
 
         const queryString = qs.stringify(options)
-        const response = axios.get(`http://localhost:1337/api/articles?${queryString}`)
+        const response = await axios.get(`http://localhost:1337/api/articles?${queryString}`)
         return response
     }
 
@@ -40,11 +48,11 @@ export default function DisplayMoreArticle({ username, slug }: IPropTypes) {
     return (
         <div className="flex flex-col gap-4">
             {
-                blogs.map((blog) => {
+                blogs?.map((blog: IPropBlogTypes) => {
                     return (
                         <>
-                            { blog.attributes.Slug !== slug &&
-                                <div key={blog.attributes.id} className="flex gap-2 bg-[#53bd9530] p-2 2xl:flex-row lg:flex-col md:flex-row">
+                            {blog.attributes.Slug !== slug &&
+                                <div className="flex gap-2 bg-[#53bd9530] p-2 2xl:flex-row lg:flex-col md:flex-row">
                                     <img className="object-cover 2xl:h-[124px] lg:h-32 md:h-20 2xl:w-36 lg:w-full md:w-28" src={`http://localhost:1337${blog.attributes.imageurl}`} alt="" />
                                     <div>
                                         <Link href={`/article/${blog.attributes.Slug}`}>

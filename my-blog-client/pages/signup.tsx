@@ -1,11 +1,12 @@
 import axios from "axios"
 import { useRouter } from "next/router"
 import { useContext, useState } from "react"
+import { IAppContextTypes } from "../types"
 import { fetchUserFromJWTToken } from "../utils"
 import { AppContext } from "./_app"
 
 export default function Login() {
-    const { setUser:setUserContext, setIsLoggedIn } = useContext(AppContext)
+    const { setUser:setUserContext, setIsLoggedIn } = useContext(AppContext) as IAppContextTypes
     const router = useRouter()
 
     const [user, setUser] = useState({

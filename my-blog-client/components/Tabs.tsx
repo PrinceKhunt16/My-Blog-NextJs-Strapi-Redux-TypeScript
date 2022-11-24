@@ -12,7 +12,7 @@ interface IPropTypes {
 
 let num = 0
 let item = 0
-let hold = 10
+let hold = 20
 let time = 300
 let searchLetters = ''
 
@@ -26,13 +26,13 @@ export default function Tabs({ categories, handleSearch }: IPropTypes) {
         const timer = setTimeout(() => setCount(count + 1), time)
 
         if (num == searchLetters.length) {
-            if(num == searchLetters.length && hold > 0 && hold <= 10){
+            if(num == searchLetters.length && hold > 0){
                hold -= 1
             }
-
+            
             if(num == searchLetters.length && hold == 0){
                 num = 0
-                hold = 10
+                hold = 20
                 item += 1
             }
 
@@ -48,9 +48,9 @@ export default function Tabs({ categories, handleSearch }: IPropTypes) {
         if(num < searchLetters.length / 3){
             time = 300
         } else if (num < searchLetters.length / 2){
-            time = 230
+            time = 270
         } else {
-            time = 130
+            time = 250
         }
 
         setPlaceholder(searchLetters.substring(0, num))

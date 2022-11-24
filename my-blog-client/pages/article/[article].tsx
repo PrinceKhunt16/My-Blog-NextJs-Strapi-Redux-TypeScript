@@ -1,11 +1,9 @@
-import { AxiosResponse } from "axios"
+import axios, { AxiosResponse } from "axios"
 import { GetServerSidePropsContext } from "next"
-import { fetchArticleBySlug } from "../../http"
 import { IArticle, ICollectionResponse } from "../../types"
 import qs from "qs"
 import Head from "next/head"
 import { formatDate, serializeMarkdown } from "../../utils"
-import Image from "next/image"
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
 import DisplayMoreArticle from "../../components/DisplayMoreArticle"
 
@@ -82,12 +80,12 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
         },
     })
 
-    const { data: articles }: AxiosResponse<ICollectionResponse<IArticle[]>> = await fetchArticleBySlug(queryString)
+    const { data: articles }:AxiosResponse<ICollectionResponse<IArticle[]>> = await axios.get(`${process.env.API_BASE_URL}/api/articles?${queryString}`)
 
     if (articles.data.length === 0) {
         return {
             notFound: true,
-        };
+        }
     }
 
     return {

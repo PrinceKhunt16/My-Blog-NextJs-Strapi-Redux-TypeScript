@@ -1,87 +1,109 @@
-import { MDXRemoteSerializeResult } from 'next-mdx-remote';
+import { MDXRemoteSerializeResult } from "next-mdx-remote";
+import { Dispatch, SetStateAction } from "react";
 
 export interface ICategoryAttribute {
-    Title: string,  
-    Slug: string
+  Title: string;
+  Slug: string;
 }
 
 export interface ICategory {
-    id: number,
-    attributes: ICategoryAttribute
+  id: number;
+  attributes: ICategoryAttribute;
 }
 
 export interface IImageData {
-    data: {
-        attributes: {
-            url: string,
-            formats: {
-                small: {
-                    url: string
-                }
-            }
-        }
-    }
+  data: {
+    attributes: {
+      url: string;
+      formats: {
+        small: {
+          url: string;
+        };
+      };
+    };
+  };
 }
 
 export interface IAuthor {
-    data: {
-        attributes: {
-            firstname: string,
-            lastname: string,
-            avatar: {
-                data: {
-                    attributes: {
-                        formats: {
-                            thumbnail: {
-                                url: string
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
+  data: {
+    attributes: {
+      username: string;
+      firstname: string;
+      lastname: string;
+      avatarurl: string;
+      about: string;
+      avatar: {
+        data: {
+          attributes: {
+            formats: {
+              thumbnail: {
+                url: string;
+              };
+            };
+          };
+        };
+      };
+    };
+  };
 }
 
 export interface IArticleAttribute {
-    Title: string,
-    Body:  string | MDXRemoteSerializeResult,
-    Slug: string,
-    Image: IImageData,
-    createdAt: string,
-    author: IAuthor,
-    shortDescription: string
+  Title: string;
+  Body: string | MDXRemoteSerializeResult;
+  Slug: string;
+  Image: IImageData;
+  imageurl: string;
+  createdAt: string;
+  author: IAuthor;
+  shortDescription: string;
 }
 
 export interface IArticle {
-    id: number,
-    attributes: IArticleAttribute 
+  id: number;
+  attributes: IArticleAttribute;
 }
 
 export interface IPagination {
-    page: number,
-    pageSize: number,
-    pageCount: number,
-    total: number
+  page: number;
+  pageSize: number;
+  pageCount: number;
+  total: number;
 }
 
 export interface IResourceMeta {
-    pagination: IPagination
+  pagination: IPagination;
 }
 
 export interface ICollectionResponse<T> {
-    data: T,
-    meta: IResourceMeta
+  data: T;
+  meta: IResourceMeta;
 }
 
-export type TDirection = 1 | -1
+export type TDirection = 1 | -1;
 
 export interface IQueryOptions {
-    filters: any,
-    sort: any,
-    populate: any,
-    pagination: {
-        page: number,
-        pageSize: number
-    }
+  filters: any;
+  sort: any;
+  populate: any;
+  pagination: {
+    page: number;
+    pageSize: number;
+  };
+}
+
+export interface IUser {
+  avatarurl: string;
+  email: string;
+  username: string;
+  id: string;
+  about: string;
+}
+
+export interface IAppContextTypes {
+  user: IUser;
+  setUser: Dispatch<SetStateAction<IUser>>;
+  isLoggedIn: boolean;
+  setIsLoggedIn: Dispatch<SetStateAction<boolean>>;
+  isLoading: boolean;
+  setIsLoading: Dispatch<SetStateAction<boolean>>;
 }

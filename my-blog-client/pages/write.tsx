@@ -2,8 +2,7 @@ import axios, { AxiosResponse } from "axios"
 import { GetServerSidePropsContext } from "next"
 import { useRouter } from "next/router"
 import { useContext, useState } from "react"
-import { ICategory, ICollectionResponse } from "../types"
-import { fetchCategories } from '../http'
+import { IAppContextTypes, ICategory, ICollectionResponse } from "../types"
 import { AppContext } from "./_app"
 import Loading from "../components/Loading"
 import { isJWTIsValid } from "../utils"
@@ -16,10 +15,10 @@ interface IPropTypes {
 
 export default function Write({ categories }: IPropTypes) {
     const router = useRouter()
-    const { user, isLoggedIn, isLoading } = useContext(AppContext)
-    const [category, setCategory] = useState(null)
-    const [image, setImage] = useState('')
-    const [imagePreview, setImagePrivew] = useState('')
+    const { user, isLoggedIn, isLoading } = useContext(AppContext) as IAppContextTypes
+    const [category, setCategory] = useState<string | null>(null)
+    const [image, setImage] = useState<string | Blob>('')
+    const [imagePreview, setImagePrivew] = useState<string | ArrayBuffer | null>(null)
     const [blog, setBlog] = useState({
         Title: '',
         Body: '',
@@ -137,7 +136,7 @@ export default function Write({ categories }: IPropTypes) {
                         </div>
                         <input className="bg-transparent mb-5 px-2 h-10 focus:outline-none text-gray-600 border border-[#53bd95]" type="text" name="shortDescription" placeholder="Short Discription" onChange={(e) => handleChange(e)} />
                         <textarea className="bg-transparent mb-5 px-2 h-28 focus:outline-none text-gray-600 border border-[#53bd95] resize-none" name="Body" placeholder="Body" onChange={(e) => handleChange(e)} />
-                        <select className="bg-transparent mb-5 px-2 h-10 focus:outline-none text-gray-600 border border-[#53bd95]" onChange={(e) => setCategory(+e.target.value)}>
+                        <select className="bg-transparent mb-5 px-2 h-10 focus:outline-none text-gray-600 border border-[#53bd95]" onChange={(e) => setCategory(e.target.value)}>
                             <option className="bg-[#53bd9530]" value="">Category</option>
                             {categories.items.map((category) => {
                                 return (
@@ -158,8 +157,8 @@ export default function Write({ categories }: IPropTypes) {
     )
 }
 
-export async function getServerSideProps(context: GetServerSidePropsContext) {
-    const { data: categories }: AxiosResponse<ICollectionResponse<ICategory[]>> = await fetchCategories()
+export async function getServerSideProps() {
+    const { data: categories }: AxiosResponse<ICollectionResponse<ICategory[]>> = await axios.get(`${process.env.API_BASE_URL}/api/categories`)
 
     return {
         props: {

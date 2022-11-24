@@ -1,10 +1,11 @@
 import { useRouter } from "next/router"
 import { useContext } from "react"
 import Loading from "../components/Loading"
+import { IAppContextTypes } from "../types"
 import { AppContext } from "./_app"
 
 export default function Account() {
-    const { user, isLoading, isLoggedIn, setIsLoggedIn } = useContext(AppContext)
+    const { user, isLoading, isLoggedIn, setIsLoggedIn } = useContext(AppContext) as IAppContextTypes
     const router = useRouter()
 
     const handleLogout = () => {

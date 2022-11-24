@@ -1,9 +1,10 @@
 import Link from "next/link"
 import { useContext } from "react"
 import { AppContext } from "../pages/_app"
+import { IAppContextTypes } from "../types"
 
 export default function Navbar() {
-    const { isLoggedIn, user } = useContext(AppContext)
+    const { isLoggedIn, user } = useContext(AppContext) as IAppContextTypes
 
     return (
         <nav className="flex item-center justify-between py-3 boxshadow-fullwidth">

@@ -5,8 +5,9 @@ import Footer from '../components/Footer'
 import NextNProgress from "nextjs-progressbar"
 import { createContext, useEffect, useState } from 'react'
 import { fetchUserFromJWTToken } from '../utils'
+import { IAppContextTypes } from '../types'
 
-export const AppContext = createContext(null)
+export const AppContext = createContext<IAppContextTypes | null>(null)
 
 export default function App({ Component, pageProps }: AppProps) {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
