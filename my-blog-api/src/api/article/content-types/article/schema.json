@@ -14,7 +14,8 @@
   "attributes": {
     "Title": {
       "type": "string",
-      "required": true
+      "required": true,
+      "unique": true
     },
     "Body": {
       "type": "richtext",

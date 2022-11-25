@@ -1,6 +1,7 @@
 import axios from "axios"
 import { useRouter } from "next/router"
 import { useContext, useEffect, useState } from "react"
+import Toast from "../components/Toast"
 import { IAppContextTypes } from "../types"
 import { checkEmail, checkText, fetchUserFromJWTToken } from "../utils"
 import { AppContext } from "./_app"
@@ -24,7 +25,7 @@ export default function Login() {
         e.preventDefault()
 
         if (!checkUserData()) {
-            console.log('snackbar for unvalid user credentials')
+            Toast('Invalid user credentials')
             return
         }
 
@@ -42,18 +43,20 @@ export default function Login() {
 
         try {
             const response = await axios.post(`http://localhost:1337/api/auth/local`, data, config)
-    
+
             const { jwt } = response.data
             localStorage.setItem('jwt', JSON.stringify(jwt))
-    
+
             const obj = await fetchUserFromJWTToken(jwt)
-    
+
             setUserContext({ ...obj })
             setIsLoggedIn(true)
-    
+            Toast('You are logged in')
+
             router.push('/')
         } catch (e) {
-            console.log('snackbar for error')
+            console.log(e)
+            Toast('Invalid user credentials')
         }
     }
 
@@ -72,18 +75,20 @@ export default function Login() {
         <>
             {
                 !isLoggedIn &&
-                <div className="screen-height h-full flex items-center justify-center" >
-                    <div className="w-[400px] my-20 rounded-lg bg-[#53bd9530]">
-                        <form onSubmit={(e) => handleSubmit(e)} className="flex flex-col p-8">
-                            <h1 className="font-caveatbrush text-2xl text-center text-gray-600 mb-6">Sign up</h1>
-                            <input className="bg-transparent mb-5 px-2 h-10 focus:outline-none text-gray-600 border border-[#53bd95]" type="email" name="email" placeholder="Email" onChange={(e) => handleChange(e)} />
-                            <input className="bg-transparent mb-5 px-2 h-10 focus:outline-none text-gray-600 border border-[#53bd95]" type="password" name="password" placeholder="Password" onChange={(e) => handleChange(e)} />
-                            <div className="mt-5 flex items-center justify-center bottom-0 left-0 w-full p-2">
-                                <button type="submit" className="text-gray-700 pt-[2px] h-[42px] w-24 text-sm font-medium rounded-full bg-[#53bd9560]">SIGN UP</button>
-                            </div>
-                        </form>
+                <>
+                    <div className="screen-height h-full flex items-center justify-center" >
+                        <div className="w-[400px] my-20 rounded-lg bg-[#53bd9530]">
+                            <form onSubmit={(e) => handleSubmit(e)} className="flex flex-col p-8">
+                                <h1 className="font-caveatbrush text-2xl text-center text-gray-600 mb-6">Sign up</h1>
+                                <input className="bg-transparent mb-5 px-2 h-10 focus:outline-none text-gray-600 border border-[#53bd95]" type="email" name="email" placeholder="Email" onChange={(e) => handleChange(e)} />
+                                <input className="bg-transparent mb-5 px-2 h-10 focus:outline-none text-gray-600 border border-[#53bd95]" type="password" name="password" placeholder="Password" onChange={(e) => handleChange(e)} />
+                                <div className="mt-5 flex items-center justify-center bottom-0 left-0 w-full p-2">
+                                    <button type="submit" className="text-gray-700 pt-[2px] h-[42px] w-24 text-sm font-medium rounded-full bg-[#53bd9560]">SIGN UP</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                </div>
+                </>
             }
         </>
     )

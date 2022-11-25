@@ -6,6 +6,7 @@ import NextNProgress from "nextjs-progressbar"
 import { createContext, useEffect, useState } from 'react'
 import { fetchUserFromJWTToken } from '../utils'
 import { IAppContextTypes } from '../types'
+import ToastContainer from '../components/ToastContainer'
 
 export const AppContext = createContext<IAppContextTypes | null>(null)
 
@@ -57,6 +58,7 @@ export default function App({ Component, pageProps }: AppProps) {
           </main>
           <Footer />
         </div>
+        <ToastContainer />
       </AppContext.Provider>
     </>
   )
