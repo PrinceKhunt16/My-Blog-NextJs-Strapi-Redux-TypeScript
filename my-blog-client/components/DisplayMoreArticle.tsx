@@ -59,7 +59,7 @@ export default function DisplayMoreArticle({ username, slug }: IPropTypes) {
                     return (
                         <>
                             {blog.attributes.Slug !== slug &&
-                                <div className="flex gap-2 bg-[#53bd9530] p-2 2xl:flex-row lg:flex-col md:flex-row">
+                                <div className="flex gap-2 bg-[#53bd9515] p-2 2xl:flex-row lg:flex-col md:flex-row">
                                     <img className="object-cover 2xl:h-[124px] lg:h-32 md:h-20 2xl:w-36 lg:w-full md:w-28" src={`http://localhost:1337${blog.attributes.imageurl}`} alt="" />
                                     <div>
                                         <Link href={`/article/${blog.attributes.Slug}`}>
