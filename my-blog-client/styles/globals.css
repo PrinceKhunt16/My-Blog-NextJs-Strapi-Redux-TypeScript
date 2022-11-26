@@ -14,15 +14,20 @@
 }
 
 ::-webkit-scrollbar-track {
-    background: #53bd9530;
+    background: #53bd9520;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #53bd9540;
+    background: #53bd9530;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #53bd9590;
+    background: #53bd9560;
+}
+
+::selection {
+    color: #4b5563;
+    background: #53bd9540;
 }
 
 .disabled {
@@ -65,6 +70,12 @@
 .boxshadow-fullwidth {
     background-color: #53bd9515;
     box-shadow: 0 0 0 100vmax #53bd9515;
+    clip-path: inset(0 -100vmax);
+}
+
+.profile-boxshadow-fullwidth {
+    background-color: #53bd9525;
+    box-shadow: 0 0 0 100vmax #53bd9525;
     clip-path: inset(0 -100vmax);
 }
 

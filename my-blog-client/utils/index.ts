@@ -49,9 +49,9 @@ export const serializeMarkdown = async (item: IArticle) => {
 
 export const fetchUserFromJWTToken = async (jwt: string) => {
     const jwtObj = JSON.parse(atob(jwt.split('.')[1]))
-    const { data } = await axios.get(`http://localhost:1337/api/users/${jwtObj.id}`)
-    const { avatarurl, email, username, id, about } = data
-    return { avatarurl, email, username, id, about }
+    const { data } = await axios.get(`http://localhost:1337/api/users/${jwtObj.id}?populate=*`)
+    const { avatarurl, email, username, id, about, articles } = data
+    return { avatarurl, email, username, id, about, articles }
 }
 
 export const isJWTIsValid = () => {
@@ -59,9 +59,7 @@ export const isJWTIsValid = () => {
     
     try {
         const jwtObj = JSON.parse(atob(jwt?.split('.')[1]))
-        console.log(jwtObj, 'jwtObj')
         if(typeof jwtObj.id === "number"){
-            console.log('jwt is number')
             return true
         } else {
             localStorage.removeItem('jwt')

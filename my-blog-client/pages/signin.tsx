@@ -73,20 +73,20 @@ export default function Signup() {
     const checkUserData = () => {
         const email = checkEmail(user.email)
         const password = checkText(user.password, 8, 20)
-        const about = checkText(user.about, 60, 150)
+        const about = checkText(user.about, 60, 200)
         const username = checkText(user.username, 3, 30)
         const firstname = checkText(user.firstname, 3, 15)
         const lastname = checkText(user.lastname, 3, 15)
 
-        if(!email) Toast('Invalid email id')
-        if(!password) Toast('Password should be minimum 8 and maximum 20 characters.')
-        if(!about) Toast('About should be minimum 60 and maximum 150 characters.')
-        if(!username) Toast('Username should be minimum 3 and maximum 30 characters.')
-        if(!firstname) Toast('Firstname should be minimum 3 and maximum 15 characters.')
-        if(!lastname) Toast('Lastname should be minimum 3 and maximum 15 characters.')
-        if(avatarPreview === null) Toast('For avatar Image choosen file should be jpg file.')
+        if (!email) Toast('Invalid email id')
+        if (!password) Toast('Password should be minimum 8 and maximum 20 characters.')
+        if (!about) Toast('About should be minimum 60 and maximum 200 characters.')
+        if (!username) Toast('Username should be minimum 3 and maximum 30 characters.')
+        if (!firstname) Toast('Firstname should be minimum 3 and maximum 15 characters.')
+        if (!lastname) Toast('Lastname should be minimum 3 and maximum 15 characters.')
+        if (avatarPreview === null) Toast('Avatar Image should be jpg file.')
 
-        return email && password && about && avatarPreview !== null && username && firstname && lastname 
+        return email && password && about && avatarPreview !== null && username && firstname && lastname
     }
 
     const handleSubmit = async (e: any) => {
@@ -156,7 +156,13 @@ export default function Signup() {
                             <input className="bg-transparent mb-5 px-2 h-10 focus:outline-none text-gray-600 border border-[#53bd95]" type="password" name="password" placeholder="Password" onChange={(e) => handleChange(e)} />
                             <textarea className="bg-transparent mb-5 px-2 h-20 focus:outline-none text-gray-600 border border-[#53bd95] resize-none" name="about" placeholder="About" onChange={(e) => handleChange(e)} />
                             <div className="text-gray-600 pb-5 font-medium text-xs">
-                                <p>All fiels are required. Username should be minimum 3 and maximum 30 characters. Firstname and Lastname should be minimum 2 and maximum 15 characters. Password should be minimum 8 and maximum 20 characters. About should be minimum 60 and maximum 150 characters. For avatar Image choosen file should be jpg file.</p>
+                                <p>All fiels are required.</p>
+                                <p>Username should be minimum 3 and maximum 30 characters.</p>
+                                <p>Firstname should be minimum 3 and maximum 15 characters.</p>
+                                <p>Lastname should be minimum 3 and maximum 15 characters.</p>
+                                <p>Password should be minimum 8 and maximum 20 characters.</p>
+                                <p>About should be minimum 60 and maximum 200 characters.</p>
+                                <p>Avatar Image should be jpg file.</p>
                             </div>
                             <div className="mt-5 flex items-center justify-center bottom-0 left-0 w-full p-2">
                                 <button type="submit" className="text-gray-700 pt-[2px] h-[42px] w-24 text-sm font-medium rounded-full bg-[#53bd9560]">SIGN IN</button>

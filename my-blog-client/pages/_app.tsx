@@ -18,7 +18,8 @@ export default function App({ Component, pageProps }: AppProps) {
     email: '',
     username: '',
     id: '',
-    about: ''
+    about: '',
+    articles: []
   })
 
   const fetchInitialUser = async () => {
@@ -44,7 +45,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <AppContext.Provider value={{ user, setUser, isLoggedIn, setIsLoggedIn, isLoading, setIsLoading }}>
-        <div className='flex flex-col min-h-screen container mx-auto font-sans'>
+        <div className='flex flex-col min-h-screen container px-[18px] mx-auto font-sans'>
           <NextNProgress
             color='#53bd95'
             height={1}

@@ -56,6 +56,8 @@ export interface IArticleAttribute {
   createdAt: string;
   author: IAuthor;
   shortDescription: string;
+  firstname ?: string;
+  lastname ?: string;
 }
 
 export interface IArticle {
@@ -97,6 +99,7 @@ export interface IUser {
   username: string;
   id: string;
   about: string;
+  articles: IArticleAttribute;
 }
 
 export interface IAppContextTypes {

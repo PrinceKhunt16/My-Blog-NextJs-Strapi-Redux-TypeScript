@@ -30,11 +30,11 @@ export default function Write({ categories }: IPropTypes) {
     const checkUserData = () => {
         const title = checkText(blog.Title, 10, 150)
         const body = checkText(blog.Body, 300, 20000)
-        const shortDescription = checkText(blog.shortDescription, 150, 250)
+        const shortDescription = checkText(blog.shortDescription, 150, 300)
 
         if (imagePreview === null) Toast('For Blog Image choosen file should be jpg file.')
         if (!title) Toast('Title should be minimum 10 and maximum 150 characters.')
-        if (!shortDescription) Toast('Short Description should be minimum 150 characters.')
+        if (!shortDescription) Toast('Short Description should be minimum 150 and maximum 300 characters.')
         if (!body) Toast('Body should be minimum 300 characters.')
         if (category === '0') Toast('Category should be selected.')
 
@@ -158,7 +158,9 @@ export default function Write({ categories }: IPropTypes) {
     return (
         <div className="screen-height flex items-center justify-center">
             {isLoading && (
-                <Loading />
+                <div className="screen-height flex items-center justify-center">
+                    <Loading />
+                </div>
             )}
             {isLoggedIn && !isLoading && (
                 <div className="w-[400px] my-20 rounded-lg bg-[#53bd9530]">
@@ -184,7 +186,12 @@ export default function Write({ categories }: IPropTypes) {
                             })}
                         </select>
                         <div className="text-gray-600 pb-5 font-medium text-xs">
-                            <p>All fiels are required. Title should be minimum 10 and maximum 150 characters. Body should be minimum 300 characters. Short Description should be minimum 150 characters. Category should be selected. For Blog Image should be jpg file.</p>
+                            <p>All fiels are required.</p>
+                            <p>Title should be minimum 10 and maximum 150 characters.</p>
+                            <p>Body should be minimum 300 characters. </p>
+                            <p>Short Description should be minimum 300 characters.</p>
+                            <p>Category should be selected.</p>
+                            <p>Blog Image should be jpg file.</p>
                         </div>
                         <div className="mt-5 flex items-center justify-center bottom-0 left-0 w-full p-2">
                             <button className="text-gray-700 pt-[2px] h-[42px] w-24 text-sm font-medium rounded-full bg-[#53bd9560]" type="submit">POST</button>

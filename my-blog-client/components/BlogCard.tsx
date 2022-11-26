@@ -12,10 +12,10 @@ export default function BlogCard({ article }: IPropType) {
         <div>
             <Link href={`/article/${article.attributes.Slug}`}>
                 <h1 className="text-[28px] font-normal font-caveatbrush text-gray-600 hover:text-primary transition-transform hover:cursor-pointer leading-8 hover:decoration-gray-500">
-                    {article.attributes.Title}
+                    {article.attributes.Title.slice(0, 95)}
                 </h1>
             </Link>
-            <div className="flex items-center my-3">
+            <div className="flex items-center mt-2 mb-2">
                 <div className="flex items-center justify-center mr-2">
                     <Image
                         src={`http://localhost:1337${article.attributes.author.data.attributes.avatarurl}`}
@@ -34,9 +34,16 @@ export default function BlogCard({ article }: IPropType) {
                     </span>
                 </span>
             </div>
-            <div className="text-gray-500">
-                {article.attributes.shortDescription.slice(0, 250)}{' '}
-                {article.attributes.shortDescription.length > 250 ? <span className="text-gray-500 text-sm">read more</span> : ''}
+            <div className="flex">
+                <div className="mr-3">
+                    <div className="text-gray-500">
+                        {article.attributes.shortDescription.slice(0, 300)}{' '}
+                        {article.attributes.shortDescription.length > 300 ? <span className="text-gray-500 text-sm">read more</span> : ''}
+                    </div>
+                </div>
+                <div className="max-w-[150px] max-h-[100px] flex items-center justify-center">
+                    <img className="h-full w-full object-cover" src={`http://localhost:1337${article.attributes.imageurl}`} alt="" />
+                </div>
             </div>
         </div>
     )
