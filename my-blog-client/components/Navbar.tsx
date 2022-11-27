@@ -46,16 +46,16 @@ export default function Navbar() {
                             </>
                         ) : (
                             <>
-                                <ul className="text-transition flex items-center gap-5">
+                                <ul className="flex items-center gap-5">
                                     <li className="text-gray-600">
-                                        <a href="/signin">
+                                        <Link href="/signin">
                                             Sign in
-                                        </a>
+                                        </Link>
                                     </li>
                                     <li className="text-gray-600">
-                                        <a href="/signup">
+                                        <Link href="/signup">
                                             Sign up
-                                        </a>
+                                        </Link>
                                     </li>
                                 </ul>
                             </>

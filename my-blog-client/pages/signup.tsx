@@ -49,11 +49,10 @@ export default function Login() {
             const { jwt } = response.data
             localStorage.setItem('jwt', JSON.stringify(jwt))
 
-            const obj = await fetchUserFromJWTToken(jwt)
-
             dispatch(fetchUser())
 
-            router.push('/account')
+            router.push('/')
+            router.reload()
         } catch (e) {
             Toast('Invalid user credentials')
         }

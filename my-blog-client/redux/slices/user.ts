@@ -29,7 +29,6 @@ export const userSlice = createSlice({
       state.isSignedIn = false
     }),
     builder.addCase(fetchUser.fulfilled, (state, action) => {
-      console.log(action.payload)
       state.data = action.payload
       state.isLoading = false
       state.isSignedIn = true
