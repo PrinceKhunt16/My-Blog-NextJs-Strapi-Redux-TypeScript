@@ -29,13 +29,14 @@ export const userSlice = createSlice({
       state.isSignedIn = false
     }),
     builder.addCase(fetchUser.fulfilled, (state, action) => {
+      console.log(action.payload)
       state.data = action.payload
-      state.isSignedIn = true
       state.isLoading = false
+      state.isSignedIn = true
     }),
     builder.addCase(fetchUser.rejected, (state) => {
-      state.isLoading = true
       state.isSignedIn = false
+      state.isLoading = true
     })
   }
 })
@@ -55,9 +56,9 @@ export const fetchUser = createAsyncThunk('products/fetchuser', async () => {
       const { avatarurl, email, username, id, about, articles } = data
       return { avatarurl, email, username, id, about, articles }
     } catch (e) {
-      return null
+      throw 404
     }
   } else {
-    return null
+    throw 404
   }
 })

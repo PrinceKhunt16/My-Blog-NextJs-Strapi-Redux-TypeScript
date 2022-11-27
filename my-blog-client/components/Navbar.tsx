@@ -30,8 +30,7 @@ export default function Navbar() {
                 </li>
             </ul>
             <ul className="flex items-center">
-                {
-                    isSignedIn ?
+                {isSignedIn ?
                         (
                             <>
                                 <li>
@@ -47,7 +46,7 @@ export default function Navbar() {
                             </>
                         ) : (
                             <>
-                                <ul className="flex items-center gap-5">
+                                <ul className="text-transition flex items-center gap-5">
                                     <li className="text-gray-600">
                                         <a href="/signin">
                                             Sign in

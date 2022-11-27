@@ -146,3 +146,21 @@
         opacity: 0;
     }
 }
+
+.text-transition {
+    animation: text 0.7s;
+}
+
+@keyframes text {
+    0% {
+        visibility: hidden;
+    }
+
+    99% {
+        visibility: hidden;
+    }
+
+    100% {
+        visibility: visible;
+    }
+}
