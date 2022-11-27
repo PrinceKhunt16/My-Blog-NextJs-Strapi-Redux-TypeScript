@@ -166,16 +166,20 @@ export default function Write({ categories }: IPropTypes) {
                 <div className="w-[400px] my-20 rounded-lg bg-[#53bd9530]">
                     <form className="flex flex-col p-8" onSubmit={(e) => handleSubmit(e)} >
                         <h1 className="font-caveatbrush text-2xl text-center text-gray-600 mb-6">Write Blog</h1>
-                        <input className="bg-transparent mb-5 px-2 h-10 focus:outline-none text-gray-600 border border-[#53bd95]" type="text" name="Title" placeholder="Title" onChange={(e) => handleChange(e)} />
+                        <input className="bg-transparent mb-1 px-2 h-10 focus:outline-none text-gray-600 border border-[#53bd95]" type="text" name="Title" placeholder="Title" onChange={(e) => handleChange(e)} />
+                        <p className="text-gray-600 mb-4 font-semibold text-xs">Title should be minimum 10 and maximum 150 characters.</p>
                         <div className="signin flex gap-2">
                             {imagePreview &&
                                 <img className="h-10 w-20 object-cover border border-[#53bd95]" src={imagePreview} alt="" />
                             }
-                            <input className="mb-5 h-10 focus:outline-none text-gray-600 border border-[#53bd95]" type="file" name="Image" onChange={(e) => handleChange(e)} />
+                            <input className="mb-1 h-10 focus:outline-none text-gray-600 border border-[#53bd95]" type="file" name="Image" onChange={(e) => handleChange(e)} />
                         </div>
-                        <input className="bg-transparent mb-5 px-2 h-10 focus:outline-none text-gray-600 border border-[#53bd95]" type="text" name="shortDescription" placeholder="Short Discription" onChange={(e) => handleChange(e)} />
-                        <textarea className="write-textarea bg-transparent mb-5 px-2 h-28 focus:outline-none text-gray-600 border border-[#53bd95] resize-none" name="Body" placeholder="Body" onChange={(e) => handleChange(e)} />
-                        <select className="bg-transparent mb-5 px-2 h-10 focus:outline-none text-gray-600 border border-[#53bd95]" onChange={(e) => setCategory(e.target.value)}>
+                        <p className="text-gray-600 mb-4 font-semibold text-xs">Blog Image should be jpg file.</p>
+                        <input className="bg-transparent mb-1 px-2 h-10 focus:outline-none text-gray-600 border border-[#53bd95]" type="text" name="shortDescription" placeholder="Short Discription" onChange={(e) => handleChange(e)} />
+                        <p className="text-gray-600 mb-4 font-semibold text-xs">Short Description should be minimum 300 characters.</p>
+                        <textarea className="write-textarea bg-transparent mb-1 px-2 h-28 focus:outline-none text-gray-600 border border-[#53bd95] resize-none" name="Body" placeholder="Body" onChange={(e) => handleChange(e)} />
+                        <p className="text-gray-600 mb-4 font-semibold text-xs">Body should be minimum 300 characters. </p>
+                        <select className="bg-transparent mb-1 px-2 h-10 focus:outline-none text-gray-600 border border-[#53bd95]" onChange={(e) => setCategory(e.target.value)}>
                             <option className="bg-[#53bd9530]" value="0">Category</option>
                             {categories.items.map((category) => {
                                 return (
@@ -185,16 +189,9 @@ export default function Write({ categories }: IPropTypes) {
                                 )
                             })}
                         </select>
-                        <div className="text-gray-600 pb-5 font-medium text-xs">
-                            <p>All fiels are required.</p>
-                            <p>Title should be minimum 10 and maximum 150 characters.</p>
-                            <p>Body should be minimum 300 characters. </p>
-                            <p>Short Description should be minimum 300 characters.</p>
-                            <p>Category should be selected.</p>
-                            <p>Blog Image should be jpg file.</p>
-                        </div>
+                        <p className="text-gray-600 mb-4 font-semibold text-xs">Category should be selected.</p>
                         <div className="mt-5 flex items-center justify-center bottom-0 left-0 w-full p-2">
-                            <button className="text-gray-700 pt-[2px] h-[42px] w-24 text-sm font-medium rounded-full bg-[#53bd9560]" type="submit">POST</button>
+                            <button className="text-gray-700 mt-4 h-[40px] w-20 text-xs font-bold rounded-full bg-[#53bd9560]" type="submit">POST</button>
                         </div>
                     </form>
                 </div>

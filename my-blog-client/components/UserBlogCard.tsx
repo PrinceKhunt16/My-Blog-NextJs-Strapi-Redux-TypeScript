@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { useState } from "react"
 import { IArticleAttribute } from "../types"
 import { formatDate } from "../utils"
 
@@ -7,14 +8,22 @@ interface IPropType {
 }
 
 export default function UserBlogCard({ article }: IPropType) {
+    const [hover, setHover] = useState(false)
+
     return (
-        <div>
-            <Link href={`/article/${article.Slug}`}>
-                <h1 className="text-[28px] font-normal font-caveatbrush text-gray-600 hover:text-primary transition-transform hover:cursor-pointer leading-8 hover:decoration-gray-500">
-                    {article.Title.slice(0, 95)}
-                </h1>
-            </Link>
-            <div className="flex items-center mt-2 mb-1">
+        <div className="relative" onMouseOver={() => setHover(true)} onMouseLeave={() => setHover(false)}>
+            <div className="flex gap-3 absolute top-0 right-0">
+                <button className={`text-primary text-xs font-semibold ${hover ? 'block' : 'hidden'}`}>EDIT</button>
+                <button className={`text-primary text-xs font-semibold ${hover ? 'block' : 'hidden'}`}>DELETE</button>
+            </div>
+            <div className="w-fit">
+                <Link href={`/article/${article.Slug}`}>
+                    <h1 className="text-[28px] font-normal font-caveatbrush text-gray-600 hover:text-primary transition-transform hover:cursor-pointer leading-8 hover:decoration-gray-500">
+                        {article.Title.slice(0, 95)}
+                    </h1>
+                </Link>
+            </div>
+            <div className="flex items-center mt-2 mb-2">
                 <span className="text-sm text-gray-600">
                     You on {" "}
                     <span className="text-gray-400">
@@ -29,7 +38,7 @@ export default function UserBlogCard({ article }: IPropType) {
                         {article.shortDescription.length > 300 ? <span className="text-gray-500 text-sm">read more</span> : ''}
                     </div>
                 </div>
-                <div className="max-w-[150px] max-h-[100px] bg-[#53bd9525]">
+                <div className="hidden md:block max-w-[150px] max-h-[100px] bg-[#53bd9525]">
                     <img className="h-full w-full object-cover" src={`http://localhost:1337${article.imageurl}`} alt="" />
                 </div>
             </div>

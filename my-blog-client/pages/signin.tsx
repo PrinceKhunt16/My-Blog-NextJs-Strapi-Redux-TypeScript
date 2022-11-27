@@ -143,29 +143,27 @@ export default function Signup() {
                     <div className="w-[400px] my-20 rounded-lg bg-[#53bd9530]">
                         <form onSubmit={(e) => handleSubmit(e)} className="flex flex-col p-8">
                             <h1 className="font-caveatbrush text-2xl text-center text-gray-600 mb-6">Sign in</h1>
-                            <input className="bg-transparent mb-5 px-2 h-10 focus:outline-none text-gray-600 border border-[#53bd95]" type="text" name="username" placeholder="Username" onChange={(e) => handleChange(e)} />
-                            <input className="bg-transparent mb-5 px-2 h-10 focus:outline-none text-gray-600 border border-[#53bd95]" type="text" name="firstname" placeholder="Firstname" onChange={(e) => handleChange(e)} />
-                            <input className="bg-transparent mb-5 px-2 h-10 focus:outline-none text-gray-600 border border-[#53bd95]" type="text" name="lastname" placeholder="Lastname" onChange={(e) => handleChange(e)} />
+                            <input className="bg-transparent mb-1 px-2 h-10 focus:outline-none text-gray-600 border border-[#53bd95]" type="text" name="username" placeholder="Username" onChange={(e) => handleChange(e)} />
+                            <p className="mb-4 text-gray-600 font-semibold text-xs">Username should be minimum 3 and maximum 30 characters.</p>
+                            <input className="bg-transparent mb-1 px-2 h-10 focus:outline-none text-gray-600 border border-[#53bd95]" type="text" name="firstname" placeholder="Firstname" onChange={(e) => handleChange(e)} />
+                            <p className="text-gray-600 mb-4 font-semibold text-xs">Firstname should be minimum 3 and maximum 15 characters.</p>
+                            <input className="bg-transparent mb-1 px-2 h-10 focus:outline-none text-gray-600 border border-[#53bd95]" type="text" name="lastname" placeholder="Lastname" onChange={(e) => handleChange(e)} />
+                            <p className="text-gray-600 mb-4 font-semibold text-xs">Lastname should be minimum 3 and maximum 15 characters.</p>
                             <div className="signin flex gap-2">
                                 {avatarPreview &&
-                                    <img className="h-10 w-10 rounded-full object-cover border border-[#53bd95]" src={avatarPreview} alt="" />
+                                    <img className="h-10 w-10 rounded-full object-cover border border-[#53bd95]" src={avatarPreview} alt="avatar" />
                                 }
-                                <input className="mb-5 h-10 focus:outline-none text-gray-600 border border-[#53bd95]" type="file" name="avatar" onChange={(e) => handleChange(e)} />
+                                <input className="mb-1 h-10 focus:outline-none text-gray-600 border border-[#53bd95]" type="file" name="avatar" onChange={(e) => handleChange(e)} />
                             </div>
-                            <input className="bg-transparent mb-5 px-2 h-10 focus:outline-none text-gray-600 border border-[#53bd95]" type="text" name="email" placeholder="Email" onChange={(e) => handleChange(e)} />
-                            <input className="bg-transparent mb-5 px-2 h-10 focus:outline-none text-gray-600 border border-[#53bd95]" type="password" name="password" placeholder="Password" onChange={(e) => handleChange(e)} />
-                            <textarea className="bg-transparent mb-5 px-2 h-20 focus:outline-none text-gray-600 border border-[#53bd95] resize-none" name="about" placeholder="About" onChange={(e) => handleChange(e)} />
-                            <div className="text-gray-600 pb-5 font-medium text-xs">
-                                <p>All fiels are required.</p>
-                                <p>Username should be minimum 3 and maximum 30 characters.</p>
-                                <p>Firstname should be minimum 3 and maximum 15 characters.</p>
-                                <p>Lastname should be minimum 3 and maximum 15 characters.</p>
-                                <p>Password should be minimum 8 and maximum 20 characters.</p>
-                                <p>About should be minimum 60 and maximum 200 characters.</p>
-                                <p>Avatar Image should be jpg file.</p>
-                            </div>
+                            <p className="text-gray-600 mb-4 font-semibold text-xs">Avatar Image should be jpg file.</p>
+                            <input className="bg-transparent mb-1 px-2 h-10 focus:outline-none text-gray-600 border border-[#53bd95]" type="text" name="email" placeholder="Email" onChange={(e) => handleChange(e)} />
+                            <p className="text-gray-600 mb-4 font-semibold text-xs">Email should be valid email.</p>
+                            <input className="bg-transparent mb-1 px-2 h-10 focus:outline-none text-gray-600 border border-[#53bd95]" type="password" name="password" placeholder="Password" onChange={(e) => handleChange(e)} />
+                            <p className="text-gray-600 mb-4 font-semibold text-xs">Password should be minimum 8 and maximum 20 characters.</p>
+                            <textarea className="bg-transparent mb-1 px-2 h-20 focus:outline-none text-gray-600 border border-[#53bd95] resize-none" name="about" placeholder="About" onChange={(e) => handleChange(e)} />
+                            <p className="text-gray-600 mb-4 font-semibold text-xs">About should be minimum 60 and maximum 200 characters.</p>
                             <div className="mt-5 flex items-center justify-center bottom-0 left-0 w-full p-2">
-                                <button type="submit" className="text-gray-700 pt-[2px] h-[42px] w-24 text-sm font-medium rounded-full bg-[#53bd9560]">SIGN IN</button>
+                                <button type="submit" className="text-gray-700 mt-4 h-[40px] w-20 text-xs font-bold rounded-full bg-[#53bd9560]">SIGN IN</button>
                             </div>
                         </form>
                     </div>

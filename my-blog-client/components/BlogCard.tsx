@@ -10,11 +10,13 @@ interface IPropType {
 export default function BlogCard({ article }: IPropType) {
     return (
         <div>
-            <Link href={`/article/${article.attributes.Slug}`}>
-                <h1 className="text-[28px] font-normal font-caveatbrush text-gray-600 hover:text-primary transition-transform hover:cursor-pointer leading-8 hover:decoration-gray-500">
-                    {article.attributes.Title.slice(0, 95)}
-                </h1>
-            </Link>
+            <div className="w-fit">
+                <Link href={`/article/${article.attributes.Slug}`}>
+                    <h1 className="text-[28px] font-normal font-caveatbrush text-gray-600 hover:text-primary transition-transform hover:cursor-pointer leading-8 hover:decoration-gray-500">
+                        {article.attributes.Title.slice(0, 95)}
+                    </h1>
+                </Link>
+            </div>
             <div className="flex items-center mt-2 mb-2">
                 <div className="flex items-center justify-center mr-2">
                     <Image
@@ -41,7 +43,7 @@ export default function BlogCard({ article }: IPropType) {
                         {article.attributes.shortDescription.length > 300 ? <span className="text-gray-500 text-sm">read more</span> : ''}
                     </div>
                 </div>
-                <div className="max-w-[150px] max-h-[100px] flex items-center justify-center">
+                <div className="hidden md:block max-w-[150px] max-h-[100px] flex items-center justify-center">
                     <img className="h-full w-full object-cover" src={`http://localhost:1337${article.attributes.imageurl}`} alt="" />
                 </div>
             </div>

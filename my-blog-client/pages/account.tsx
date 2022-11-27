@@ -44,7 +44,7 @@ export default function Account() {
                             <h1 className="font-caveatbrush text-3xl text-gray-600">{user.username}</h1>
                         </div>
                     </div>
-                    <ul className="w-full borderbottom pb-3 my-3 flex items-center justify-start gap-4">
+                    <ul className="w-full borderbottom pb-4 my-3 flex items-center justify-start gap-4">
                         {
                             tabs.map((t, idx) => {
                                 return (

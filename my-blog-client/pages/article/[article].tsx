@@ -40,16 +40,16 @@ export default function Article({ article, notFound = false }: IPropTypes) {
                     </div>
                 </div>
                 <div className="lg:col-span-1 md:col-span-2 pt-7">
-                    <div className="p-5 w-full flex flex-col items-center border border-primary bg-[#53bd9515]">
-                        <div>
+                    <div className="p-5 w-full flex flex-col bg-[#53bd9510]">
+                        <div className="flex items-center justify-start">
                             <img
                                 src={`http://localhost:1337${article.attributes.author.data.attributes.avatarurl}`}
                                 alt={article.attributes.Title}
-                                className="h-36 w-36 border border-primary object-cover rounded-full"
+                                className="h-20 w-20 object-cover rounded-full"
                             />
-                        </div>
-                        <div>
-                            <h1 className="pt-3 font-caveatbrush text-2xl text-center text-gray-600">{article.attributes.author.data.attributes.username}</h1>
+                            <div>
+                                <h1 className="ml-3 font-caveatbrush text-2xl text-gray-600">{article.attributes.author.data.attributes.username}</h1>
+                            </div>
                         </div>
                         <div className="mt-4 w-full">
                             <div className="pb-2 text-sm font-medium">

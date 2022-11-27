@@ -51,9 +51,8 @@ export default function Login() {
 
             setUserContext({ ...obj })
             setIsLoggedIn(true)
-            Toast('You are logged in')
 
-            router.push('/')
+            router.push('/account')
         } catch (e) {
             console.log(e)
             Toast('Invalid user credentials')
@@ -83,7 +82,7 @@ export default function Login() {
                                 <input className="bg-transparent mb-5 px-2 h-10 focus:outline-none text-gray-600 border border-[#53bd95]" type="email" name="email" placeholder="Email" onChange={(e) => handleChange(e)} />
                                 <input className="bg-transparent mb-5 px-2 h-10 focus:outline-none text-gray-600 border border-[#53bd95]" type="password" name="password" placeholder="Password" onChange={(e) => handleChange(e)} />
                                 <div className="mt-5 flex items-center justify-center bottom-0 left-0 w-full p-2">
-                                    <button type="submit" className="text-gray-700 pt-[2px] h-[42px] w-24 text-sm font-medium rounded-full bg-[#53bd9560]">SIGN UP</button>
+                                    <button type="submit" className="text-gray-700 mt-4 h-[40px] w-20 text-xs font-bold rounded-full bg-[#53bd9560]">SIGN UP</button>
                                 </div>
                             </form>
                         </div>
