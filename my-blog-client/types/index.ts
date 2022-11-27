@@ -94,19 +94,10 @@ export interface IQueryOptions {
 }
 
 export interface IUser {
-  avatarurl: string;
-  email: string;
-  username: string;
-  id: string;
-  about: string;
-  articles: IArticleAttribute;
-}
-
-export interface IAppContextTypes {
-  user: IUser;
-  setUser: Dispatch<SetStateAction<IUser>>;
-  isLoggedIn: boolean;
-  setIsLoggedIn: Dispatch<SetStateAction<boolean>>;
-  isLoading: boolean;
-  setIsLoading: Dispatch<SetStateAction<boolean>>;
+  avatarurl: string,
+  email: string,
+  username: string,
+  id: string,
+  about: string,
+  articles: Array<IArticleAttribute>
 }

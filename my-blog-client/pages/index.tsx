@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import axios, { AxiosResponse } from 'axios'
 import { GetServerSidePropsContext } from 'next'
 import Head from 'next/head'
@@ -7,7 +8,9 @@ import { IArticle, ICategory, ICollectionResponse, IPagination, IQueryOptions } 
 import qs from 'qs'
 import Pagination from '../components/Pagination'
 import { useRouter } from 'next/router'
-import { debounce } from '../utils'
+import { debounce, isJWTIsValid } from '../utils'
+import { useDispatch } from 'react-redux'
+import { fetchUser } from '../redux/slices/user'
 
 interface IPropTypes {
   categories: {
@@ -20,6 +23,7 @@ interface IPropTypes {
 }
 
 export default function Home({ categories, articles }: IPropTypes) {
+  const dispatch = useDispatch()
   const router = useRouter()
   const { page, pageCount } = articles.pagination
 

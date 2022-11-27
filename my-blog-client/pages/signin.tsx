@@ -1,13 +1,13 @@
 import axios from "axios"
 import { useRouter } from "next/router"
-import { useContext, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
+import { useSelector } from "react-redux"
 import Toast from "../components/Toast"
-import { IAppContextTypes } from "../types"
+import { RootState } from "../redux/store"
 import { checkEmail, checkText } from "../utils"
-import { AppContext } from "./_app"
 
 export default function Signup() {
-    const { isLoggedIn } = useContext(AppContext) as IAppContextTypes
+    const { isSignedIn } = useSelector((state: RootState) => state.user)
     const router = useRouter()
     const [avatar, setAvatar] = useState<string | Blob>('')
     const [avatarPreview, setAvatarPreview] = useState<string | ArrayBuffer | null>(null)
@@ -138,7 +138,7 @@ export default function Signup() {
     return (
         <>
             {
-                !isLoggedIn &&
+                !isSignedIn &&
                 <div className="screen-height h-full flex items-center justify-center">
                     <div className="w-[400px] my-20 rounded-lg bg-[#53bd9530]">
                         <form onSubmit={(e) => handleSubmit(e)} className="flex flex-col p-8">

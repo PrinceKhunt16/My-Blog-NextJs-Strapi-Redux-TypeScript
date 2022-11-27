@@ -1,51 +1,48 @@
 import Link from "next/link"
-import { useContext } from "react"
-import { AppContext } from "../pages/_app"
-import { IAppContextTypes } from "../types"
+import { useSelector } from 'react-redux'
+import { RootState } from "../redux/store"
 
 export default function Navbar() {
-    const { isLoggedIn, user } = useContext(AppContext) as IAppContextTypes
+    const { data, isSignedIn } = useSelector((state: RootState) => state.user)
 
     return (
         <nav className="flex item-center justify-between py-3 boxshadow-fullwidth">
-            <Link href="/">
-                <div className="flex items-center cursor-pointer">
-                    <span className="text-[32px] text-primary font-caveatbrush">
-                        My Blog
-                    </span>
-                </div>
-            </Link>
+            <div className="flex items-center cursor-pointer">
+                <span className="text-[32px] text-primary font-caveatbrush">
+                    My Blog
+                </span>
+            </div>
             <ul className="flex items-center gap-5">
                 <li className="text-gray-600">
-                    <a href="/">Blogs</a>
+                    <Link href="/">Blogs</Link>
                 </li>
                 <li className="text-gray-600">
-                    <a href="#">Community</a>
+                    <Link href="#">Community</Link>
                 </li>
                 <li className="text-gray-600">
-                    <a href="#">About</a>
+                    <Link href="#">About</Link>
                 </li>
                 <li className="text-gray-600">
-                    <a href="#">Learn</a>
+                    <Link href="#">Learn</Link>
                 </li>
                 <li className="text-gray-600">
-                    <a href="/write">Write</a>
+                    <Link href="/write">Write</Link>
                 </li>
             </ul>
             <ul className="flex items-center">
                 {
-                    isLoggedIn ?
+                    isSignedIn ?
                         (
                             <>
                                 <li>
-                                    <a href="/account">
+                                    <Link href='/account'>
                                         <div>
                                             <img
-                                                src={`http://localhost:1337${user.avatarurl}`} alt=""
+                                                src={`http://localhost:1337${data?.avatarurl}`} alt=""
                                                 className="w-10 h-10 cursor-pointer rounded-full"
                                             />
                                         </div>
-                                    </a>
+                                    </Link>
                                 </li>
                             </>
                         ) : (

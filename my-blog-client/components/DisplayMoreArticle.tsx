@@ -57,7 +57,7 @@ export default function DisplayMoreArticle({ username, slug }: IPropTypes) {
             {
                 blogs?.map((blog: IPropBlogTypes) => {
                     return (
-                        <>
+                        <div key={blog.attributes.Slug}>
                             {blog.attributes.Slug !== slug &&
                                 <div className="flex gap-2 py-2 2xl:flex-row lg:flex-col md:flex-row">
                                     <img className="object-cover 2xl:h-[90px] lg:h-32 md:h-20 2xl:w-32 lg:w-full md:w-28" src={`http://localhost:1337${blog.attributes.imageurl}`} alt="" />
@@ -72,7 +72,7 @@ export default function DisplayMoreArticle({ username, slug }: IPropTypes) {
                                     </div>
                                 </div>
                             }
-                        </>
+                        </div>
                     )
                 })
             }

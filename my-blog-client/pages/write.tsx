@@ -1,11 +1,12 @@
 import axios, { AxiosResponse } from "axios"
 import { useRouter } from "next/router"
-import { useContext, useEffect, useState } from "react"
-import { IAppContextTypes, ICategory, ICollectionResponse } from "../types"
-import { AppContext } from "./_app"
+import { useEffect, useState } from "react"
+import { ICategory, ICollectionResponse } from "../types"
 import Loading from "../components/Loading"
 import { checkText, isJWTIsValid } from "../utils"
 import Toast from "../components/Toast"
+import { useSelector } from "react-redux"
+import { RootState } from "../redux/store"
 
 interface IPropTypes {
     categories: {
@@ -14,8 +15,8 @@ interface IPropTypes {
 }
 
 export default function Write({ categories }: IPropTypes) {
+    const { data, isSignedIn, isLoading } = useSelector((state: RootState) => state.user)
     const router = useRouter()
-    const { user, isLoggedIn, isLoading } = useContext(AppContext) as IAppContextTypes
     const [category, setCategory] = useState<string>('0')
     const [image, setImage] = useState<string>('')
     const [imagePreview, setImagePrivew] = useState<string | ArrayBuffer | null>(null)
@@ -56,7 +57,7 @@ export default function Write({ categories }: IPropTypes) {
             {
                 data: {
                     Category: [category],
-                    author: [user.id]
+                    author: [data?.id]
                 }
             },
             config
@@ -162,7 +163,7 @@ export default function Write({ categories }: IPropTypes) {
                     <Loading />
                 </div>
             )}
-            {isLoggedIn && !isLoading && (
+            {isSignedIn && !isLoading && (
                 <div className="w-[400px] my-20 rounded-lg bg-[#53bd9530]">
                     <form className="flex flex-col p-8" onSubmit={(e) => handleSubmit(e)} >
                         <h1 className="font-caveatbrush text-2xl text-center text-gray-600 mb-6">Write Blog</h1>

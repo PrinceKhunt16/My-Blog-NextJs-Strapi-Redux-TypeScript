@@ -48,7 +48,7 @@ export const serializeMarkdown = async (item: IArticle) => {
 }
 
 export const fetchUserFromJWTToken = async (jwt: string) => {
-    const jwtObj = JSON.parse(atob(jwt.split('.')[1]))
+    const jwtObj = JSON.parse(window.atob(jwt.split('.')[1]))
     const { data } = await axios.get(`http://localhost:1337/api/users/${jwtObj.id}?populate=*`)
     const { avatarurl, email, username, id, about, articles } = data
     return { avatarurl, email, username, id, about, articles }
@@ -57,15 +57,15 @@ export const fetchUserFromJWTToken = async (jwt: string) => {
 export const isJWTIsValid = () => {
     const jwt = localStorage.getItem('jwt')
     
-    try {
-        const jwtObj = JSON.parse(atob(jwt?.split('.')[1]))
-        if(typeof jwtObj.id === "number"){
+    if(jwt){
+        const obj = JSON.parse(window.atob(jwt.split('.')[1]))
+        if(typeof obj.id === "number"){
             return true
         } else {
             localStorage.removeItem('jwt')
             return false
         }
-    } catch (e) {
+    } else {
         localStorage.removeItem('jwt')
         return false
     }

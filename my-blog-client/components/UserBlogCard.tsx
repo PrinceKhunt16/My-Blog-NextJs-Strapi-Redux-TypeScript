@@ -12,7 +12,7 @@ export default function UserBlogCard({ article }: IPropType) {
 
     return (
         <div className="relative" onMouseOver={() => setHover(true)} onMouseLeave={() => setHover(false)}>
-            <div className="flex gap-3 absolute top-0 right-0">
+            <div className="flex gap-3 absolute top-[14px] right-0">
                 <button className={`text-primary text-xs font-semibold ${hover ? 'block' : 'hidden'}`}>EDIT</button>
                 <button className={`text-primary text-xs font-semibold ${hover ? 'block' : 'hidden'}`}>DELETE</button>
             </div>

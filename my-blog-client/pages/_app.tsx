@@ -1,50 +1,27 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
+import { Provider, useDispatch, useSelector } from 'react-redux'
+import { RootState, store, wrapper } from '../redux/store'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import NextNProgress from "nextjs-progressbar"
-import { createContext, useEffect, useState } from 'react'
-import { fetchUserFromJWTToken } from '../utils'
-import { IAppContextTypes } from '../types'
 import ToastContainer from '../components/ToastContainer'
+import { useEffect } from 'react'
+import { fetchUser } from '../redux/slices/user'
 
-export const AppContext = createContext<IAppContextTypes | null>(null)
-
-export default function App({ Component, pageProps }: AppProps) {
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
-  const [isLoading, setIsLoading] = useState(true)
-  const [user, setUser] = useState({
-    avatarurl: '',
-    email: '',
-    username: '',
-    id: '',
-    about: '',
-    articles: []
-  })
-
-  const fetchInitialUser = async () => {
-    try {
-      const jwt = localStorage.getItem('jwt')
-      if (jwt) {
-        const obj = await fetchUserFromJWTToken(jwt)
-        setUser({ ...obj })
-        setIsLoading(false)
-        setIsLoggedIn(true)
-      } else {
-        setIsLoading(false)
-      }
-    } catch (e) {
-      localStorage.removeItem('jwt')
-    }
-  }
+function App({ Component, pageProps }: AppProps) {
+  const { isSignedIn } = useSelector((state: RootState) => state.user)
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    fetchInitialUser()
+    if (!isSignedIn) {
+      dispatch(fetchUser())
+    }
   }, [])
 
   return (
     <>
-      <AppContext.Provider value={{ user, setUser, isLoggedIn, setIsLoggedIn, isLoading, setIsLoading }}>
+      <Provider store={store}>
         <div className='flex flex-col min-h-screen container px-[18px] mx-auto font-sans'>
           <NextNProgress
             color='#53bd95'
@@ -60,7 +37,9 @@ export default function App({ Component, pageProps }: AppProps) {
           <Footer />
         </div>
         <ToastContainer />
-      </AppContext.Provider>
+      </Provider>
     </>
   )
 }
+
+export default wrapper.withRedux(App);

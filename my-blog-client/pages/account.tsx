@@ -1,19 +1,21 @@
 import { useRouter } from "next/router"
-import { useContext, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import Loading from "../components/Loading"
-import { IAppContextTypes } from "../types"
-import { AppContext } from "./_app"
 import UserArticleList from "../components/UserArticleList"
+import { useDispatch, useSelector } from "react-redux"
+import { RootState } from "../redux/store"
+import {  logout } from "../redux/slices/user"
 
 export default function Account() {
-    const { user, isLoading, isLoggedIn, setIsLoggedIn } = useContext(AppContext) as IAppContextTypes
+    const { data, isLoading, isSignedIn } = useSelector((state: RootState) => state.user)
+    const dispatch = useDispatch()
     const router = useRouter()
     const [tabs, setTabs] = useState(['Your Blogs', 'About', 'Logout'])
     const [tab, setTab] = useState('Your Blogs')
 
     const handleLogout = () => {
         localStorage.removeItem('jwt')
-        setIsLoggedIn(false)
+        dispatch(logout())
         router.push('/')
     }
 
@@ -31,17 +33,17 @@ export default function Account() {
                     <Loading />
                 </div>
             )}
-            {isLoggedIn && !isLoading && (
+            {isSignedIn && !isLoading && (
                 <div className="w-full my-8">
                     <div className="w-full mb-7 flex rounded-lg">
                         <div className="flex items-center justify-center">
                             <img
-                                src={`http://localhost:1337${user.avatarurl}`} alt=""
+                                src={`http://localhost:1337${data?.avatarurl}`} alt=""
                                 className="w-20 cursor-pointer rounded-full"
                             />
                         </div>
                         <div className="ml-4 flex items-center">
-                            <h1 className="font-caveatbrush text-3xl text-gray-600">{user.username}</h1>
+                            <h1 className="font-caveatbrush text-3xl text-gray-600">{data?.username}</h1>
                         </div>
                     </div>
                     <ul className="w-full borderbottom pb-4 my-3 flex items-center justify-start gap-4">
@@ -66,9 +68,9 @@ export default function Account() {
                     </ul>
                     {tab === 'Your Blogs' &&
                         <div>
-                            {user.articles &&
+                            {data?.articles &&
                                 <UserArticleList
-                                    articles={user.articles}
+                                    articles={data?.articles}
                                 />
                             }
                         </div>
@@ -76,10 +78,10 @@ export default function Account() {
                     {tab === 'About' &&
                         <div>
                             <div className="mt-3 max-w-[350px] text-sm font-medium">
-                                <p className="text-gray-600">{user.about}</p>
+                                <p className="text-gray-600">{data?.about}</p>
                             </div>
                             <div className="mt-3 text-sm font-medium">
-                                <p className="text-gray-600">My email id is {user.email}</p>
+                                <p className="text-gray-600">My email id is {data?.email}</p>
                             </div>
                         </div>
                     }

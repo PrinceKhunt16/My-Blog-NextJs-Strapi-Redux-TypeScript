@@ -1,13 +1,15 @@
 import axios from "axios"
 import { useRouter } from "next/router"
-import { useContext, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
 import Toast from "../components/Toast"
-import { IAppContextTypes } from "../types"
+import { fetchUser } from "../redux/slices/user"
+import { RootState } from "../redux/store"
 import { checkEmail, checkText, fetchUserFromJWTToken } from "../utils"
-import { AppContext } from "./_app"
 
 export default function Login() {
-    const { isLoggedIn, setUser: setUserContext, setIsLoggedIn } = useContext(AppContext) as IAppContextTypes
+    const { isSignedIn } = useSelector((state: RootState) => state.user)
+    const dispatch = useDispatch()
     const router = useRouter()
 
     const [user, setUser] = useState({
@@ -49,12 +51,10 @@ export default function Login() {
 
             const obj = await fetchUserFromJWTToken(jwt)
 
-            setUserContext({ ...obj })
-            setIsLoggedIn(true)
+            dispatch(fetchUser())
 
             router.push('/account')
         } catch (e) {
-            console.log(e)
             Toast('Invalid user credentials')
         }
     }
@@ -73,7 +73,7 @@ export default function Login() {
     return (
         <>
             {
-                !isLoggedIn &&
+                !isSignedIn &&
                 <>
                     <div className="screen-height h-full flex items-center justify-center" >
                         <div className="w-[400px] my-20 rounded-lg bg-[#53bd9530]">
