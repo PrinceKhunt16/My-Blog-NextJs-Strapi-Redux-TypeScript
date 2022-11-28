@@ -1,31 +1,20 @@
-import { useEffect } from 'react'
-import axios, { AxiosResponse } from 'axios'
-import { GetServerSidePropsContext } from 'next'
 import Head from 'next/head'
 import ArticleList from '../components/ArticleList'
 import Tabs from '../components/Tabs'
-import { IArticle, ICategory, ICollectionResponse, IPagination, IQueryOptions } from '../types'
-import qs from 'qs'
 import Pagination from '../components/Pagination'
 import { useRouter } from 'next/router'
-import { debounce, isJWTIsValid } from '../utils'
-import { useDispatch } from 'react-redux'
-import { fetchUser } from '../redux/slices/user'
+import { debounce } from '../utils'
+import { useSelector } from 'react-redux'
+import { RootState, wrapper } from '../redux/store'
+import { fetchCategories } from '../redux/slices/categories'
+import { fetchArticles } from '../redux/slices/articles'
 
-interface IPropTypes {
-  categories: {
-    items: ICategory[]
-  },
-  articles: {
-    items: IArticle[]
-    pagination: IPagination
-  },
-}
-
-export default function Home({ categories, articles }: IPropTypes) {
-  const dispatch = useDispatch()
+export default function Home() {
   const router = useRouter()
-  const { page, pageCount } = articles.pagination
+  const { data: categories } = useSelector((state: RootState) => state.categories)
+  const { data: articles } = useSelector((state: RootState) => state.articles)
+
+  const { page, pageCount } = articles.meta.pagination
 
   const handleSearch = (query: string) => {
     router.push(`/?search=${query}`)
@@ -39,11 +28,11 @@ export default function Home({ categories, articles }: IPropTypes) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Tabs
-        categories={categories.items}
+        categories={categories}
         handleSearch={debounce(handleSearch, 500)}
       />
       <ArticleList
-        articles={articles.items}
+        articles={articles.data}
       />
       <Pagination
         page={page}
@@ -53,45 +42,11 @@ export default function Home({ categories, articles }: IPropTypes) {
   )
 }
 
-export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const options: Partial<IQueryOptions> = {
-    populate: ['author.avatar'],
-    sort: ['id:desc'],
-    pagination: {
-      page: context.query.page ? +context.query.page : 1,
-      pageSize: 8
-    }
-  }
-
-  if (context.query.search) {
-    options.filters = {
-      Title: {
-        $containsi: context.query.search
-      }
-    }
-  }
-
-  const queryString = qs.stringify(options)
-
-  const config = {
-    headers: {
-      Authorization: `Bearer ${process.env.NEXT_PUBLIC_BASE_API_KEY}`
-    }
-  }
-
-  const { data: articles }: AxiosResponse<ICollectionResponse<IArticle[]>> = await axios.get(`${process.env.API_BASE_URL}/api/articles?${queryString}`, config)
-
-  const { data: categories }: AxiosResponse<ICollectionResponse<ICategory[]>> = await axios.get(`${process.env.API_BASE_URL}/api/categories`, config)
-
+export const getServerSideProps = wrapper.getServerSideProps(store => async ({ query }) => {
+  await store.dispatch(fetchCategories())
+  await store.dispatch(fetchArticles(query))
+  
   return {
-    props: {
-      categories: {
-        items: categories.data
-      },
-      articles: {
-        items: articles.data,
-        pagination: articles.meta.pagination
-      }
-    }
+    props: {}
   }
-}
+})

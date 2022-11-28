@@ -203,7 +203,7 @@ export default function Write({ categories }: IPropTypes) {
 }
 
 export async function getServerSideProps() {
-    const { data: categories }: AxiosResponse<ICollectionResponse<ICategory[]>> = await axios.get(`${process.env.API_BASE_URL}/api/categories`)
+    const { data: categories }: AxiosResponse<ICollectionResponse<ICategory[]>> = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/categories`)
 
     return {
         props: {

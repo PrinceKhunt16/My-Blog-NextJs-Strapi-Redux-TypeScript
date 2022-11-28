@@ -35,7 +35,7 @@ export const userSlice = createSlice({
     }),
     builder.addCase(fetchUser.rejected, (state) => {
       state.isSignedIn = false
-      state.isLoading = true
+      state.isLoading = false
     })
   }
 })
@@ -44,7 +44,7 @@ export const { logout } = userSlice.actions
 
 export default userSlice.reducer
 
-export const fetchUser = createAsyncThunk('products/fetchuser', async () => {
+export const fetchUser = createAsyncThunk('user/fetchUser', async () => {
   const jwt = localStorage.getItem('jwt')
 
   if(jwt){

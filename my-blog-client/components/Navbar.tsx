@@ -7,7 +7,7 @@ export default function Navbar() {
 
     return (
         <nav className="flex item-center justify-between py-3 boxshadow-fullwidth">
-            <div className="flex items-center cursor-pointer">
+            <div className="flex items-center">
                 <span className="text-[32px] text-primary font-caveatbrush">
                     My Blog
                 </span>

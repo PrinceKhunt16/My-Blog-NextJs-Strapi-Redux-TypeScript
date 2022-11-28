@@ -1,7 +1,7 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
-import { Provider, useDispatch, useSelector } from 'react-redux'
-import { RootState, store, wrapper } from '../redux/store'
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState, wrapper } from '../redux/store'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import NextNProgress from "nextjs-progressbar"
@@ -21,23 +21,21 @@ function App({ Component, pageProps }: AppProps) {
 
   return (
     <>
-      <Provider store={store}>
-        <div className='flex flex-col min-h-screen container px-[18px] mx-auto font-sans'>
-          <NextNProgress
-            color='#53bd95'
-            height={1}
-            options={{
-              showSpinner: false
-            }}
-          />
-          <Navbar />
-          <main>
-            <Component {...pageProps} />
-          </main>
-          <Footer />
-        </div>
-        <ToastContainer />
-      </Provider>
+      <div className='flex flex-col min-h-screen container px-[18px] mx-auto font-sans'>
+        <NextNProgress
+          color='#53bd95'
+          height={1}
+          options={{
+            showSpinner: false
+          }}
+        />
+        <Navbar />
+        <main>
+          <Component {...pageProps} />
+        </main>
+        <Footer />
+      </div>
+      <ToastContainer />
     </>
   )
 }

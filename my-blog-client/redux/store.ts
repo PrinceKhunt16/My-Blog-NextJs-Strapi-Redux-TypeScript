@@ -1,25 +1,41 @@
-import { combineReducers, createStore } from "redux";
-import thunk from "redux-thunk";
-import { composeWithDevTools } from "redux-devtools-extension";
-import { createWrapper } from "next-redux-wrapper";
-import { applyMiddleware } from '@reduxjs/toolkit'
+import { combineReducers, AnyAction } from "redux";
+import { createWrapper, HYDRATE } from "next-redux-wrapper";
+import { configureStore } from '@reduxjs/toolkit'
 import userSlice from './slices/user'
+import categoriesSlice from "./slices/categories";
+import articlesSlice from "./slices/articles";
 
-const reducer = combineReducers({
+const combineReducer = combineReducers({
   user: userSlice,
+  categories: categoriesSlice,
+  articles: articlesSlice
 })
 
-const middleware = [thunk];
+const reducer = (state: ReturnType<typeof combineReducer>, action: AnyAction) => {
+   if (action.type === HYDRATE) {
+    const next = {
+      ...state, 
+      ...action.payload,
+    };
+    
+    if (state.user) {
+      next.user = state.user;
+    }
+    
+    return next;
+  } else {
+    return combineReducer(state, action);
+  }
+};
 
-export const store = createStore(
+const makeStore = () => configureStore({
   reducer,
-  {},
-  composeWithDevTools(applyMiddleware(...middleware))
-);
+  devTools: true
+})
 
-const makeStore = () => store;
+type Store = ReturnType<typeof makeStore>;
+
+export type AppDispatch = Store['dispatch'];
+export type RootState = ReturnType<Store['getState']>;
 
 export const wrapper = createWrapper(makeStore);
-
-export type RootState = ReturnType<typeof store.getState>
-export type AppDispatch = typeof store.dispatch

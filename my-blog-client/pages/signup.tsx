@@ -5,10 +5,10 @@ import { useDispatch, useSelector } from "react-redux"
 import Toast from "../components/Toast"
 import { fetchUser } from "../redux/slices/user"
 import { RootState } from "../redux/store"
-import { checkEmail, checkText, fetchUserFromJWTToken } from "../utils"
+import { checkEmail, checkText } from "../utils"
 
 export default function Login() {
-    const { isSignedIn } = useSelector((state: RootState) => state.user)
+    const { isSignedIn, isLoading } = useSelector((state: RootState) => state.user)
     const dispatch = useDispatch()
     const router = useRouter()
 
@@ -52,7 +52,6 @@ export default function Login() {
             dispatch(fetchUser())
 
             router.push('/')
-            router.reload()
         } catch (e) {
             Toast('Invalid user credentials')
         }
