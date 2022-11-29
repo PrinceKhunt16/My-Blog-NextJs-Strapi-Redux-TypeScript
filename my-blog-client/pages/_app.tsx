@@ -1,7 +1,7 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 import { useDispatch, useSelector } from 'react-redux'
-import { RootState, wrapper } from '../redux/store'
+import { AppDispatch, RootState, wrapper } from '../redux/store'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import NextNProgress from "nextjs-progressbar"
@@ -11,7 +11,7 @@ import { fetchUser } from '../redux/slices/user'
 
 function App({ Component, pageProps }: AppProps) {
   const { isUser } = useSelector((state: RootState) => state.user)
-  const dispatch = useDispatch()
+  const dispatch = useDispatch<AppDispatch>()
 
   useEffect(() => {
     if (!isUser) {

@@ -6,7 +6,7 @@ import Search from "../images/search.png"
 import { useEffect, useState } from "react"
 
 interface IPropTypes {
-    categories: ICategory[],
+    categories: ICategory[] | null,
     handleSearch: (query: string) => void
 }
 
@@ -74,7 +74,7 @@ export default function Tabs({ categories, handleSearch }: IPropTypes) {
                     <Link href='/'>Recent</Link>
                 </li>
                 {
-                    categories.map((category) => {
+                    categories?.map((category) => {
                         return (
                             <li
                                 key={category.id}

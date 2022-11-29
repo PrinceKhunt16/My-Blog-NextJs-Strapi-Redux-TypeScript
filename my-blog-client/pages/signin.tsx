@@ -3,11 +3,11 @@ import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import Toast from "../components/Toast"
 import { signinUserImage, signinUserText } from "../redux/slices/signin"
-import { RootState } from "../redux/store"
+import { AppDispatch, RootState } from "../redux/store"
 import { checkEmail, checkText } from "../utils"
 
 export default function Signup() {
-    const dispatch = useDispatch()
+    const dispatch = useDispatch<AppDispatch>()
     const { isUser } = useSelector((state: RootState) => state.user)
     const { error, message } = useSelector((state: RootState) => state.signin)
     const router = useRouter()

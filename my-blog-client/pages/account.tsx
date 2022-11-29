@@ -3,12 +3,12 @@ import { useEffect, useState } from "react"
 import Loading from "../components/Loading"
 import UserArticleList from "../components/UserArticleList"
 import { useDispatch, useSelector } from "react-redux"
-import { RootState } from "../redux/store"
+import { AppDispatch, RootState } from "../redux/store"
 import { logout } from "../redux/slices/user"
 
 export default function Account() {
     const { data, isLoading, isUser } = useSelector((state: RootState) => state.user)
-    const dispatch = useDispatch()
+    const dispatch = useDispatch<AppDispatch>()
     const router = useRouter()
     const [tabs, setTabs] = useState(['Your Blogs', 'About', 'Logout'])
     const [tab, setTab] = useState('Your Blogs')

@@ -65,6 +65,11 @@ export interface IArticle {
   attributes: IArticleAttribute;
 }
 
+export interface IArticleSliceData {
+  data: IArticle[] | null;
+  meta: IResourceMeta;
+}
+
 export interface IPagination {
   page: number;
   pageSize: number;

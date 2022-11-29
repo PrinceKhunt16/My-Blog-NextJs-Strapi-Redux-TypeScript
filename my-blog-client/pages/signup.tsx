@@ -1,17 +1,15 @@
-import axios from "axios"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import Toast from "../components/Toast"
 import { signupUser } from "../redux/slices/signup"
-import { fetchUser } from "../redux/slices/user"
-import { RootState } from "../redux/store"
+import { AppDispatch, RootState } from "../redux/store"
 import { checkEmail, checkText } from "../utils"
 
 export default function Login() {
     const { isUser } = useSelector((state: RootState) => state.user)
     const { isSignedUp, error, message } = useSelector((state: RootState) => state.signup)
-    const dispatch = useDispatch()
+    const dispatch = useDispatch<AppDispatch>()
     const router = useRouter()
     const [user, setUser] = useState({
         email: '',

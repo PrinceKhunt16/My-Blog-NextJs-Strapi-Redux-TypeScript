@@ -9,13 +9,13 @@ export interface ISignupSliceUserState {
 export interface ISignupSliceState {
     isSignedUp: boolean,
     error: null | string,
-    message: null | string
+    message: string
 }
 
 const initialState: ISignupSliceState = {
     isSignedUp: false,
     error: null,
-    message: null
+    message: ''
 }
 
 export const signupSlice = createSlice({
@@ -26,16 +26,16 @@ export const signupSlice = createSlice({
         builder.addCase(signupUser.pending, (state) => {
             state.isSignedUp = false,
             state.error = null,
-            state.message = null
+            state.message = ''
         }),
         builder.addCase(signupUser.fulfilled, (state) => {
             state.isSignedUp = true,
             state.message = 'You are signed up'
-            state.error = null
+            state.error = ''
         }),
         builder.addCase(signupUser.rejected, (state) => {
             state.isSignedUp = false,
-            state.message = null
+            state.message = ''
             state.error = 'Invalid user credentials'
         })
     },

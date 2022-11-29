@@ -1,10 +1,16 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { HYDRATE } from "next-redux-wrapper";
 import qs from "qs";
-import { IQueryOptions } from "../../types";
+import { ParsedUrlQuery } from "querystring";
+import { IArticleSliceData, IQueryOptions } from "../../types";
 
-const initialState = {
+export interface IArticleSliceProps {
+  data: IArticleSliceData | null,
+  error: string,
+  isLoading: boolean
+}
+
+const initialState: IArticleSliceProps = {
   data: null,
   error: "",
   isLoading: false,
@@ -33,7 +39,7 @@ export default articlesSlice.reducer;
 
 export const fetchArticles = createAsyncThunk(
   "articles/fetchArticles",
-  async (query) => {
+  async (query: ParsedUrlQuery) => {
     const options: Partial<IQueryOptions> = {
       populate: ["author.avatar"],
       sort: ["id:desc"],

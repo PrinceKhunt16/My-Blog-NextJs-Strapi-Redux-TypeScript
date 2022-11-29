@@ -13,9 +13,8 @@ export interface ISigninSliceUserState {
 export interface ISigninSliceProps {
     isSignedIn: boolean,
     error: string | null,
-    message: string | null,
-    id: number | null,
-    url: string
+    message: string,
+    id: number | null
 }
 
 export interface ISigninSliceAfterImageState {
@@ -28,9 +27,8 @@ type ISigninSliceImageState = string | Blob
 const initialState: ISigninSliceProps = {
     isSignedIn: false,
     error: null,
-    message: null,
-    id: null,
-    url: ''
+    message: '',
+    id: null
 }
 
 export const signinSlice = createSlice({
@@ -40,61 +38,58 @@ export const signinSlice = createSlice({
         setDefaultSignIn: (state) => {
             state.isSignedIn = false
             state.error = null
-            state.message = null
+            state.message = ''
             state.id = null
-            state.url = ''
         }
     },
     extraReducers(builder) {
         builder.addCase(signinUserText.pending, (state) => {
             state.isSignedIn = false
             state.error = null
-            state.message = null
+            state.message = ''
         }),
         builder.addCase(signinUserText.fulfilled, (state, action) => {
             localStorage.setItem('jwt', action.payload.jwt)
             state.id = action.payload.user.id
             state.isSignedIn = false,
-            state.message = 'You good to go 1'
+            state.message = 'Text data is posted.'
             state.error = null
         }),
         builder.addCase(signinUserText.rejected, (state) => {
             state.isSignedIn = false
-            state.message = null
-            state.error = 'Email or Username are already taken'
+            state.message = ''
+            state.error = 'Email or Username are already taken.'
         }),
         builder.addCase(signinUserImage.pending, (state) => {
             state.isSignedIn = false
             state.error = null
-            state.message = null
+            state.message = ''
         }),
         builder.addCase(signinUserImage.fulfilled, (state) => {
             state.isSignedIn = false
-            state.message = 'You good to go 2'
+            state.message = 'Your avatar posted.'
             state.error = null
         }),
         builder.addCase(signinUserImage.rejected, (state) => {
             state.isSignedIn = false
-            state.message = null
-            state.error = 'Your selected image should be less than 1 mb'
+            state.message = ''
+            state.error = 'Your selected image should be less than 1 mb.'
         }),
         builder.addCase(signinUserImageUrlUpdate.pending, (state) => {
             state.isSignedIn = false
             state.error = null
-            state.message = null
+            state.message = ''
         }),
         builder.addCase(signinUserImageUrlUpdate.fulfilled, (state) => {
             state.isSignedIn = true
             state.message = 'Your account has been created.'
             state.error = null
-            state.url = ''
             state.id = null
         }),
         builder.addCase(signinUserImageUrlUpdate.rejected, (state) => {
             state.isSignedIn = false
-            state.message = null
-            state.error = 'Email or Username are already taken'
-            state.url = ''
+            state.message = ''
+            state.error = 'Email or Username are already taken.'
             state.id = null
         })
     },
