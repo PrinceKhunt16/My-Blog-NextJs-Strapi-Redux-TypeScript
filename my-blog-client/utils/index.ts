@@ -1,4 +1,3 @@
-import axios from "axios"
 import { serialize } from "next-mdx-remote/serialize"
 import { IArticle } from "../types"
 
@@ -45,13 +44,6 @@ export const serializeMarkdown = async (item: IArticle) => {
             Body: body
         }
     }
-}
-
-export const fetchUserFromJWTToken = async (jwt: string) => {
-    const jwtObj = JSON.parse(window.atob(jwt.split('.')[1]))
-    const { data } = await axios.get(`http://localhost:1337/api/users/${jwtObj.id}?populate=*`)
-    const { avatarurl, email, username, id, about, articles } = data
-    return { avatarurl, email, username, id, about, articles }
 }
 
 export const isJWTIsValid = () => {

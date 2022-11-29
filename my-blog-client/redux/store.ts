@@ -4,11 +4,15 @@ import { configureStore } from '@reduxjs/toolkit'
 import userSlice from './slices/user'
 import categoriesSlice from "./slices/categories";
 import articlesSlice from "./slices/articles";
+import signupSlice from "./slices/signup";
+import signinSlice from "./slices/signin";
 
 const combineReducer = combineReducers({
   user: userSlice,
   categories: categoriesSlice,
-  articles: articlesSlice
+  articles: articlesSlice,
+  signup: signupSlice,
+  signin: signinSlice
 })
 
 const reducer = (state: ReturnType<typeof combineReducer>, action: AnyAction) => {
@@ -18,9 +22,9 @@ const reducer = (state: ReturnType<typeof combineReducer>, action: AnyAction) =>
       ...action.payload,
     };
     
-    if (state.user) {
-      next.user = state.user;
-    }
+    if (state.user) next.user = state.user;
+    if (state.signup) next.signup = state.signup;
+    if (state.signin) next.signin = state.signin;
     
     return next;
   } else {

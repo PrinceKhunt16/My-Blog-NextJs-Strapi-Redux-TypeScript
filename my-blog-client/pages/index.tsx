@@ -4,17 +4,30 @@ import Tabs from '../components/Tabs'
 import Pagination from '../components/Pagination'
 import { useRouter } from 'next/router'
 import { debounce } from '../utils'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { RootState, wrapper } from '../redux/store'
 import { fetchCategories } from '../redux/slices/categories'
 import { fetchArticles } from '../redux/slices/articles'
+import { useEffect } from 'react'
+import { setDefaultSignIn } from '../redux/slices/signin'
+import { fetchUser } from '../redux/slices/user'
 
 export default function Home() {
   const router = useRouter()
+  const dispath = useDispatch()
   const { data: categories } = useSelector((state: RootState) => state.categories)
   const { data: articles } = useSelector((state: RootState) => state.articles)
+  const { isSignedIn } = useSelector((state: RootState) => state.signin)
+  const { isSignedUp } = useSelector((state: RootState) => state.signup)
 
   const { page, pageCount } = articles.meta.pagination
+
+  useEffect(() => {
+    if(isSignedIn || isSignedUp){
+      dispath(setDefaultSignIn())
+      dispath(fetchUser())
+    }
+  }, [isSignedIn, isSignedUp])
 
   const handleSearch = (query: string) => {
     router.push(`/?search=${query}`)

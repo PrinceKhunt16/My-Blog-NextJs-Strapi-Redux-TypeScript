@@ -1,13 +1,15 @@
-import axios from "axios"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import Toast from "../components/Toast"
+import { signinUserImage, signinUserText } from "../redux/slices/signin"
 import { RootState } from "../redux/store"
 import { checkEmail, checkText } from "../utils"
 
 export default function Signup() {
-    const { isSignedIn } = useSelector((state: RootState) => state.user)
+    const dispatch = useDispatch()
+    const { isUser } = useSelector((state: RootState) => state.user)
+    const { error, message } = useSelector((state: RootState) => state.signin)
     const router = useRouter()
     const [avatar, setAvatar] = useState<string | Blob>('')
     const [avatarPreview, setAvatarPreview] = useState<string | ArrayBuffer | null>(null)
@@ -19,56 +21,6 @@ export default function Signup() {
         username: '',
         about: ''
     })
-
-    const handleTextData = async () => {
-        const data = new FormData()
-
-        data.set("username", user.username)
-        data.set("firstname", user.firstname)
-        data.set("lastname", user.lastname)
-        data.set("email", user.email)
-        data.set("password", user.password)
-        data.set("about", user.about)
-
-        const config = {
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${process.env.NEXT_PUBLIC_BASE_API_KEY}`
-            }
-        }
-
-        const response = await axios.post(`http://localhost:1337/api/auth/local/register`, data, config)
-        return response
-    }
-
-    const handleImageData = async () => {
-        const data = new FormData()
-        data.append('files', avatar)
-
-        const config = {
-            headers: {
-                Authorization: `Bearer ${process.env.NEXT_PUBLIC_BASE_API_KEY}`
-            }
-        }
-
-        const response = await axios.post(`http://localhost:1337/api/upload`, data, config)
-        return response
-    }
-
-    const handleImageAfterText = async (id: number, url: string) => {
-        const data = new FormData()
-        data.set("avatarurl", url)
-
-        const config = {
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${process.env.NEXT_PUBLIC_BASE_API_KEY}`
-            }
-        }
-
-        const response = await axios.put(`http://localhost:1337/api/users/${id}`, data, config)
-        return response
-    }
 
     const checkUserData = () => {
         const email = checkEmail(user.email)
@@ -96,14 +48,15 @@ export default function Signup() {
             return
         }
 
-        try {
-            const textResponse = await handleTextData()
-            const fileResponse = await handleImageData()
-            const response = await handleImageAfterText(textResponse.data.user.id, fileResponse.data[0].url)
-            Toast('Now you need login to write blogs.')
-            router.push('/signup')
-        } catch (e) {
-            Toast(e.response.data.error.message)
+        dispatch(signinUserText(user))
+        dispatch(signinUserImage(avatar))
+                    
+        if(error){
+            Toast(error)
+            return
+        } else {
+            Toast(message)
+            router.push('/')
         }
     }
 
@@ -138,7 +91,7 @@ export default function Signup() {
     return (
         <>
             {
-                !isSignedIn &&
+                !isUser &&
                 <div className="screen-height h-full flex items-center justify-center">
                     <div className="w-[400px] my-20 rounded-lg bg-[#53bd9530]">
                         <form onSubmit={(e) => handleSubmit(e)} className="flex flex-col p-8">

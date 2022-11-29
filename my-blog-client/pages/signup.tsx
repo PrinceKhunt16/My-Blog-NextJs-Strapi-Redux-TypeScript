@@ -3,15 +3,16 @@ import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import Toast from "../components/Toast"
+import { signupUser } from "../redux/slices/signup"
 import { fetchUser } from "../redux/slices/user"
 import { RootState } from "../redux/store"
 import { checkEmail, checkText } from "../utils"
 
 export default function Login() {
-    const { isSignedIn, isLoading } = useSelector((state: RootState) => state.user)
+    const { isUser } = useSelector((state: RootState) => state.user)
+    const { isSignedUp, error, message } = useSelector((state: RootState) => state.signup)
     const dispatch = useDispatch()
     const router = useRouter()
-
     const [user, setUser] = useState({
         email: '',
         password: ''
@@ -31,35 +32,26 @@ export default function Login() {
             return
         }
 
-        const data = new FormData()
-        data.set("identifier", user.email)
-        data.set("password", user.password)
+        dispatch(signupUser(user))
 
-        const config = {
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json",
-                Authorization: `Bearer ${process.env.NEXT_PUBLIC_BASE_API_KEY}`
-            }
+        if(error){
+            Toast(error)
+            return
         }
 
-        try {
-            const response = await axios.post(`http://localhost:1337/api/auth/local`, data, config)
-
-            const { jwt } = response.data
-            localStorage.setItem('jwt', JSON.stringify(jwt))
-
-            dispatch(fetchUser())
-
+        if(isSignedUp) {
+            Toast(message)
             router.push('/')
-        } catch (e) {
-            Toast('Invalid user credentials')
         }
     }
 
     const handleChange = (e: any) => {
         setUser({ ...user, [e.target.name]: e.target.value })
     }
+
+    useEffect(() => {
+
+    }, [error, message])
 
     useEffect(() => {
         const jwt = localStorage.getItem('jwt')
@@ -71,7 +63,7 @@ export default function Login() {
     return (
         <>
             {
-                !isSignedIn &&
+                !isUser &&
                 <>
                     <div className="screen-height h-full flex items-center justify-center" >
                         <div className="w-[400px] my-20 rounded-lg bg-[#53bd9530]">

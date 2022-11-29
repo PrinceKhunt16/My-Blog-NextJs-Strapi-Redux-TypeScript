@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { RootState } from "../redux/store"
 
 export default function Navbar() {
-    const { data, isSignedIn } = useSelector((state: RootState) => state.user)
+    const { data, isUser } = useSelector((state: RootState) => state.user)
 
     return (
         <nav className="flex item-center justify-between py-3 boxshadow-fullwidth">
@@ -30,7 +30,7 @@ export default function Navbar() {
                 </li>
             </ul>
             <ul className="flex items-center">
-                {isSignedIn ?
+                {isUser ?
                         (
                             <>
                                 <li>
@@ -38,7 +38,7 @@ export default function Navbar() {
                                         <div>
                                             <img
                                                 src={`http://localhost:1337${data?.avatarurl}`} alt=""
-                                                className="w-10 h-10 cursor-pointer rounded-full"
+                                                className="w-10 h-10 cursor-pointer object-cover rounded-full"
                                             />
                                         </div>
                                     </Link>

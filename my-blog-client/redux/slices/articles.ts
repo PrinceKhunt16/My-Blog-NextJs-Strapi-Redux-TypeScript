@@ -24,6 +24,7 @@ export const articlesSlice = createSlice({
     }),
     builder.addCase(fetchArticles.rejected, (state) => {
       state.data = null;
+      state.isLoading = false;
     });
   },
 });

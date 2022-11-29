@@ -2,14 +2,14 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { IUser } from "../../types";
 
-export interface UserState {
-  isSignedIn: boolean;
+export interface IUserSliceProps {
+  isUser: boolean;
   isLoading: boolean;
   data: IUser | null;
 }
 
-const initialState: UserState = {
-  isSignedIn: false,
+const initialState: IUserSliceProps = {
+  isUser: false,
   isLoading: false,
   data: null
 }
@@ -20,21 +20,21 @@ export const userSlice = createSlice({
   reducers: {
     logout: (state) => {
       state.data = null
-      state.isSignedIn = false
+      state.isUser = false
     }
   },
   extraReducers: (builder) => {
     builder.addCase(fetchUser.pending, (state) => {
       state.isLoading = true
-      state.isSignedIn = false
+      state.isUser = false
     }),
     builder.addCase(fetchUser.fulfilled, (state, action) => {
       state.data = action.payload
       state.isLoading = false
-      state.isSignedIn = true
+      state.isUser = true
     }),
     builder.addCase(fetchUser.rejected, (state) => {
-      state.isSignedIn = false
+      state.isUser = false
       state.isLoading = false
     })
   }

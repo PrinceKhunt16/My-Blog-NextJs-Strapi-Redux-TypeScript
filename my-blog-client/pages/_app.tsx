@@ -10,11 +10,11 @@ import { useEffect } from 'react'
 import { fetchUser } from '../redux/slices/user'
 
 function App({ Component, pageProps }: AppProps) {
-  const { isSignedIn } = useSelector((state: RootState) => state.user)
+  const { isUser } = useSelector((state: RootState) => state.user)
   const dispatch = useDispatch()
 
   useEffect(() => {
-    if (!isSignedIn) {
+    if (!isUser) {
       dispatch(fetchUser())
     }
   }, [])

@@ -15,7 +15,7 @@ interface IPropTypes {
 }
 
 export default function Write({ categories }: IPropTypes) {
-    const { data, isSignedIn, isLoading } = useSelector((state: RootState) => state.user)
+    const { data, isUser, isLoading } = useSelector((state: RootState) => state.user)
     const router = useRouter()
     const [category, setCategory] = useState<string>('0')
     const [image, setImage] = useState<string>('')
@@ -163,7 +163,7 @@ export default function Write({ categories }: IPropTypes) {
                     <Loading />
                 </div>
             )}
-            {isSignedIn && !isLoading && (
+            {isUser && !isLoading && (
                 <div className="w-[400px] my-20 rounded-lg bg-[#53bd9530]">
                     <form className="flex flex-col p-8" onSubmit={(e) => handleSubmit(e)} >
                         <h1 className="font-caveatbrush text-2xl text-center text-gray-600 mb-6">Write Blog</h1>
