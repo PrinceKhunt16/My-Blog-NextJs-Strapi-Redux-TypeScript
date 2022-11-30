@@ -22,7 +22,7 @@
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #53bd9560;
+    background: #53bd9540;
 }
 
 ::selection {
@@ -108,6 +108,7 @@
 .mdxremote p {
     font-size: 18px;
     margin: 0px;
+    line-height: 1.6;
 }
 
 .screen-height {

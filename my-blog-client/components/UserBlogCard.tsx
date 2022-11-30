@@ -14,7 +14,7 @@ export default function UserBlogCard({ article }: IPropType) {
             </div>
             <div className="w-fit mt-[10px]">
                 <Link href={`/article/${article.Slug}`}>
-                    <h1 className="text-[28px] font-normal font-caveatbrush text-gray-600 hover:text-primary transition-transform hover:cursor-pointer leading-8 hover:decoration-gray-500">
+                    <h1 className="text-[24px] font-normal font-caveatbrush text-gray-600 hover:text-primary transition-transform hover:cursor-pointer leading-8 hover:decoration-gray-500">
                         {article.Title.slice(0, 95)}
                     </h1>
                 </Link>
@@ -22,16 +22,16 @@ export default function UserBlogCard({ article }: IPropType) {
             <div className="flex items-center mt-2 mb-2">
                 <span className="text-sm text-gray-600">
                     You on {" "}
-                    <span className="text-gray-400">
+                    <span className="text-gray-500">
                         {formatDate(article.createdAt)}
                     </span>
                 </span>
             </div>
             <div className="flex mt-1">
                 <div className="mr-3">
-                    <div className="text-gray-500">
-                        {article.shortDescription.slice(0, 300)}{' '}
-                        {article.shortDescription.length > 300 ? <span className="text-gray-500 text-sm">read more</span> : ''}
+                    <div className="text-gray-600">
+                        {article.shortDescription.slice(0, 160)}{' '}
+                        {article.shortDescription.length > 160 ? <span className="text-gray-600">&nbsp;read more</span> : ''}
                     </div>
                 </div>
             </div>

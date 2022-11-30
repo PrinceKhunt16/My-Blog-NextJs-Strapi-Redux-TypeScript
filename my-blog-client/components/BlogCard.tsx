@@ -15,7 +15,7 @@ export default function BlogCard({ article }: IPropType) {
             </div>
             <div className="w-fit mt-[10px]">
                 <Link href={`/article/${article.attributes.Slug}`}>
-                    <h1 className="text-[28px] font-normal font-caveatbrush text-gray-600 hover:text-primary transition-transform hover:cursor-pointer leading-8 hover:decoration-gray-500">
+                    <h1 className="text-[24px] font-normal font-caveatbrush text-gray-600 hover:text-primary transition-transform hover:cursor-pointer leading-7 hover:decoration-gray-500">
                         {article.attributes.Title.slice(0, 95)}
                     </h1>
                 </Link>
@@ -30,20 +30,20 @@ export default function BlogCard({ article }: IPropType) {
                         className="h-10 w-10 object-cover rounded-full"
                     />
                 </div>
-                <span className="text-sm text-gray-600">
+                <span className=" text-gray-500 text-sm">
                     {article.attributes.author.data.attributes.firstname}{' '}
                     {article.attributes.author.data.attributes.lastname} on
                     &nbsp;
-                    <span className="text-gray-400">
+                    <span className="text-gray-500">
                         {formatDate(article.attributes.createdAt)}
                     </span>
                 </span>
             </div>
             <div className="flex">
                 <div className="mr-2">
-                    <div className="text-gray-500">
-                        {article.attributes.shortDescription.slice(0, 300)}{' '}
-                        {article.attributes.shortDescription.length > 300 ? <span className="text-gray-500 text-sm">read more</span> : ''}
+                    <div className="text-gray-600">
+                        {article.attributes.shortDescription.slice(0, 160)}{' '}
+                        {article.attributes.shortDescription.length > 160 ? <span className="text-gray-600">read more</span> : ''}
                     </div>
                 </div>
             </div>

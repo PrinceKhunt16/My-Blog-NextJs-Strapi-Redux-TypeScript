@@ -23,24 +23,24 @@ export default function Article({ article, notFound = false }: IPropTypes) {
                 />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <div className="mb-7 mt-4 grid lg:grid-cols-3 md:grid-cols-2 lg:gap-12 md:gap-0 single-article">
-                <div className="lg:col-span-2 md:col-span-2">
-                    <h1 className="text-[40px] font-caveatbrush text-gray-600 leading-[45px]">
+            <div className="mb-7 mt-7 grid lg:grid-cols-3 md:grid-cols-2 lg:gap-7 md:gap-0 single-article">
+                <div className="lg:col-span-2 pb-5 md:col-span-2">
+                    <h1 className="text-[28px] xl:text-[30px] leading-[35px] font-caveatbrush text-gray-600">
                         {article.attributes.Title}
                     </h1>
-                    <div className="text-lg text-gray-600 leading-7">
+                    <div className="text-base text-gray-600 leading-7">
                         <img
                             className="w-full pt-5"
                             src={`http://localhost:1337${article.attributes.imageurl}`}
                             alt={article.attributes.Title}
                         />
-                        <div className="pt-6 mdxremote">
+                        <div className="pt-6 mdxremote text-gray-600">
                             <MDXRemote {...(article.attributes.Body) as MDXRemoteSerializeResult} />
                         </div>
                     </div>
                 </div>
-                <div className="lg:col-span-1 md:col-span-2 pt-7">
-                    <div className="p-5 w-full flex flex-col bg-[#53bd9510]">
+                <div className="lg:col-span-1 md:col-span-2">
+                    <div className="lg:pl-7 lg:border-l lg:border-t-0 border-t lg:pt-0 pt-7 w-full h-full flex flex-col">
                         <div className="flex items-center justify-start">
                             <img
                                 src={`http://localhost:1337${article.attributes.author.data.attributes.avatarurl}`}
@@ -52,7 +52,7 @@ export default function Article({ article, notFound = false }: IPropTypes) {
                             </div>
                         </div>
                         <div className="mt-4 w-full">
-                            <div className="pb-2 text-sm font-medium">
+                            <div className="pb-2">
                                 <p className="text-gray-600">{article.attributes.author.data.attributes.about}</p>
                                 <p className="text-gray-600">This blog written by {article.attributes.author.data.attributes.username} on {formatDate(article.attributes.createdAt)} and below his more blogs.</p>
                             </div>
