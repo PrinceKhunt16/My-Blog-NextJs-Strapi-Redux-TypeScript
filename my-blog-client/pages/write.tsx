@@ -5,8 +5,9 @@ import { ICategory, ICollectionResponse } from "../types"
 import Loading from "../components/Loading"
 import { checkText, isJWTIsValid } from "../utils"
 import Toast from "../components/Toast"
-import { useSelector } from "react-redux"
-import { RootState } from "../redux/store"
+import { useDispatch, useSelector } from "react-redux"
+import { AppDispatch, RootState } from "../redux/store"
+import { writeImage, writeUserText } from "../redux/slices/write"
 
 interface IPropTypes {
     categories: {
@@ -15,18 +16,15 @@ interface IPropTypes {
 }
 
 export default function Write({ categories }: IPropTypes) {
-    const { data, isUser, isLoading } = useSelector((state: RootState) => state.user)
+    const { isUser, isLoading } = useSelector((state: RootState) => state.user)
+    const { error, message } = useSelector((state: RootState) => state.write)
+    const dispatch = useDispatch<AppDispatch>()
     const router = useRouter()
+    const [dis, setDis] = useState<boolean>(false)
     const [category, setCategory] = useState<string>('0')
     const [image, setImage] = useState<string>('')
     const [imagePreview, setImagePrivew] = useState<string | ArrayBuffer | null>(null)
-    const [blog, setBlog] = useState({
-        Title: '',
-        Body: '',
-        shortDescription: '',
-        imageurl: '',
-        Slug: ''
-    })
+    const [blog, setBlog] = useState({ Title: '', Body: '', shortDescription: '', imageurl: '', Slug: '' })
 
     const checkUserData = () => {
         const title = checkText(blog.Title, 10, 150)
@@ -42,83 +40,26 @@ export default function Write({ categories }: IPropTypes) {
         return title && body && shortDescription && category !== '0' && imagePreview !== null
     }
 
-    const handleTextData = async () => {
-
-        const config = {
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${process.env.NEXT_PUBLIC_BASE_API_KEY}`
-            }
-        }
-
-        const postresponse = await axios.post(`http://localhost:1337/api/articles`, { data: blog }, config)
-
-        const response = await axios.put(`http://localhost:1337/api/articles/${postresponse.data.data.id}/?populate=categories&users`,
-            {
-                data: {
-                    Category: [category],
-                    author: [data?.id]
-                }
-            },
-            config
-        )
-
-        return postresponse
-    }
-
-    const handleImageData = async () => {
-        const data = new FormData()
-        data.append('files', image)
-
-        const config = {
-            headers: {
-                Authorization: `Bearer ${process.env.NEXT_PUBLIC_BASE_API_KEY}`
-            }
-        }
-
-        const response = await axios.post(`http://localhost:1337/api/upload`, data, config)
-        return response
-    }
-
-    const handleImageAfterText = async (id: number, url: string) => {
-        const config = {
-            headers: {
-                Authorization: `Bearer ${process.env.NEXT_PUBLIC_BASE_API_KEY}`
-            }
-        }
-
-        const response = await axios.put(`http://localhost:1337/api/articles/${id}/?populate=imageurl`,
-            {
-                data: {
-                    imageurl: url
-                }
-            },
-            config
-        )
-        return response
-    }
-
     const handleSubmit = async (e: any) => {
         e.preventDefault()
+        setDis(true)
 
         if (!checkUserData()) {
+            setDis(false)
             return
         }
 
-        try {
-            if (isJWTIsValid()) {
-                const textResponse = await handleTextData()
-                const fileResponse = await handleImageData()
-                const response = await handleImageAfterText(textResponse.data.data.id, fileResponse.data[0].url)
-                router.push('/')
-            } else {
-                router.push('/signup')
-            }
-        } catch (e) {
-            if (e.response.data.error.details.errors[0].path[0] == 'Title') {
-                Toast('This is a blog above the title so you have something else')
-            }
+        if (!isJWTIsValid()) {
+            router.push('/signup')
         }
+
+        const obj = {
+            blog: blog,
+            category: category
+        }
+
+        dispatch(writeUserText(obj))
+        dispatch(writeImage(image))
     }
 
     const handleChange = (e: any) => {
@@ -142,6 +83,21 @@ export default function Write({ categories }: IPropTypes) {
             setBlog({ ...blog, [e.target.name]: e.target.value })
         }
     }
+
+    useEffect(() => {
+        if (dis) {
+            if (error) {
+                setDis(false)
+                Toast(error)
+            }
+
+            if (message === 'Your blog has been posted.') {
+                Toast(message)
+                setDis(false)
+                router.push('/')
+            }
+        }
+    }, [error, message])
 
     useEffect(() => {
         const dummy = blog.Title
@@ -192,7 +148,7 @@ export default function Write({ categories }: IPropTypes) {
                         </select>
                         <p className="text-gray-600 mb-4 font-semibold text-xs">Category should be selected.</p>
                         <div className="mt-5 flex items-center justify-center bottom-0 left-0 w-full p-2">
-                            <button className="text-gray-700 mt-4 h-[40px] w-20 text-xs font-bold rounded-full bg-[#53bd9560]" type="submit">POST</button>
+                            <button className={` ${dis && 'disabled'} text-gray-700 mt-4 h-[40px] w-20 text-xs font-bold rounded-full bg-[#53bd9560]`} type="submit">POST</button>
                         </div>
                     </form>
                 </div>

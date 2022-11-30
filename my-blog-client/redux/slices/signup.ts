@@ -30,7 +30,7 @@ export const signupSlice = createSlice({
         }),
         builder.addCase(signupUser.fulfilled, (state) => {
             state.isSignedUp = true,
-            state.message = 'You are signed up'
+            state.message = 'You are signed up.'
             state.error = ''
         }),
         builder.addCase(signupUser.rejected, (state) => {

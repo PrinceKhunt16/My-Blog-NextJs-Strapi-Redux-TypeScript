@@ -5,6 +5,7 @@ import UserArticleList from "../components/UserArticleList"
 import { useDispatch, useSelector } from "react-redux"
 import { AppDispatch, RootState } from "../redux/store"
 import { logout } from "../redux/slices/user"
+import Link from "next/link"
 
 export default function Account() {
     const { data, isLoading, isUser } = useSelector((state: RootState) => state.user)
@@ -68,10 +69,22 @@ export default function Account() {
                     </ul>
                     {tab === 'Your Blogs' &&
                         <div>
-                            {data?.articles && 
+                            {data?.articles &&
                                 <UserArticleList
                                     articles={data?.articles}
                                 />
+                            }
+                            {data?.articles.length === 0 &&
+                                <div>
+                                    <div className="h-full flex items-center justify-center" >
+                                        <div className="w-[400px] flex flex-col p-8 items-center justify-center mt-[60px] mb-14 rounded-lg bg-[#53bd9530]">
+                                            <p className="text-gray-600">You haven't written a single blog so you won't see anything here. If you want to write a blog, start writing your blog by clicking below button.</p>
+                                            <Link href='/write' className="flex items-center justify-center text-gray-700 mt-10 h-[40px] w-20 text-xs font-bold rounded-full bg-[#53bd9560]">
+                                                WRITE
+                                            </Link>
+                                        </div>
+                                    </div>
+                                </div>
                             }
                         </div>
                     }

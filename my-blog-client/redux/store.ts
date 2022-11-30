@@ -6,13 +6,15 @@ import categoriesSlice from "./slices/categories";
 import articlesSlice from "./slices/articles";
 import signupSlice from "./slices/signup";
 import signinSlice from "./slices/signin";
+import writeSlice from "./slices/write";
 
 const combineReducer = combineReducers({
   user: userSlice,
   categories: categoriesSlice,
   articles: articlesSlice,
   signup: signupSlice,
-  signin: signinSlice
+  signin: signinSlice,
+  write: writeSlice
 })
 
 const reducer = (state: ReturnType<typeof combineReducer>, action: AnyAction) => {
@@ -22,6 +24,7 @@ const reducer = (state: ReturnType<typeof combineReducer>, action: AnyAction) =>
       ...action.payload,
     };
     
+    if (state.write) next.write = state.write;
     if (state.user) next.user = state.user;
     if (state.signup) next.signup = state.signup;
     if (state.signin) next.signin = state.signin;

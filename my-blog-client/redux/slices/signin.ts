@@ -73,7 +73,7 @@ export const signinSlice = createSlice({
         builder.addCase(signinUserImage.rejected, (state) => {
             state.isSignedIn = false
             state.message = ''
-            state.error = 'Your selected image should be less than 1 mb.'
+            state.error = 'Your selected image should be png or jpg.'
         }),
         builder.addCase(signinUserImageUrlUpdate.pending, (state) => {
             state.isSignedIn = false

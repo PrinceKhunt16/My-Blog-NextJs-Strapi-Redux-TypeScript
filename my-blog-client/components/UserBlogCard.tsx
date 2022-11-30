@@ -1,5 +1,4 @@
 import Link from "next/link"
-import { useState } from "react"
 import { IArticleAttribute } from "../types"
 import { formatDate } from "../utils"
 
@@ -8,15 +7,12 @@ interface IPropType {
 }
 
 export default function UserBlogCard({ article }: IPropType) {
-    const [hover, setHover] = useState(false)
-
     return (
-        <div className="relative" onMouseOver={() => setHover(true)} onMouseLeave={() => setHover(false)}>
-            <div className="flex gap-3 absolute top-[14px] right-0">
-                <button className={`text-primary text-xs font-semibold ${hover ? 'block' : 'hidden'}`}>EDIT</button>
-                <button className={`text-primary text-xs font-semibold ${hover ? 'block' : 'hidden'}`}>DELETE</button>
+        <div className="relative">
+            <div className="md:block h-[250px] flex items-center justify-center">
+                <img className="h-full w-full object-cover" src={`http://localhost:1337${article.imageurl}`} alt="" />
             </div>
-            <div className="w-fit">
+            <div className="w-fit mt-[10px]">
                 <Link href={`/article/${article.Slug}`}>
                     <h1 className="text-[28px] font-normal font-caveatbrush text-gray-600 hover:text-primary transition-transform hover:cursor-pointer leading-8 hover:decoration-gray-500">
                         {article.Title.slice(0, 95)}
@@ -37,9 +33,6 @@ export default function UserBlogCard({ article }: IPropType) {
                         {article.shortDescription.slice(0, 300)}{' '}
                         {article.shortDescription.length > 300 ? <span className="text-gray-500 text-sm">read more</span> : ''}
                     </div>
-                </div>
-                <div className="hidden md:block max-w-[150px] max-h-[100px] bg-[#53bd9525]">
-                    <img className="h-full w-full object-cover" src={`http://localhost:1337${article.imageurl}`} alt="" />
                 </div>
             </div>
         </div>

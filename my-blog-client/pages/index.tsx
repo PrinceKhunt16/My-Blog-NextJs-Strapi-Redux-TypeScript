@@ -11,6 +11,7 @@ import { fetchArticles } from '../redux/slices/articles'
 import { useEffect } from 'react'
 import { setDefaultSignIn } from '../redux/slices/signin'
 import { fetchUser } from '../redux/slices/user'
+import { setDefaultWrite } from '../redux/slices/write'
 
 export default function Home() {
   const router = useRouter()
@@ -19,6 +20,7 @@ export default function Home() {
   const { data: articles } = useSelector((state: RootState) => state.articles)
   const { isSignedIn } = useSelector((state: RootState) => state.signin)
   const { isSignedUp } = useSelector((state: RootState) => state.signup)
+  const { writtenDown } = useSelector((state: RootState) => state.write)
 
   const page = articles?.meta.pagination.page
   const pageCount = articles?.meta.pagination.pageCount
@@ -28,7 +30,11 @@ export default function Home() {
       dispath(setDefaultSignIn())
       dispath(fetchUser())
     }
-  }, [isSignedIn, isSignedUp])
+    
+    if(writtenDown){
+      dispath(setDefaultWrite())
+    }
+  }, [isSignedIn, isSignedUp, writtenDown])
 
   const handleSearch = (query: string) => {
     router.push(`/?search=${query}`)

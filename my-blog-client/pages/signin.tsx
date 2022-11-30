@@ -10,17 +10,11 @@ export default function Signup() {
     const dispatch = useDispatch<AppDispatch>()
     const { isUser } = useSelector((state: RootState) => state.user)
     const { error, message } = useSelector((state: RootState) => state.signin)
+    const [dis, setDis] = useState<boolean>(false)
     const router = useRouter()
     const [avatar, setAvatar] = useState<string | Blob>('')
     const [avatarPreview, setAvatarPreview] = useState<string | ArrayBuffer | null>(null)
-    const [user, setUser] = useState({
-        firstname: '',
-        lastname: '',
-        email: '',
-        password: '',
-        username: '',
-        about: ''
-    })
+    const [user, setUser] = useState({ firstname: '', lastname: '', email: '', password: '', username: '', about: '' })
 
     const checkUserData = () => {
         const email = checkEmail(user.email)
@@ -43,21 +37,15 @@ export default function Signup() {
 
     const handleSubmit = async (e: any) => {
         e.preventDefault()
+        setDis(true)
 
         if (!checkUserData()) {
+            setDis(false)
             return
         }
 
         dispatch(signinUserText(user))
         dispatch(signinUserImage(avatar))
-                    
-        if(error){
-            Toast(error)
-            return
-        } else {
-            Toast(message)
-            router.push('/')
-        }
     }
 
     const handleChange = (e: any) => {
@@ -80,6 +68,21 @@ export default function Signup() {
             setUser({ ...user, [e.target.name]: e.target.value })
         }
     }
+
+    useEffect(() => {
+        if (dis) {
+            if (error) {
+                setDis(false)
+                Toast(error)
+            }
+
+            if (message === 'Your account has been created.') {
+                Toast(message)
+                setDis(false)
+                router.push('/')
+            }
+        }
+    }, [error, message])
 
     useEffect(() => {
         const jwt = localStorage.getItem('jwt')
@@ -116,7 +119,7 @@ export default function Signup() {
                             <textarea className="bg-transparent mb-1 px-2 h-20 focus:outline-none text-gray-600 border border-[#53bd95] resize-none" name="about" placeholder="About" onChange={(e) => handleChange(e)} />
                             <p className="text-gray-600 mb-4 font-semibold text-xs">About should be minimum 60 and maximum 200 characters.</p>
                             <div className="mt-5 flex items-center justify-center bottom-0 left-0 w-full p-2">
-                                <button type="submit" className="text-gray-700 mt-4 h-[40px] w-20 text-xs font-bold rounded-full bg-[#53bd9560]">SIGN IN</button>
+                                <button type="submit" className={`${dis && 'disabled'} text-gray-700 mt-4 h-[40px] w-20 text-xs font-bold rounded-full bg-[#53bd9560]`}>SIGN IN</button>
                             </div>
                         </form>
                     </div>

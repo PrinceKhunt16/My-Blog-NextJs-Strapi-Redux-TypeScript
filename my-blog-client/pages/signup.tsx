@@ -8,7 +8,8 @@ import { checkEmail, checkText } from "../utils"
 
 export default function Login() {
     const { isUser } = useSelector((state: RootState) => state.user)
-    const { isSignedUp, error, message } = useSelector((state: RootState) => state.signup)
+    const { error, message } = useSelector((state: RootState) => state.signup)
+    const [dis, setDis] = useState<boolean>(false)
     const dispatch = useDispatch<AppDispatch>()
     const router = useRouter()
     const [user, setUser] = useState({
@@ -24,31 +25,34 @@ export default function Login() {
 
     const handleSubmit = async (e: any) => {
         e.preventDefault()
+        setDis(true)
 
         if (!checkUserData()) {
+            setDis(false)
             Toast('Invalid user credentials')
             return
         }
 
         dispatch(signupUser(user))
-
-        if(error){
-            Toast(error)
-            return
-        }
-
-        if(isSignedUp) {
-            Toast(message)
-            router.push('/')
-        }
     }
-
+    
     const handleChange = (e: any) => {
         setUser({ ...user, [e.target.name]: e.target.value })
     }
 
     useEffect(() => {
+        if (dis) {
+            if (error) {
+                setDis(false)
+                Toast(error)
+            }
 
+            if (message === 'You are signed up.') {
+                Toast(message)
+                setDis(false)
+                router.push('/')
+            }
+        }
     }, [error, message])
 
     useEffect(() => {
@@ -70,7 +74,7 @@ export default function Login() {
                                 <input className="bg-transparent mb-5 px-2 h-10 focus:outline-none text-gray-600 border border-[#53bd95]" type="email" name="email" placeholder="Email" onChange={(e) => handleChange(e)} />
                                 <input className="bg-transparent mb-5 px-2 h-10 focus:outline-none text-gray-600 border border-[#53bd95]" type="password" name="password" placeholder="Password" onChange={(e) => handleChange(e)} />
                                 <div className="mt-5 flex items-center justify-center bottom-0 left-0 w-full p-2">
-                                    <button type="submit" className="text-gray-700 mt-4 h-[40px] w-20 text-xs font-bold rounded-full bg-[#53bd9560]">SIGN UP</button>
+                                    <button type="submit" className={`${dis && 'disabled'} text-gray-700 mt-4 h-[40px] w-20 text-xs font-bold rounded-full bg-[#53bd9560]`}>SIGN UP</button>
                                 </div>
                             </form>
                         </div>
