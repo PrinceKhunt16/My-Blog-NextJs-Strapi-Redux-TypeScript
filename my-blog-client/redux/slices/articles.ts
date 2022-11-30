@@ -45,7 +45,7 @@ export const fetchArticles = createAsyncThunk(
       sort: ["id:desc"],
       pagination: {
         page: query.page ? +query.page : 1,
-        pageSize: 8,
+        pageSize: 9,
       },
     };
 
@@ -61,6 +61,14 @@ export const fetchArticles = createAsyncThunk(
           $containsi: query.search,
         },
       };
+    } else {
+      if(query.category){
+        options.filters = {
+          Category: {
+            slug: query.category,
+          },
+        }
+      }
     }
 
     const queryString = qs.stringify(options);

@@ -11,7 +11,7 @@ interface IPropTypes {
     redirectUrl?: string
 }
 
-export default function Pagination({ page, pageCount, redirectUrl = '/' }: IPropTypes) {
+export default function Pagination({ page, pageCount = 1, redirectUrl = '/' }: IPropTypes) {
     const router = useRouter()
 
     const isNextDisabled = (): boolean => {
