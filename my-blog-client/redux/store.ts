@@ -7,6 +7,7 @@ import articlesSlice from "./slices/articles";
 import signupSlice from "./slices/signup";
 import signinSlice from "./slices/signin";
 import writeSlice from "./slices/write";
+import articleSlice from "./slices/article";
 
 const combineReducer = combineReducers({
   user: userSlice,
@@ -14,7 +15,8 @@ const combineReducer = combineReducers({
   articles: articlesSlice,
   signup: signupSlice,
   signin: signinSlice,
-  write: writeSlice
+  write: writeSlice,
+  article: articleSlice
 })
 
 const reducer = (state: ReturnType<typeof combineReducer>, action: AnyAction) => {

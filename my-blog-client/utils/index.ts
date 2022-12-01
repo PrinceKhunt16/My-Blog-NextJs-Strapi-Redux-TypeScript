@@ -34,18 +34,6 @@ export const debounce = (fn: (query: string) => void, timeout = 1000) => {
     return debounced
 }
 
-export const serializeMarkdown = async (item: IArticle) => {
-    const body = await serialize(item.attributes.Body as string)
-
-    return {
-        ...item,
-        attributes: {
-            ...item.attributes,
-            Body: body
-        }
-    }
-}
-
 export const isJWTIsValid = () => {
     const jwt = localStorage.getItem('jwt')
     

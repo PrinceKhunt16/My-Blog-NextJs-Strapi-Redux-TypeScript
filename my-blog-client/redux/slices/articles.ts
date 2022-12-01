@@ -37,9 +37,7 @@ export const articlesSlice = createSlice({
 
 export default articlesSlice.reducer;
 
-export const fetchArticles = createAsyncThunk(
-  "articles/fetchArticles",
-  async (query: ParsedUrlQuery) => {
+export const fetchArticles = createAsyncThunk("articles/fetchArticles", async (query: ParsedUrlQuery) => {
     const options: Partial<IQueryOptions> = {
       populate: ["author.avatar"],
       sort: ["id:desc"],

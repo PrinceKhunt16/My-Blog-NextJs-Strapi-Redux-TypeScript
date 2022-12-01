@@ -120,7 +120,7 @@ export const writeUserText = createAsyncThunk('write/createWriteText', async (da
     return postresponse.data
 })
 
-export const writeImage = createAsyncThunk('signin/createBlogImage', async (image: IWriteSliceImageState, { dispatch }) => {
+export const writeImage = createAsyncThunk('write/createBlogImage', async (image: IWriteSliceImageState, { dispatch }) => {
     const d = new FormData()
     d.append('files', image)
 
@@ -135,7 +135,7 @@ export const writeImage = createAsyncThunk('signin/createBlogImage', async (imag
     dispatch(writeImageUrlUpdate(response.data[0].url))
 })
 
-export const writeImageUrlUpdate = createAsyncThunk('signin/usersBlogInPutImageUrl', async ( url: string | Blob, { getState }) => {
+export const writeImageUrlUpdate = createAsyncThunk('write/usersBlogInPutImageUrl', async ( url: string | Blob, { getState }) => {
     const { write } = getState() as any
 
     const config = {

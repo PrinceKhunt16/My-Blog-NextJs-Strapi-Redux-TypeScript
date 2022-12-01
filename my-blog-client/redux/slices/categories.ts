@@ -27,9 +27,7 @@ export const categoriesSlice = createSlice({
 
 export default categoriesSlice.reducer;
 
-export const fetchCategories = createAsyncThunk(
-  "category/fetchCategory",
-  async () => {
+export const fetchCategories = createAsyncThunk("category/fetchCategory", async () => {
     const config = {
       headers: {
         Authorization: `Bearer ${process.env.NEXT_PUBLIC_BASE_API_KEY}`,
