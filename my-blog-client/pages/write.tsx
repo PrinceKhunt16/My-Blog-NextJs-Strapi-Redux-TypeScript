@@ -33,8 +33,8 @@ export default function Write({ categories }: IPropTypes) {
         const category = blog.Category === '0'
 
         if (imagePreview === null) Toast('For Blog Image choosen file should be jpg file.')
-        if (!title) Toast('Title should be minimum 10 and maximum 150 characters.')
-        if (!shortDescription) Toast('Short Description should be minimum 150 and maximum 300 characters.')
+        if (!title) Toast('Title should be 10 to 150 characters.')
+        if (!shortDescription) Toast('Short Description should be 130 to 300 characters.')
         if (!body) Toast('Body should be minimum 300 characters.')
         if (category) Toast('Category should be selected.')
 
@@ -121,7 +121,7 @@ export default function Write({ categories }: IPropTypes) {
                     <form className="flex flex-col p-8" onSubmit={(e) => handleSubmit(e)} >
                         <h1 className="tracking-[0.2px] font-caveatbrush text-2xl text-center text-gray-600 mb-6">Write Blog</h1>
                         <input className="tracking-[0.2px] bg-transparent mb-1 px-2 h-10 focus:outline-none text-gray-600 border border-[#53bd95]" type="text" name="Title" placeholder="Title" onChange={(e) => handleChange(e)} />
-                        <p className="text-gray-600 mb-4 font-semibold text-xs">Title should be minimum 10 and maximum 150 characters.</p>
+                        <p className="text-gray-600 mb-4 font-semibold text-xs">Title should be 10 to 150 characters.</p>
                         <div className="signin flex gap-2">
                             {imagePreview &&
                                 <img className="h-10 w-20 object-cover border border-[#53bd95]" src={imagePreview} alt="" />
@@ -130,7 +130,7 @@ export default function Write({ categories }: IPropTypes) {
                         </div>
                         <p className="text-gray-600 mb-4 font-semibold text-xs">Blog Image should be jpg file.</p>
                         <input className="tracking-[0.2px] bg-transparent mb-1 px-2 h-10 focus:outline-none text-gray-600 border border-[#53bd95]" type="text" name="shortDescription" placeholder="Short Discription" onChange={(e) => handleChange(e)} />
-                        <p className="text-gray-600 mb-4 font-semibold text-xs">Short Description should be minimum 300 characters.</p>
+                        <p className="text-gray-600 mb-4 font-semibold text-xs">Short Description should be 130 to 300 characters.</p>
                         <textarea className="tracking-[0.2px] write-textarea bg-transparent mb-1 px-2 h-28 focus:outline-none text-gray-600 border border-[#53bd95] resize-none" name="Body" placeholder="Body" onChange={(e) => handleChange(e)} />
                         <p className="text-gray-600 mb-4 font-semibold text-xs">Body should be minimum 300 characters. </p>
                         <select className="tracking-[0.2px] bg-transparent mb-1 px-2 h-10 focus:outline-none text-gray-600 border border-[#53bd95]" name="Category" onChange={(e) => handleChange(e)}>

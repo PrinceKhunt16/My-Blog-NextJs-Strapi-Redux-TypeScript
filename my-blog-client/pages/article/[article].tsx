@@ -55,7 +55,7 @@ export default function Article({ body }: IPropType) {
                         <div className="mt-4 w-full">
                             <div className="pb-2 tracking-[0.3px]">
                                 <p className="text-gray-600">{data?.attributes.author.data.attributes.about}</p>
-                                <p className="text-gray-600">This blog written by {data?.attributes.author.data.attributes.username} on {data && formatDate(data?.attributes.createdAt)} and below his more blogs.</p>
+                                <p className="text-gray-600">This blog written by {data?.attributes.author.data.attributes.username} on {data && formatDate(data?.attributes.createdAt)}{ usersData?.data && usersData?.data?.length > 1 && "and below his more blogs"}.</p>
                             </div>
                             <div className="flex flex-col">
                                 { usersData?.data &&
