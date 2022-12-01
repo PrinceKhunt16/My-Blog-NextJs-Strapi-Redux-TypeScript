@@ -44,10 +44,10 @@ export default function Account() {
                             />
                         </div>
                         <div className="ml-4 flex items-center">
-                            <h1 className="font-caveatbrush text-3xl text-gray-600">{data?.username}</h1>
+                            <h1 className="tracking-[0.2px] font-caveatbrush text-3xl text-gray-600">{data?.username}</h1>
                         </div>
                     </div>
-                    <ul className="w-full borderbottom pb-4 my-3 flex items-center justify-start gap-4">
+                    <ul className="tracking-[0.2px] w-full borderbottom pb-4 my-3 flex items-center justify-start gap-4">
                         {
                             tabs.map((t, idx) => {
                                 return (
@@ -78,8 +78,8 @@ export default function Account() {
                                 <div>
                                     <div className="h-full flex items-center justify-center" >
                                         <div className="w-[400px] flex flex-col p-8 items-center justify-center mt-[60px] mb-14 rounded-lg bg-[#53bd9530]">
-                                            <p className="text-gray-600">You haven't written a single blog so you won't see anything here. If you want to write a blog, start writing your blog by clicking below button.</p>
-                                            <Link href='/write' className="flex items-center justify-center text-gray-700 mt-10 h-[40px] w-20 text-xs font-bold rounded-full bg-[#53bd9560]">
+                                            <p className="text-gray-600 tracking-[0.2px]">You haven't written a single blog so you won't see anything here. If you want to write a blog, start writing your blog by clicking below button.</p>
+                                            <Link href='/write' className="flex tracking-[0.2px] items-center justify-center text-gray-700 mt-10 h-[40px] w-20 text-xs font-bold rounded-full bg-[#53bd9560]">
                                                 WRITE
                                             </Link>
                                         </div>
@@ -90,7 +90,7 @@ export default function Account() {
                     }
                     {tab === 'About' &&
                         <div>
-                            <div className="h-full flex items-center justify-center" >
+                            <div className="tracking-[0.2px] h-full flex items-center justify-center" >
                                 <div className="w-[400px] flex flex-col p-8 justify-center mt-20 mb-14 rounded-lg bg-[#53bd9530]">
                                     <p className="text-gray-600">{data?.about}</p>
                                     <p className="text-gray-600 mt-4">My email id is {data?.email}</p>
@@ -100,10 +100,10 @@ export default function Account() {
                     }
                     {tab === 'Logout' &&
                         <div>
-                            <div className="h-full flex items-center justify-center" >
+                            <div className="tracking-[0.2px] h-full flex items-center justify-center" >
                                 <div className="w-[400px] flex flex-col p-8 items-center justify-center mt-20 mb-14 rounded-lg bg-[#53bd9530]">
                                     <p className="text-gray-600">If you wanna log out so you can click the below button. But you don't worry your data would be get when you do again sign up.</p>
-                                    <button onClick={() => handleLogout()} className="text-gray-700 mt-10 h-[40px] w-20 text-xs font-bold rounded-full bg-[#53bd9560]">LOGOUT</button>
+                                    <button onClick={() => handleLogout()} className="text-gray-700 tracking-[0.2px] mt-10 h-[40px] w-20 text-xs font-bold rounded-full bg-[#53bd9560]">LOGOUT</button>
                                 </div>
                             </div>
                         </div>

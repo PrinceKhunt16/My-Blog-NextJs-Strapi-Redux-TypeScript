@@ -122,8 +122,8 @@ export default function Write({ categories }: IPropTypes) {
             {isUser && !isLoading && (
                 <div className="w-[400px] my-20 rounded-lg bg-[#53bd9530]">
                     <form className="flex flex-col p-8" onSubmit={(e) => handleSubmit(e)} >
-                        <h1 className="font-caveatbrush text-2xl text-center text-gray-600 mb-6">Write Blog</h1>
-                        <input className="bg-transparent mb-1 px-2 h-10 focus:outline-none text-gray-600 border border-[#53bd95]" type="text" name="Title" placeholder="Title" onChange={(e) => handleChange(e)} />
+                        <h1 className="tracking-[0.2px] font-caveatbrush text-2xl text-center text-gray-600 mb-6">Write Blog</h1>
+                        <input className="tracking-[0.2px] bg-transparent mb-1 px-2 h-10 focus:outline-none text-gray-600 border border-[#53bd95]" type="text" name="Title" placeholder="Title" onChange={(e) => handleChange(e)} />
                         <p className="text-gray-600 mb-4 font-semibold text-xs">Title should be minimum 10 and maximum 150 characters.</p>
                         <div className="signin flex gap-2">
                             {imagePreview &&
@@ -132,11 +132,11 @@ export default function Write({ categories }: IPropTypes) {
                             <input className="mb-1 h-10 focus:outline-none text-gray-600 border border-[#53bd95]" type="file" name="Image" onChange={(e) => handleChange(e)} />
                         </div>
                         <p className="text-gray-600 mb-4 font-semibold text-xs">Blog Image should be jpg file.</p>
-                        <input className="bg-transparent mb-1 px-2 h-10 focus:outline-none text-gray-600 border border-[#53bd95]" type="text" name="shortDescription" placeholder="Short Discription" onChange={(e) => handleChange(e)} />
+                        <input className="tracking-[0.2px] bg-transparent mb-1 px-2 h-10 focus:outline-none text-gray-600 border border-[#53bd95]" type="text" name="shortDescription" placeholder="Short Discription" onChange={(e) => handleChange(e)} />
                         <p className="text-gray-600 mb-4 font-semibold text-xs">Short Description should be minimum 300 characters.</p>
-                        <textarea className="write-textarea bg-transparent mb-1 px-2 h-28 focus:outline-none text-gray-600 border border-[#53bd95] resize-none" name="Body" placeholder="Body" onChange={(e) => handleChange(e)} />
+                        <textarea className="tracking-[0.2px] write-textarea bg-transparent mb-1 px-2 h-28 focus:outline-none text-gray-600 border border-[#53bd95] resize-none" name="Body" placeholder="Body" onChange={(e) => handleChange(e)} />
                         <p className="text-gray-600 mb-4 font-semibold text-xs">Body should be minimum 300 characters. </p>
-                        <select className="bg-transparent mb-1 px-2 h-10 focus:outline-none text-gray-600 border border-[#53bd95]" onChange={(e) => setCategory(e.target.value)}>
+                        <select className="tracking-[0.2px] bg-transparent mb-1 px-2 h-10 focus:outline-none text-gray-600 border border-[#53bd95]" onChange={(e) => setCategory(e.target.value)}>
                             <option className="bg-[#53bd9530]" value="0">Category</option>
                             {categories.items.map((category) => {
                                 return (
@@ -148,7 +148,7 @@ export default function Write({ categories }: IPropTypes) {
                         </select>
                         <p className="text-gray-600 mb-4 font-semibold text-xs">Category should be selected.</p>
                         <div className="mt-5 flex items-center justify-center bottom-0 left-0 w-full p-2">
-                            <button className={` ${dis && 'disabled'} text-gray-700 mt-4 h-[40px] w-20 text-xs font-bold rounded-full bg-[#53bd9560]`} type="submit">POST</button>
+                            <button className={` ${dis && 'disabled'} text-gray-700 tracking-[0.2px] mt-4 h-[40px] w-20 text-xs font-bold rounded-full bg-[#53bd9560]`} type="submit">POST</button>
                         </div>
                     </form>
                 </div>

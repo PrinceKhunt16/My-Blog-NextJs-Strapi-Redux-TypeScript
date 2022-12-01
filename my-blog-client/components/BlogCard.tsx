@@ -15,7 +15,7 @@ export default function BlogCard({ article }: IPropType) {
             </div>
             <div className="w-fit mt-[10px]">
                 <Link href={`/article/${article.attributes.Slug}`}>
-                    <h1 className="text-[24px] font-normal font-caveatbrush text-gray-600 hover:text-primary transition-transform hover:cursor-pointer leading-7 hover:decoration-gray-500">
+                    <h1 className="tracking-[0.2px] text-[25px] font-normal font-caveatbrush text-gray-600 hover:text-primary transition-transform hover:cursor-pointer leading-7 hover:decoration-gray-500">
                         {article.attributes.Title.slice(0, 95)}
                     </h1>
                 </Link>
@@ -30,7 +30,7 @@ export default function BlogCard({ article }: IPropType) {
                         className="h-10 w-10 object-cover rounded-full"
                     />
                 </div>
-                <span className=" text-gray-500 text-sm">
+                <span className="tracking-[0.2px] text-gray-500 text-sm">
                     {article.attributes.author.data.attributes.firstname}{' '}
                     {article.attributes.author.data.attributes.lastname} on
                     &nbsp;
@@ -41,7 +41,7 @@ export default function BlogCard({ article }: IPropType) {
             </div>
             <div className="flex">
                 <div className="mr-2">
-                    <div className="text-gray-600">
+                    <div className="tracking-[0.2px] text-gray-600">
                         {article.attributes.shortDescription.slice(0, 160)}{' '}
                         {article.attributes.shortDescription.length > 160 ? <span className="text-gray-600">read more</span> : ''}
                     </div>

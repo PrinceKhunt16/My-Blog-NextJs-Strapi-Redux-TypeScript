@@ -64,7 +64,7 @@ export default function Tabs({ categories, handleSearch }: IPropTypes) {
 
     return (
         <div className="flex items-center justify-between borderbottom">
-            <ul className="flex items-center gap-4 mt-4 mb-4">
+            <ul className="tracking-[0.2px] flex items-center gap-4 mt-4 mb-4">
                 <li className={
                     `${router.pathname === '/'
                         ? 'text-primary'
@@ -100,7 +100,7 @@ export default function Tabs({ categories, handleSearch }: IPropTypes) {
                     onChange={(e) => handleSearch(e.target.value)}
                     type="text"
                     placeholder={`blogs on ${placeholder}`}
-                    className="outline-none w-48 ml-3 pt-0.5 text-gray-600 placeholder:text-gray-600"
+                    className="tracking-[0.2px] outline-none w-48 ml-3 pt-0.5 text-gray-600 placeholder:text-gray-600"
                 />
             </div>
         </div>

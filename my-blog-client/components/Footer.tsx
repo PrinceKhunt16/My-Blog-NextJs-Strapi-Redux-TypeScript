@@ -7,11 +7,11 @@ export default function Footer() {
                         My Blog
                     </span>
                 </div>
-                <p className="text-xs font-bold text-gray-700 sm:ml-4 sm:pl-4 sm:mt-0 mt-2 pt-1">
+                <p className="tracking-[0.2px] text-xs font-bold text-gray-700 sm:ml-4 sm:pl-4 sm:mt-0 mt-2 pt-1">
                     © 2022 My Blog —
                     <a
                         href="https://twitter.com/codersgyan"
-                        className="text-gray-700 ml-1"
+                        className="tracking-[0.2px] text-gray-700 ml-1"
                         rel="noopener noreferrer"
                         target="_blank">
                         @myblog

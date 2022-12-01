@@ -12,7 +12,7 @@ export default function Navbar() {
                     My Blog
                 </span>
             </div>
-            <ul className="flex items-center gap-5">
+            <ul className="tracking-[0.2px] flex items-center gap-5">
                 <li className="text-gray-600">
                     <Link href="/">Blogs</Link>
                 </li>
@@ -46,7 +46,7 @@ export default function Navbar() {
                             </>
                         ) : (
                             <>
-                                <ul className="flex items-center gap-5">
+                                <ul className="flex items-center gap-5 tracking-[0.2px]">
                                     <li className="text-gray-600">
                                         <Link href="/signin">
                                             Sign in
