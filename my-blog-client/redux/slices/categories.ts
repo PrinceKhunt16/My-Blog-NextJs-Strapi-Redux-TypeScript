@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import { fetchCategoriesAxios } from "../../http";
 
 const initialState = {
   data: null,
@@ -28,17 +28,6 @@ export const categoriesSlice = createSlice({
 export default categoriesSlice.reducer;
 
 export const fetchCategories = createAsyncThunk("category/fetchCategory", async () => {
-    const config = {
-      headers: {
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_BASE_API_KEY}`,
-      },
-    };
-
-    const data = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/categories`,
-      config
-    );
-
-    return data.data.data;
-  }
-);
+  const data = await fetchCategoriesAxios()
+  return data.data.data;
+});

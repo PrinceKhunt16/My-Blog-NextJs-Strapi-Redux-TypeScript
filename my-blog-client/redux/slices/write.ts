@@ -1,15 +1,15 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { blogImageUpdateAxios, writeBlogTextAxios } from "../../http";
 
 export interface IWriteSliceWriteState {
-    blog: {
-        Title: string,
-        Body: string,
-        shortDescription: string,
-        imageurl: string,
-        Slug: string
-    },
-    category: string
+    Title: string,
+    Body: string,
+    shortDescription: string,
+    imageurl: string,
+    Slug: string,
+    author: number,
+    Category: string
 }
 
 export interface IWriteSliceProps {
@@ -95,28 +95,12 @@ export const { setDefaultWrite } = writeSlice.actions
 
 export default writeSlice.reducer
 
-export const writeUserText = createAsyncThunk('write/createWriteText', async (data: IWriteSliceWriteState, { getState, dispatch }) => {
+export const writeUserText = createAsyncThunk('write/createWriteText', async (blog: IWriteSliceWriteState, { getState, dispatch }) => {
     const { user } = getState() as any
 
-    const config = {
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${process.env.NEXT_PUBLIC_BASE_API_KEY}`
-        }
-    }
+    blog.author = user.data.id
 
-    const postresponse = await axios.post(`http://localhost:1337/api/articles`, { data: data.blog }, config)
-
-    const response = await axios.put(`http://localhost:1337/api/articles/${postresponse.data.data.id}/?populate=categories&users`,
-        {
-            data: {
-                Category: [data.category],
-                author: [user.data.id]
-            }
-        },
-        config
-    )
-
+    const postresponse = await writeBlogTextAxios(blog)
     return postresponse.data
 })
 
@@ -135,23 +119,9 @@ export const writeImage = createAsyncThunk('write/createBlogImage', async (image
     dispatch(writeImageUrlUpdate(response.data[0].url))
 })
 
-export const writeImageUrlUpdate = createAsyncThunk('write/usersBlogInPutImageUrl', async ( url: string | Blob, { getState }) => {
+export const writeImageUrlUpdate = createAsyncThunk('write/usersBlogInPutImageUrl', async ( url: string, { getState }) => {
     const { write } = getState() as any
 
-    const config = {
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${process.env.NEXT_PUBLIC_BASE_API_KEY}`
-        }
-    }
-
-    const response = await axios.put(`http://localhost:1337/api/articles/${write.id}/?populate=imageurl`,
-        {
-            data: {
-                imageurl: url
-            }
-        },
-        config
-    )
+    const response = await blogImageUpdateAxios(write.id, url)
     return response.data
 })

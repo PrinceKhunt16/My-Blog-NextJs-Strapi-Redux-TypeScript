@@ -42,8 +42,8 @@ export default function BlogCard({ article }: IPropType) {
             <div className="flex">
                 <div className="mr-2">
                     <div className="tracking-[0.2px] text-gray-600">
-                        {article.attributes.shortDescription.slice(0, 160)}{' '}
-                        {article.attributes.shortDescription.length > 160 ? <span className="text-gray-600">read more</span> : ''}
+                        {article.attributes.shortDescription.slice(0, Math.floor(Math.random()*(170 - 155 + 1) + 155))}{' '}
+                        {article.attributes.shortDescription.length > 165 ? <span className="text-gray-500">more</span> : ''}
                     </div>
                 </div>
             </div>

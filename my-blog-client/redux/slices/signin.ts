@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { signinImageAxios, signinUserTextAxios } from "../../http";
 
 export interface ISigninSliceUserState {
     firstname: string,
@@ -108,14 +109,7 @@ export const signinUserText = createAsyncThunk('signin/createUserText', async (d
     d.set("password", data.password)
     d.set("about", data.about)
 
-    const config = {
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${process.env.NEXT_PUBLIC_BASE_API_KEY}`
-        }
-    }
-
-    const response = await axios.post(`http://localhost:1337/api/auth/local/register`, data, config)
+    const response = await signinUserTextAxios(d)
     return response.data
 })
 
@@ -139,13 +133,6 @@ export const signinUserImageUrlUpdate = createAsyncThunk('signin/updateUserImage
     const d = new FormData()
     d.set("avatarurl", url)
 
-    const config = {
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${process.env.NEXT_PUBLIC_BASE_API_KEY}`
-        }
-    }
-
-    const response = await axios.put(`http://localhost:1337/api/users/${signin.id}`, d, config)
+    const response = await signinImageAxios(signin.id, d)
     return response.data
 })

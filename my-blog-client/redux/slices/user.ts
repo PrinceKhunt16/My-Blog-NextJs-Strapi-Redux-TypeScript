@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import { fetchUserAxios } from "../../http";
 import { IUser } from "../../types";
 
 export interface IUserSliceProps {
@@ -51,7 +51,7 @@ export const fetchUser = createAsyncThunk('user/fetchUser', async () => {
     const obj = JSON.parse(window.atob(jwt.split('.')[1]))
 
     try {
-      const { data } = await axios.get(`http://localhost:1337/api/users/${obj.id}?populate=*`)
+      const { data } = await fetchUserAxios(obj.id)
       const { avatarurl, email, username, id, about, articles } = data
       return { avatarurl, email, username, id, about, articles }
     } catch (e) {

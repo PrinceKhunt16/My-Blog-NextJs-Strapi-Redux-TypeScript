@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
 import qs from "qs";
 import { ParsedUrlQuery } from "querystring";
+import { fetchArticlesAxios } from "../../http";
 import { IArticleSliceData, IQueryOptions } from "../../types";
 
 export interface IArticleSliceProps {
@@ -38,44 +38,33 @@ export const articlesSlice = createSlice({
 export default articlesSlice.reducer;
 
 export const fetchArticles = createAsyncThunk("articles/fetchArticles", async (query: ParsedUrlQuery) => {
-    const options: Partial<IQueryOptions> = {
-      populate: ["author.avatar"],
-      sort: ["id:desc"],
-      pagination: {
-        page: query.page ? +query.page : 1,
-        pageSize: 9,
+  const options: Partial<IQueryOptions> = {
+    populate: ["author.avatar"],
+    sort: ["id:desc"],
+    pagination: {
+      page: query.page ? +query.page : 1,
+      pageSize: 9,
+    },
+  };
+  
+  if (query.search) {
+    options.filters = {
+      Title: {
+        $containsi: query.search,
       },
     };
-
-    const config = {
-      headers: {
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_BASE_API_KEY}`,
-      },
-    };
-
-    if (query.search) {
+  } else {
+    if(query.category){
       options.filters = {
-        Title: {
-          $containsi: query.search,
+        Category: {
+          slug: query.category,
         },
-      };
-    } else {
-      if(query.category){
-        options.filters = {
-          Category: {
-            slug: query.category,
-          },
-        }
       }
     }
-
-    const queryString = qs.stringify(options);
-
-    const data = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/articles?${queryString}`,
-      config
-    );
-
-    return data.data;
   }
-);
+
+  const queryString = qs.stringify(options)
+
+  const data = await fetchArticlesAxios(queryString)
+  return data.data;
+});

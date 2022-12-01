@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { ParsedUrlQuery } from "querystring";
 import qs from "qs"
 import { IArticle, IArticleSliceData } from "../../types";
-import axios from "axios";
+import { fetchArticlesAxios } from "../../http";
 
 export interface IArticleSliceProps {
   data: IArticle | null,
@@ -63,14 +63,7 @@ export const fetchArticle = createAsyncThunk("article/fetchArticle", async (quer
       },
   })
 
-  const config = {
-    headers: {
-      Authorization: `Bearer ${process.env.NEXT_PUBLIC_BASE_API_KEY}`
-    }
-  }
-
-  const data = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/articles?${queryString}`, config)
-
+  const data = await fetchArticlesAxios(queryString)
   return data.data.data[0]
 })
 
@@ -88,12 +81,6 @@ export const fetchArticlesOfUser = createAsyncThunk("article/fetchArticlesOfUser
 
   const queryString = qs.stringify(options)
 
-  const config = {
-    headers: {
-      Authorization: `Bearer ${process.env.NEXT_PUBLIC_BASE_API_KEY}`
-    }
-  }
-  
-  const data = await axios.get(`http://localhost:1337/api/articles?${queryString}`, config)
+  const data = await fetchArticlesAxios(queryString)
   return data.data
 })

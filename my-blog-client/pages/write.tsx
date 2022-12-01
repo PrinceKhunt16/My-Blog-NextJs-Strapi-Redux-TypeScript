@@ -8,6 +8,7 @@ import Toast from "../components/Toast"
 import { useDispatch, useSelector } from "react-redux"
 import { AppDispatch, RootState } from "../redux/store"
 import { writeImage, writeUserText } from "../redux/slices/write"
+import { logout } from "../redux/slices/user"
 
 interface IPropTypes {
     categories: {
@@ -21,23 +22,23 @@ export default function Write({ categories }: IPropTypes) {
     const dispatch = useDispatch<AppDispatch>()
     const router = useRouter()
     const [dis, setDis] = useState<boolean>(false)
-    const [category, setCategory] = useState<string>('0')
     const [image, setImage] = useState<string>('')
     const [imagePreview, setImagePrivew] = useState<string | ArrayBuffer | null>(null)
-    const [blog, setBlog] = useState({ Title: '', Body: '', shortDescription: '', imageurl: '', Slug: '' })
+    const [blog, setBlog] = useState({ Title: '', Body: '', shortDescription: '', imageurl: '', Slug: '', Category: '0', author: -1 })
 
     const checkUserData = () => {
         const title = checkText(blog.Title, 10, 150)
         const body = checkText(blog.Body, 300, 20000)
         const shortDescription = checkText(blog.shortDescription, 150, 300)
+        const category = blog.Category === '0'
 
         if (imagePreview === null) Toast('For Blog Image choosen file should be jpg file.')
         if (!title) Toast('Title should be minimum 10 and maximum 150 characters.')
         if (!shortDescription) Toast('Short Description should be minimum 150 and maximum 300 characters.')
         if (!body) Toast('Body should be minimum 300 characters.')
-        if (category === '0') Toast('Category should be selected.')
+        if (category) Toast('Category should be selected.')
 
-        return title && body && shortDescription && category !== '0' && imagePreview !== null
+        return title && body && shortDescription && category && imagePreview !== null
     }
 
     const handleSubmit = async (e: any) => {
@@ -49,20 +50,22 @@ export default function Write({ categories }: IPropTypes) {
             return
         }
 
+        const dummy = blog.Title
+        const slug = dummy.split(' ').map(str => str.toLowerCase()).join('-')
+        blog.Slug = slug
+
         if (!isJWTIsValid()) {
+            localStorage.removeItem('jwt')
+            dispatch(logout())
             router.push('/signup')
+        } else {
+            await dispatch(writeUserText(blog))
+            await dispatch(writeImage(image))
         }
-
-        const obj = {
-            blog: blog,
-            category: category
-        }
-
-        dispatch(writeUserText(obj))
-        dispatch(writeImage(image))
     }
 
     const handleChange = (e: any) => {
+        console.log(e.target.name)
         if (e.target.name === "Image" && e.target.files[0]) {
             const reader = new FileReader()
 
@@ -100,12 +103,6 @@ export default function Write({ categories }: IPropTypes) {
     }, [error, message])
 
     useEffect(() => {
-        const dummy = blog.Title
-        const slug = dummy.split(' ').map(str => str.toLowerCase()).join('-')
-        setBlog({ ...blog, ['Slug']: slug })
-    }, [blog.Title])
-
-    useEffect(() => {
         const jwt = localStorage.getItem('jwt')
         if (!jwt) {
             router.push('/')
@@ -120,7 +117,7 @@ export default function Write({ categories }: IPropTypes) {
                 </div>
             )}
             {isUser && !isLoading && (
-                <div className="w-[400px] my-20 rounded-lg bg-[#53bd9530]">
+                <div className="w-[420px] my-20 rounded-lg bg-[#53bd9530]">
                     <form className="flex flex-col p-8" onSubmit={(e) => handleSubmit(e)} >
                         <h1 className="tracking-[0.2px] font-caveatbrush text-2xl text-center text-gray-600 mb-6">Write Blog</h1>
                         <input className="tracking-[0.2px] bg-transparent mb-1 px-2 h-10 focus:outline-none text-gray-600 border border-[#53bd95]" type="text" name="Title" placeholder="Title" onChange={(e) => handleChange(e)} />
@@ -136,7 +133,7 @@ export default function Write({ categories }: IPropTypes) {
                         <p className="text-gray-600 mb-4 font-semibold text-xs">Short Description should be minimum 300 characters.</p>
                         <textarea className="tracking-[0.2px] write-textarea bg-transparent mb-1 px-2 h-28 focus:outline-none text-gray-600 border border-[#53bd95] resize-none" name="Body" placeholder="Body" onChange={(e) => handleChange(e)} />
                         <p className="text-gray-600 mb-4 font-semibold text-xs">Body should be minimum 300 characters. </p>
-                        <select className="tracking-[0.2px] bg-transparent mb-1 px-2 h-10 focus:outline-none text-gray-600 border border-[#53bd95]" onChange={(e) => setCategory(e.target.value)}>
+                        <select className="tracking-[0.2px] bg-transparent mb-1 px-2 h-10 focus:outline-none text-gray-600 border border-[#53bd95]" name="Category" onChange={(e) => handleChange(e)}>
                             <option className="bg-[#53bd9530]" value="0">Category</option>
                             {categories.items.map((category) => {
                                 return (

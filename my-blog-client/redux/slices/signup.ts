@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import { signupUserAxios } from "../../http";
 
 export interface ISignupSliceUserState {
     email: string,
@@ -48,15 +48,7 @@ export const signupUser = createAsyncThunk('signup/fetchUser', async (data: ISig
     d.set("identifier", data.email)
     d.set("password", data.password)
 
-    const config = {
-        headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-            Authorization: `Bearer ${process.env.NEXT_PUBLIC_BASE_API_KEY}`
-        }
-    }
-
-    const response = await axios.post(`http://localhost:1337/api/auth/local`, d, config)
+    const response = await signupUserAxios(d)
 
     const { jwt } = response.data
     localStorage.setItem('jwt', JSON.stringify(jwt))

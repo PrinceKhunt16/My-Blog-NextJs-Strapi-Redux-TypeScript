@@ -96,7 +96,7 @@ export default function Signup() {
             {
                 !isUser &&
                 <div className="screen-height h-full flex items-center justify-center">
-                    <div className="w-[400px] my-20 rounded-lg bg-[#53bd9530]">
+                    <div className="w-[420px] my-20 rounded-lg bg-[#53bd9530]">
                         <form onSubmit={(e) => handleSubmit(e)} className="flex flex-col p-8">
                             <h1 className="tracking-[0.2px] font-caveatbrush text-2xl text-center text-gray-600 mb-6">Sign in</h1>
                             <input className="tracking-[0.2px] bg-transparent mb-1 px-2 h-10 focus:outline-none text-gray-600 border border-[#53bd95]" type="text" name="username" placeholder="Username" onChange={(e) => handleChange(e)} />
