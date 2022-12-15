@@ -119,7 +119,7 @@ export default function Write({ categories }: IPropTypes) {
             {isUser && !isLoading && (
                 <div className="w-[420px] my-20 rounded-lg bg-[#53bd9530]">
                     <form className="flex flex-col p-8" onSubmit={(e) => handleSubmit(e)} >
-                        <h1 className="tracking-[0.2px] font-caveatbrush text-2xl text-center text-gray-600 mb-6">Write Blog</h1>
+                        <h1 className="tracking-[0.2px] font-caveat text-3xl text-center text-gray-700 mb-6">Write Blog</h1>
                         <input className="tracking-[0.2px] bg-transparent mb-1 px-2 h-10 focus:outline-none text-gray-600 border border-[#53bd95]" type="text" name="Title" placeholder="Title" onChange={(e) => handleChange(e)} />
                         <p className="text-gray-600 mb-4 font-semibold text-xs">Title should be 10 to 150 characters.</p>
                         <div className="signin flex gap-2">

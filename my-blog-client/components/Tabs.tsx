@@ -55,8 +55,8 @@ export default function Tabs({ categories, handleSearch }: IPropTypes) {
 
         setPlaceholder(searchLetters.substring(0, num))
         return () => clearTimeout(timer)
-    // }, [count])
-    }, [])
+    }, [count])
+    // }, [])
 
     const isActiveLink = (category: ICategory) => {
         return category.attributes.Slug === router.query.category

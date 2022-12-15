@@ -26,7 +26,7 @@ export default function Article({ body }: IPropType) {
             </Head>
             <div className="mb-7 mt-7 grid lg:grid-cols-3 md:grid-cols-2 lg:gap-7 md:gap-0 single-article">
                 <div className="lg:col-span-2 pb-5 md:col-span-2">
-                    <h1 className="tracking-[0.4px] text-[28px] xl:text-[30px] leading-[35px] font-caveatbrush text-gray-600">
+                    <h1 className="font-caveat font-medium tracking-[0.4px] text-[30px] xl:text-[34px] leading-[35px] text-gray-600">
                         {data?.attributes.Title}
                     </h1>
                     <div className="text-base text-gray-600 leading-7">
@@ -35,7 +35,7 @@ export default function Article({ body }: IPropType) {
                             src={`http://localhost:1337${data?.attributes.imageurl}`}
                             alt={data?.attributes.Title}
                         />
-                        <div className="pt-6 mdxremote text-gray-600 tracking-[0.4px]">
+                        <div className="pt-6 mdxremote text-gray-600 tracking-[0.3px]">
                             <MDXRemote {...(body as MDXRemoteSerializeResult)} />
                         </div>
                     </div>
@@ -49,7 +49,7 @@ export default function Article({ body }: IPropType) {
                                 className="h-20 w-20 object-cover rounded-full"
                             />
                             <div>
-                                <h1 className="tracking-[0.2px] ml-3 font-caveatbrush text-2xl text-gray-600">{data?.attributes.author.data.attributes.username}</h1>
+                                <h1 className="tracking-[0.2px] ml-3 font-caveat font-medium text-2xl text-gray-600">{data?.attributes.author.data.attributes.username}</h1>
                             </div>
                         </div>
                         <div className="mt-4 w-full">
@@ -67,7 +67,7 @@ export default function Article({ body }: IPropType) {
                                                         <img className="object-cover w-full h-[180px]" src={`http://localhost:1337${blog.attributes.imageurl}`} alt="" />
                                                         <div>
                                                             <Link href={`/article/${blog.attributes.Slug}`}>
-                                                                <h1 className="tracking-[0.2px] text-[26px] pt-1 leading-[30px] font-normal font-caveatbrush text-gray-600 hover:text-primary transition-transform hover:cursor-pointer hover:decoration-gray-500">{blog.attributes.Title}</h1>
+                                                                <h1 className="tracking-[0.2px] text-[26px] pt-1 leading-[30px] font-caveat font-semibold text-gray-600 hover:text-primary transition-transform hover:cursor-pointer hover:decoration-gray-500">{blog.attributes.Title}</h1>
                                                             </Link>
                                                             <div className="tracking-[0.3px] text-gray-600 leading-[24px] pt-1">
                                                                 {blog.attributes.shortDescription.slice(0, 100)}{' '}

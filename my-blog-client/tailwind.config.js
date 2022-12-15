@@ -16,7 +16,8 @@ module.exports = {
     },
     fontFamily: {
       sans: ['Roboto', 'sans-serif'],
-      caveatbrush: 'Caveat Brush'
+      caveatbrush: 'Caveat Brush',
+      caveat: 'Caveat'
     }
   },
   plugins: [],

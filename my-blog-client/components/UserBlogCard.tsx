@@ -14,7 +14,7 @@ export default function UserBlogCard({ article }: IPropType) {
             </div>
             <div className="w-fit mt-[10px]">
                 <Link href={`/article/${article.Slug}`}>
-                    <h1 className="tracking-[0.2px] text-[25px] font-normal font-caveatbrush text-gray-600 hover:text-primary transition-transform hover:cursor-pointer leading-8 hover:decoration-gray-500">
+                    <h1 className="tracking-[0.2px] text-[26px] font-caveat font-semibold text-gray-700 hover:text-primary transition-transform hover:cursor-pointer leading-8 hover:decoration-gray-500">
                         {article.Title.slice(0, 95)}
                     </h1>
                 </Link>

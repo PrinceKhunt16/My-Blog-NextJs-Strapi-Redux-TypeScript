@@ -44,7 +44,7 @@ export default function Account() {
                             />
                         </div>
                         <div className="ml-4 flex items-center">
-                            <h1 className="tracking-[0.2px] font-caveatbrush text-3xl text-gray-600">{data?.username}</h1>
+                            <h1 className="tracking-[0.2px] font-caveat font-medium text-3xl text-gray-700">{data?.username}</h1>
                         </div>
                     </div>
                     <ul className="tracking-[0.2px] w-full borderbottom pb-4 my-3 flex items-center justify-start gap-4">
