@@ -48,7 +48,7 @@ export const writeSlice = createSlice({
         builder.addCase(writeUserText.fulfilled, (state, action) => {
             state.writtenDown = false
             state.id = action.payload.data.id
-            state.message = 'Text data posted.',
+            state.message = '',
             state.error = null
         }),
         builder.addCase(writeUserText.rejected, (state) => {
@@ -63,7 +63,7 @@ export const writeSlice = createSlice({
         }),
         builder.addCase(writeImage.fulfilled, (state) => {
             state.writtenDown = false
-            state.message = 'Your blog image posted.'
+            state.message = ''
             state.error = null
         }),
         builder.addCase(writeImage.rejected, (state) => {

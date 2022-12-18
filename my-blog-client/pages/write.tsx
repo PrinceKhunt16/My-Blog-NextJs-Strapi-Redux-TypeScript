@@ -29,7 +29,7 @@ export default function Write({ categories }: IPropTypes) {
     const checkUserData = () => {
         const title = checkText(blog.Title, 10, 150)
         const body = checkText(blog.Body, 300, 20000)
-        const shortDescription = checkText(blog.shortDescription, 150, 300)
+        const shortDescription = checkText(blog.shortDescription, 130, 300)
         const category = blog.Category === '0'
 
         if (imagePreview === null) Toast('For Blog Image choosen file should be jpg file.')
@@ -45,7 +45,7 @@ export default function Write({ categories }: IPropTypes) {
         e.preventDefault()
         setDis(true)
 
-        if (!checkUserData()) {
+        if (checkUserData()) {
             setDis(false)
             return
         }
@@ -65,7 +65,6 @@ export default function Write({ categories }: IPropTypes) {
     }
 
     const handleChange = (e: any) => {
-        console.log(e.target.name)
         if (e.target.name === "Image" && e.target.files[0]) {
             const reader = new FileReader()
 
